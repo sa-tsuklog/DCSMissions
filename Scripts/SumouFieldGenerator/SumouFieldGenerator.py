@@ -225,6 +225,11 @@ if __name__ == "__main__":
     outFilename = "GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second);
     
     
+    oggFiles = glob.glob("TemplateMission/l10n/DEFAULT/*.ogg")
+    for oggFile in oggFiles:
+        shutil.copyfile(oggFile,"tmp/l10n/DEFAULT/"+os.path.basename(oggFile))
+    
+    
     with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")
         zf.write("tmp/options", arcname="options")
