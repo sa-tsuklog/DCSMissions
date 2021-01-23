@@ -14,6 +14,7 @@ import numpy as np
 import datetime
 from DcsMissionGeneration import TheatreGenerator
 from DcsMissionGeneration import WarehousesGenerator
+import sys
 
 TIMEOFDAY_MIN = 7
 TIMEOFDAY_MAX = 17
@@ -25,6 +26,8 @@ AI_PLANE_RANGE     = 100000
 THEATRE = [
         "Caucasus",
         "Nevada",
+        "Persian Gulf",
+        "Syria",
     ]
 
 
@@ -161,7 +164,22 @@ def setWeather(missionDict,weatherTemplates):
     
 
 if __name__ == "__main__":
-    theatre = THEATRE[0]
+    args = sys.argv
+    
+    if(len(args)>1):
+        theatreCandidates = args[1].split(",")
+        theatreIndex = np.random.randint(0,len(theatreCandidates))
+        
+        theatre = THEATRE[0]
+        for tmpTheatre in THEATRE:
+            if(tmpTheatre.lower().replace(" ","").startswith(theatreCandidates[theatreIndex].lower().replace(" ",""))):
+                theatre = tmpTheatre
+        
+    else:
+        theatre = THEATRE[np.random.randint(0,len(THEATRE))]
+    
+    print("Theatre:",theatre)
+    
     with open("TheatreInfo.json") as f:
         theatreInfo = json.load(f)
     
@@ -203,7 +221,11 @@ if __name__ == "__main__":
     shutil.move("tmp/dictionary",dictPath+"/dictionary")
     shutil.move("tmp/mapResource",dictPath+"/mapResource")
     
-    with zipfile.ZipFile('GeneratedMission.miz',"w",compression=zipfile.ZIP_DEFLATED) as zf:
+    dt_now = datetime.datetime.now()
+    outFilename = "GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second);
+    
+    
+    with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")
         zf.write("tmp/options", arcname="options")
         zf.write("tmp/theatre",arcname="theatre")
