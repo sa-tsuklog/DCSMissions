@@ -16,6 +16,8 @@ from DcsMissionGeneration import TheatreGenerator
 from DcsMissionGeneration import WarehousesGenerator
 import sys
 
+RANDOM_HEADING = False
+
 TIMEOFDAY_MIN = 7
 TIMEOFDAY_MAX = 17
 
@@ -94,7 +96,11 @@ def relocate(missionDict,theatreInfo,theatre):
                     for unitNo in group["units"]:
                         group["units"][unitNo]["x"] = startPointX
                         group["units"][unitNo]["y"] = startPointY
-                    
+                        if(RANDOM_HEADING):
+                            group["units"][unitNo]["heading"] = 2*(np.random.rand()-0.5)*np.pi
+                        else:
+                            group["units"][unitNo]["heading"] = 0
+                            
                     clientCount[coalition] += 1
                 else:
                     startPointX = bullseyeX + AI_PLANE_RANGE * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
