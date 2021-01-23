@@ -28,7 +28,7 @@ AI_PLANE_RANGE     = 100000
 THEATRE = [
         "Caucasus",
         "Nevada",
-        "Persian Gulf",
+        "PersianGulf",
         "Syria",
     ]
 
@@ -197,7 +197,7 @@ if __name__ == "__main__":
     optionsDict = LuaDictTool.load("TemplateMission/options")
     #warehousesDict = LuaDictTool.load("TemplateMission/warehouses")
     warehousesGen = WarehousesGenerator(theatre=theatre)
-    warehousesGen.setDefaultParameters()
+    warehousesGen.setDefaultParameters(theatreInfo=theatreInfo)
     dictionaryDict = LuaDictTool.load("TemplateMission/l10n/DEFAULT/dictionary")
     mapResourceDict = LuaDictTool.load("TemplateMission/l10n/DEFAULT/mapResource")
     theatreGen = TheatreGenerator(theatre=theatre)
