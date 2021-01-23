@@ -227,14 +227,14 @@ if __name__ == "__main__":
     shutil.move("tmp/dictionary",dictPath+"/dictionary")
     shutil.move("tmp/mapResource",dictPath+"/mapResource")
     
-    dt_now = datetime.datetime.now()
-    outFilename = "GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second);
-    
-    
     oggFiles = glob.glob("TemplateMission/l10n/DEFAULT/*.ogg")
     for oggFile in oggFiles:
         shutil.copyfile(oggFile,"tmp/l10n/DEFAULT/"+os.path.basename(oggFile))
     
+    
+    
+    dt_now = datetime.datetime.now()
+    outFilename = "GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre);
     
     with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")
@@ -251,4 +251,4 @@ if __name__ == "__main__":
     #todo update maxDictId
     #todo update trig,func, condition, return
     
-    print("mission generated")
+    print("mission generated: ",outFilename)
