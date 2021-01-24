@@ -57,6 +57,8 @@ def relocate(missionDict,theatreInfo,theatre):
     missionDict["coalition"]["red"]["bullseye"]["x"] = bullseyeX
     missionDict["coalition"]["red"]["bullseye"]["y"] = bullseyeY
     
+    missionDict["map"]["centerX"] = bullseyeX
+    missionDict["map"]["centerY"] = bullseyeY
     
     aiRangeScale = np.random.rand()*1.2 + 0.8 # x0.8 ~ 2.0
     
@@ -98,8 +100,16 @@ def relocate(missionDict,theatreInfo,theatre):
                         group["units"][unitNo]["y"] = startPointY
                         if(RANDOM_HEADING):
                             group["units"][unitNo]["heading"] = 2*(np.random.rand()-0.5)*np.pi
+                            group["units"][unitNo]["psi"] = 2*(np.random.rand()-0.5)*np.pi
                         else:
+                            psi = -radDirection+np.pi
+                            if(psi < -np.pi):
+                                psi += 2*np.pi
+                            if(psi > np.pi):
+                                psi -= 2*np.pi
+                            
                             group["units"][unitNo]["heading"] = 0
+                            group["units"][unitNo]["psi"] = psi
                             
                     clientCount[coalition] += 1
                 else:
@@ -143,6 +153,12 @@ def setDate(missionDict):
     
     rnd = np.random.rand()
     missionDict["start_time"] = 3600 * int(TIMEOFDAY_MAX * rnd + TIMEOFDAY_MIN * (1-rnd))
+    
+    hour = missionDict["start_time"] // 3600
+    min  = (missionDict["start_time"] // 60) % 60
+    sec  = (missionDict["start_time"]) % 60
+    
+    print("Mission Time:{:04}/{:02}/{:02} {:02}-{:02}-{:02}".format(missionDict["date"]["Year"],missionDict["date"]["Month"],missionDict["date"]["Day"],hour,min,sec))
 
 def setWeather(missionDict,weatherTemplates):
     probabilityTotal = 0
@@ -227,11 +243,6 @@ if __name__ == "__main__":
     shutil.move("tmp/dictionary",dictPath+"/dictionary")
     shutil.move("tmp/mapResource",dictPath+"/mapResource")
     
-    oggFiles = glob.glob("TemplateMission/l10n/DEFAULT/*.ogg")
-    for oggFile in oggFiles:
-        shutil.copyfile(oggFile,"tmp/l10n/DEFAULT/"+os.path.basename(oggFile))
-    
-    
     
     dt_now = datetime.datetime.now()
     outFilename = "GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre);
@@ -244,11 +255,18 @@ if __name__ == "__main__":
         zf.write("tmp/l10n/DEFAULT/dictionary",arcname="l10n/DEFAULT/dictionary")
         zf.write("tmp/l10n/DEFAULT/mapResource",arcname="l10n/DEFAULT/mapResource")
         
+        oggFiles = glob.glob("TemplateMission/l10n/DEFAULT/*.ogg")
+        for oggFile in oggFiles:
+            soundFilename = os.path.basename(oggFile)
+            shutil.copyfile(oggFile,"tmp/l10n/DEFAULT/"+ soundFilename)
+            zf.write("tmp/l10n/DEFAULT/"+soundFilename,arcname="l10n/DEFAULT/"+soundFilename)
+        
+        
     #shutil.move("mission.miz","C:/Users/sa/Saved Games/DCS.openbeta/Missions/mission.miz")
 
     
     
     #todo update maxDictId
     #todo update trig,func, condition, return
-    
+    print("----------------------")
     print("mission generated: ",outFilename)
