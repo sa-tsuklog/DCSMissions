@@ -15,6 +15,7 @@ import datetime
 from DcsMissionGeneration import TheatreGenerator
 from DcsMissionGeneration import WarehousesGenerator
 import sys
+import argparse
 
 RANDOM_HEADING = False
 
@@ -22,8 +23,9 @@ TIMEOFDAY_MIN = 7
 TIMEOFDAY_MAX = 17
 
 MIN_RANGE_FROM_EDGE = 150000
-CLIENT_PLANE_RANGE =  50000
-AI_PLANE_RANGE     = 100000
+# CLIENT_PLANE_RANGE =  50000
+# AI_PLANE_RANGE     = 100000
+M_PER_NM = 1852
 
 THEATRE = [
         "Caucasus",
@@ -35,7 +37,7 @@ THEATRE = [
 
 
 
-def relocate(missionDict,theatreInfo,theatre):
+def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance):
     bullseyeXMax = theatreInfo[theatre]["CombatArea"]["X"]["Max"] - MIN_RANGE_FROM_EDGE
     bullseyeXMin = theatreInfo[theatre]["CombatArea"]["X"]["Min"] + MIN_RANGE_FROM_EDGE
     bullseyeYMax = theatreInfo[theatre]["CombatArea"]["Y"]["Max"] - MIN_RANGE_FROM_EDGE
@@ -60,7 +62,8 @@ def relocate(missionDict,theatreInfo,theatre):
     missionDict["map"]["centerX"] = bullseyeX
     missionDict["map"]["centerY"] = bullseyeY
     
-    aiRangeScale = np.random.rand()*1.2 + 0.8 # x0.8 ~ 2.0
+    #aiRangeScale = np.random.rand()*1.2 + 0.8 # x0.8 ~ 2.0
+    aiRangeScale = 1
     
     radBlueDirection = np.random.rand() * np.pi * 2
     RAD_DIRECTION_DELTA = 0.001
@@ -86,8 +89,8 @@ def relocate(missionDict,theatreInfo,theatre):
                 
                 
                 if(group["units"][1]["skill"] == "Client"):                    
-                    startPointX = bullseyeX + CLIENT_PLANE_RANGE * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
-                    startPointY = bullseyeY + CLIENT_PLANE_RANGE * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
+                    startPointX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
+                    startPointY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
                     
                     group["route"]["points"][1]["x"] = startPointX
                     group["route"]["points"][1]["y"] = startPointY
@@ -113,8 +116,8 @@ def relocate(missionDict,theatreInfo,theatre):
                             
                     clientCount[coalition] += 1
                 else:
-                    startPointX = bullseyeX + AI_PLANE_RANGE * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
-                    startPointY = bullseyeY + AI_PLANE_RANGE * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
+                    startPointX = bullseyeX + mAiPlaneDistance * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
+                    startPointY = bullseyeY + mAiPlaneDistance * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
                      
                     group["route"]["points"][1]["x"] = startPointX
                     group["route"]["points"][1]["y"] = startPointY
@@ -186,17 +189,22 @@ def setWeather(missionDict,weatherTemplates):
     
 
 if __name__ == "__main__":
-    args = sys.argv
+    parser = argparse.ArgumentParser(description="description sample")
+    parser.add_argument('--theatre',default=None,help='Caucasus | Nevada | PersianGulf | Syria')
+    parser.add_argument('--distance',type=int,default=45)
+    parser.add_argument('--AWACSdistance',type=int,default=150)
+    args = parser.parse_args()
     
-    if(len(args)>1):
-        theatreCandidates = args[1].split(",")
+    
+    if(not args.theatre is None):
+        theatreCandidates = args.theatre.split(",")
         theatreIndex = np.random.randint(0,len(theatreCandidates))
-        
+         
         theatre = THEATRE[0]
         for tmpTheatre in THEATRE:
             if(tmpTheatre.lower().replace(" ","").startswith(theatreCandidates[theatreIndex].lower().replace(" ",""))):
                 theatre = tmpTheatre
-        
+         
     else:
         theatre = THEATRE[np.random.randint(0,len(THEATRE))]
     
@@ -204,6 +212,10 @@ if __name__ == "__main__":
     
     with open("TheatreInfo.json") as f:
         theatreInfo = json.load(f)
+    
+    
+    mClientPlaneDistance = M_PER_NM * args.distance/2
+    mAiPlaneDistance = M_PER_NM * args.AWACSdistance/2
     
     
     dictPath = "tmp/l10n/DEFAULT"
@@ -226,7 +238,7 @@ if __name__ == "__main__":
     
     
     missionDict["theatre"] = theatre
-    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre)
+    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance)
     
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())
     

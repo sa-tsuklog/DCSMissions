@@ -5,11 +5,11 @@ DCS Worldの空対空ミッション生成ツールです。
 
 ## 例：  
 
-    python3 SumouFileGenerator.py Caucasus,Nevada,PersianGulf,Syria  
+    python3 SumouFileGenerator.py --theatre=Caucasus,Nevada,PersianGulf,Syria  
 Caucasus,Nevada,PersianGulf,Syriaの中からランダムにマップを選択しミッションを生成  
 
 
-    python3 SumouFileGenerator.py Caucasus
+    python3 SumouFileGenerator.py --theatre=Caucasus
 
 
 マップをCaucasusに固定しミッションを生成  
@@ -19,6 +19,21 @@ Caucasus,Nevada,PersianGulf,Syriaの中からランダムにマップを選択�
 
 
 引数を省略した場合はSumouFileGenerator.pyが現在対応しているマップの中からランダムに選択される  
+
+
+    python3 SumouFileGenerator.py --theatre=Caucasus
+
+
+マップをCaucasusに固定しミッションを生成、交戦距離60nm  
+
+
+    python3 SumouFileGenerator.py --theatre=Caucasus --distance=60
+
+
+マップをCaucasusに固定しミッションを生成、交戦距離60nm、AWACSの距離150nm  
+
+
+    python3 SumouFileGenerator.py --theatre=Caucasus --distance=60 --AWACSdistance=150
 
 
 ## 引数：
