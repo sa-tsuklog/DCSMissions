@@ -175,8 +175,9 @@ options =
             ["AOA_SHOWINHUD"] = false,
             ["TDC_GatePPI"] = 5,
             ["TDC_PPI_is_Polar"] = false,
-            ["CPLocalList"] = "default",
             ["UNI_NODRIFT"] = false,
+            ["CPLocalList"] = "default",
+            ["FUEL_DETOT_AUTO"] = false,
             ["TDC_KBPrecission"] = 100,
         }, -- end of ["M-2000C"]
         ["A-10C_2"] = 
