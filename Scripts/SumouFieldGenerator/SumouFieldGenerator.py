@@ -34,7 +34,71 @@ THEATRE = [
         "Syria",
     ]
 
+FEET_CLOUD_BASES = [
+	(2756,13780),	#Light Scattered 1
+	(4134,8268),	#Light Scattered 2
+	(2756,8268),	#High Scattered 1
+	(4134,8268),	 #High Scattered 2
+	(4134,15157),	#Scattered 1
+	(4134,13780),	#Scattered 2
+	(5512,16535),	#Scattered 3
+	(12402,17913),	#High Scattered 3
+	(5512,12402),	#Scattered 4
+	(4134,13780),	#Scattered 5
+	(8268,17913),	#Scattered 6
+	(5512,11024),	#Scattered 7
+	(5512,11024),	#Broken 1
+	(5512,11024),	#Broken 2
+	(2756,16535),	#Broken 3
+	(4134,13780),	#Broken 4
+	(0,8268),	#Broken 5
+	(0,12402),	#Broken 6
+	(0,9646),	#Broken 7
+	(0,12402),	#Broken 8
+	(4134,13780),	#Overcast 1
+	(1378,13780),	#Overcast 2
+	(2756,11024),	#Overcast 3
+	(1378,8268),	#Overcast 4
+	(1378,11024),	#Overcast 5
+	(1378,9646),	#Overcast 6
+	(1378,8268),	#Overcast 7
+	(1378,9646),	#Overcast And Rain 1
+	(2756,8268),	#Overcast And Rain 2
+	(2756,8268),	#Overcast And Rain 3
+]
 
+CLOUD_NAMES = [
+	"Light Scattered 1",
+	"Light Scattered 2",
+	"High Scattered 1",
+	"High Scattered 2",
+	"Scattered 1",
+	"Scattered 2",
+	"Scattered 3",
+	"High Scattered 3",
+	"Scattered 4",
+	"Scattered 5",
+	"Scattered 6",
+	"Scattered 7",
+	"Broken 1",
+	"Broken 2",
+	"Broken 3",
+	"Broken 4",
+	"Broken 5",
+	"Broken 6",
+	"Broken 7",
+	"Broken 8",
+	"Overcast 1",
+	"Overcast 2",
+	"Overcast 3",
+	"Overcast 4",
+	"Overcast 5",
+	"Overcast 6",
+	"Overcast 7",
+	"Overcast And Rain 1",
+	"Overcast And Rain 2",
+	"Overcast And Rain 3",
+]
 
 
 def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance):
@@ -182,10 +246,17 @@ def setWeather(missionDict,weatherTemplates):
 #     print(rnd,",",key)
 #     print(cumulativeProbability)
 #     print(weatherTemplates["weathers"].keys())
-    print("Selected weather:",selectedWeather)
-    missionDict["weather"] = weatherTemplates["weathers"][selectedWeather]
-    
-    
+    #print("Selected weather:",selectedWeather)
+    #missionDict["weather"] = weatherTemplates["weathers"][selectedWeather]
+    cloudPreset = np.random.randint(0,30)
+    if(cloudPreset < 27):
+    	missionDict["weather"]["clouds"]["preset"] = "Preset"+str(cloudPreset+1)
+    else:
+    	missionDict["weather"]["clouds"]["preset"] = "RainyPreset"+str(cloudPreset-26)
+    baseRnd = np.random.uniform()
+    cloudBase = FEET_CLOUD_BASES[cloudPreset][0]*baseRnd + FEET_CLOUD_BASES[cloudPreset][1]*(1-baseRnd)
+    missionDict["weather"]["clouds"]["base"] = (int)(cloudBase * 0.3048)
+    print("Cloud Type:",CLOUD_NAMES[cloudPreset],"Base:",int(cloudBase)," [ft]")
     
 
 if __name__ == "__main__":
