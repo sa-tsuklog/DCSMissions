@@ -17,10 +17,16 @@ from DcsMissionGeneration import WarehousesGenerator
 import sys
 import argparse
 
+
+OUTPUT_DIR_NAME = "GeneratedMissions"
+
 RANDOM_HEADING = False
 
 TIMEOFDAY_MIN = 7
 TIMEOFDAY_MAX = 17
+
+FOG_PROBABILITY = 0.2
+DUST_PROBABILITY = 0.05
 
 MIN_RANGE_FROM_EDGE = 150000
 # CLIENT_PLANE_RANGE =  50000
@@ -261,7 +267,131 @@ def setWeather(missionDict,weatherTemplates):
 	    missionDict["weather"]["clouds"]["base"] = (int)(cloudBase * 0.3048)
 	    print("Cloud Type:",CLOUD_NAMES[cloudPreset],"Base:",int(cloudBase)," [ft]")
     else:
-    	print("CLoud Type: No cloud")
+    	print("Cloud Type: No cloud")
+
+def setWind(missionDict):
+	WINDSPEED_MAX = 50.0
+	TURBULENCE_MAX = 50.0
+	
+	WINDSPEED_CONST = WINDSPEED_MAX/3
+	TURBULENCE_CONST = TURBULENCE_MAX/3
+	
+	windDirAtGround = np.random.rand()*360
+	windDirAt2000   = windDirAtGround + np.random.normal()*60
+	windDirAt8000   = windDirAt2000   + np.random.normal()*60
+	
+	if(windDirAtGround < 0):
+		windDirAtGround += 360
+	elif(windDirAtGround > 360):
+		windDirAtGround -= 360
+	
+	if(windDirAt2000 < 0):
+		windDirAt2000 += 360
+	elif(windDirAt2000 > 360):
+		windDirAt2000 -= 360
+	
+	if(windDirAt8000 < 0):
+		windDirAt8000 += 360
+	elif(windDirAt8000 > 360):
+		windDirAt8000 -= 360
+	
+	windspeedBase = np.random.exponential()
+	windspeedAtGround = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
+	windspeedAt2000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
+	windspeedAt8000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
+	groundTurbulence  = TURBULENCE_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
+	
+	
+	if(windspeedAtGround < 0):
+		windspeedAtGround = 0
+	elif(windspeedAtGround > WINDSPEED_MAX):
+		windspeedAtGround = WINDSPEED_MAX
+	
+	if(windspeedAt2000 < 0):
+		windspeedAt2000 = 0
+	elif(windspeedAt2000 > WINDSPEED_MAX):
+		windspeedAt2000 = WINDSPEED_MAX
+	
+	if(windspeedAt8000 < 0):
+		windspeedAt8000 = 0
+	elif(windspeedAt8000 > WINDSPEED_MAX):
+		windspeedAt8000 = WINDSPEED_MAX
+	
+	if(groundTurbulence < 0):
+		groundTurbulence = 0
+	elif(groundTurbulence > TURBULENCE_MAX):
+		groungTurbulence = TURBULENCE_MAX
+	
+	#print("-------------------")
+	#print("speed at ground:",windspeedAtGround)
+	#print("speed at 2000:",windspeedAt2000)
+	#print("speed at 8000:",windspeedAt8000)
+	#print("turbulence:",groundTurbulence)
+	#print("dir at ground:",windDirAtGround)
+	#print("dir at 2000:",windDirAt2000)
+	#print("dir at 8000:",windDirAt8000)
+	#print("-------------------")
+	
+	
+	missionDict["weather"]["wind"]["atGround"]["speed"] = windspeedAtGround
+	missionDict["weather"]["wind"]["atGround"]["dir"] = windDirAtGround
+	
+	missionDict["weather"]["wind"]["at2000"]["speed"] = windspeedAt2000
+	missionDict["weather"]["wind"]["at2000"]["dir"] = windDirAt2000
+	
+	missionDict["weather"]["wind"]["at8000"]["speed"] = windspeedAt8000
+	missionDict["weather"]["wind"]["at8000"]["dir"] = windDirAt8000
+	
+	missionDict["weather"]["groundTurbulence"] = groundTurbulence
+	
+
+def setFogAndDust(missionDict):
+	FOG_VISIBILITY_MAX = 6000
+	FOG_THICKNESS_MAX = 1000
+	DUST_DENSITY_MAX = 3000
+	
+	FOG_VISIBILITY_CONST = FOG_VISIBILITY_MAX/2
+	FOG_THICKNESS_CONST = FOG_THICKNESS_MAX/2
+	DUST_DENSITY_CONST = DUST_DENSITY_MAX/2
+	
+	fogRnd = np.random.rand()
+	dustRnd = np.random.rand()
+	
+	if(fogRnd < FOG_PROBABILITY):
+		fogVisibility = FOG_VISIBILITY_MAX - FOG_VISIBILITY_CONST * np.random.exponential()
+		fogThickness = FOG_THICKNESS_CONST * np.random.exponential()
+		
+		if(fogVisibility < 0):
+			fogVisibility = 0
+		elif(fogVisibility > FOG_VISIBILITY_MAX):
+			fogVisibility = FOG_VISIBILITY_MAX
+		
+		
+		if(fogThickness < 0):
+			fogThickness = 0
+		elif(fogThickness > FOG_THICKNESS_MAX):
+			fogThickness = FOG_THICKNESS_MAX
+		
+		missionDict["weather"]["enable_fog"] = True
+		missionDict["weather"]["fog"]["thickness"] = fogThickness
+		missionDict["weather"]["fog"]["visibility"] = fogVisibility
+		
+		#print("Fog thickness = ",fogThickness)
+		#print("Fog visibility = ",fogVisibility)
+		
+	if(dustRnd < DUST_PROBABILITY):
+		dustDensity = DUST_DENSITY_CONST * np.random.exponential()
+		
+		if(dustDensity < 0):
+			dustDensity = 0
+		elif(dustDensity > DUST_DENSITY_MAX):
+			dustDensity = DUST_DENSITY_MAX
+		
+		missionDict["weather"]["enable_dust"] = True
+		missionDict["weather"]["dust_density"] = dustDensity
+		
+		#print("Dust", dustDensity)
+		
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="description sample")
@@ -310,7 +440,8 @@ if __name__ == "__main__":
     
     setDate(missionDict)
     setWeather(missionDict,weatherTemplates)
-    
+    setFogAndDust(missionDict)
+    setWind(missionDict)
     
     missionDict["theatre"] = theatre
     bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance)
@@ -332,7 +463,8 @@ if __name__ == "__main__":
     
     
     dt_now = datetime.datetime.now()
-    outFilename = "GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre);
+    os.makedirs(OUTPUT_DIR_NAME,exist_ok=True)
+    outFilename = OUTPUT_DIR_NAME+"/GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre);
     
     with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")
@@ -349,8 +481,6 @@ if __name__ == "__main__":
             zf.write("tmp/l10n/DEFAULT/"+soundFilename,arcname="l10n/DEFAULT/"+soundFilename)
         
         
-    #shutil.move("mission.miz","C:/Users/sa/Saved Games/DCS.openbeta/Missions/mission.miz")
-
     
     
     #todo update maxDictId

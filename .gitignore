@@ -2,4 +2,5 @@ Sounds/*
 Scripts/SumouFieldGenerator/__pycache_
 Scripts/SumouFieldGenerator/TemplateMission/l10n/DEFAULT/sound1.ogg
 Scripts/SumouFieldGenerator/tmp/
+Scripts/SumouFieldGenerator/GeneratedMissions/
 *.pyc
