@@ -248,16 +248,20 @@ def setWeather(missionDict,weatherTemplates):
 #     print(weatherTemplates["weathers"].keys())
     #print("Selected weather:",selectedWeather)
     #missionDict["weather"] = weatherTemplates["weathers"][selectedWeather]
-    cloudPreset = np.random.randint(0,30)
+    cloudPreset = np.random.randint(0,50)
     if(cloudPreset < 27):
     	missionDict["weather"]["clouds"]["preset"] = "Preset"+str(cloudPreset+1)
-    else:
+    elif(cloudPreset < 30):
     	missionDict["weather"]["clouds"]["preset"] = "RainyPreset"+str(cloudPreset-26)
-    baseRnd = np.random.uniform()
-    cloudBase = FEET_CLOUD_BASES[cloudPreset][0]*baseRnd + FEET_CLOUD_BASES[cloudPreset][1]*(1-baseRnd)
-    missionDict["weather"]["clouds"]["base"] = (int)(cloudBase * 0.3048)
-    print("Cloud Type:",CLOUD_NAMES[cloudPreset],"Base:",int(cloudBase)," [ft]")
-    
+    else:
+    	pass #(no clouds)
+    if(cloudPreset < 30):
+	    baseRnd = np.random.uniform()
+	    cloudBase = FEET_CLOUD_BASES[cloudPreset][0]*baseRnd + FEET_CLOUD_BASES[cloudPreset][1]*(1-baseRnd)
+	    missionDict["weather"]["clouds"]["base"] = (int)(cloudBase * 0.3048)
+	    print("Cloud Type:",CLOUD_NAMES[cloudPreset],"Base:",int(cloudBase)," [ft]")
+    else:
+    	print("CLoud Type: No cloud")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="description sample")

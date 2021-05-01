@@ -8,10 +8,10 @@ import re
 import json
 from _collections import OrderedDict
 
-RE_SUBSTITUTE = "( )*\[([^\[\]]+)\] *= *(.+),"
+RE_SUBSTITUTE = "( )*\[([^\[\]]+)\] *= *((.+)(\n.*)*),"
 RE_NEWCATEGORY = "( )*\[([^\[\]]+)\] *= *$"
 RE_ENDCATEGORY = "( )*}, -- end of \[(.+)\]"
-RE_STRING = "\"(.*)\"$"
+RE_STRING = "\"((.*)(\n.*)*)\"$"
 RE_TRUE   = "true$"
 RE_FALSE  = "false$"
 RE_INT = "-?[0-9]+$"
@@ -49,14 +49,23 @@ def load(filename):
     with open(filename) as f:
         lines = f.readlines()
         
+        multilineBuf = "";
+        
         for line in lines:
+            line = multilineBuf + line
+            
+            if(line[-2] == "\\"):
+                multilineBuf = line[0:-2] + "\\\n"
+                continue
+            else:
+                multilineBuf = ""
+            
             match1 = re.match(RE_SUBSTITUTE,line)
             match2 = re.match(RE_NEWCATEGORY,line)
             match3 = re.match(RE_ENDCATEGORY,line)
             if(match1):
                 variable = parseValue(match1.group(2))
                 value = parseValue(match1.group(3))
-#                 print("variable:," + match.group(2) + ", value:" + match.group(3)+",")
                 
                 currentDict[variable] = value
                 
@@ -71,8 +80,8 @@ def load(filename):
 #                 print("endcategory:" + match.group(2))
                 currentDict = dictStack.pop(len(dictStack)-1)
                 
-#             else:
-#                 print("unexpected line:", line)
+#            else:
+#                print("unexpected line:", line)
         
     return currentDict
 
