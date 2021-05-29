@@ -122,6 +122,7 @@ options =
         }, -- end of ["Su-25T"]
         ["DCS-SRS"] = 
         {
+            ["srsOverlayHelpTextEnabled"] = true,
             ["srsOverlayEnabled"] = true,
             ["srsAutoLaunchEnabled"] = true,
             ["srsOverlayCompactModeEnabled"] = false,

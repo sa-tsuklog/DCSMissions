@@ -273,8 +273,8 @@ def setWind(missionDict):
 	WINDSPEED_MAX = 50.0
 	TURBULENCE_MAX = 50.0
 	
-	WINDSPEED_CONST = WINDSPEED_MAX/3
-	TURBULENCE_CONST = TURBULENCE_MAX/3
+	WINDSPEED_CONST = WINDSPEED_MAX/4
+	TURBULENCE_CONST = TURBULENCE_MAX/4
 	
 	windDirAtGround = np.random.rand()*360
 	windDirAt2000   = windDirAtGround + np.random.normal()*60
@@ -296,41 +296,42 @@ def setWind(missionDict):
 		windDirAt8000 -= 360
 	
 	windspeedBase = np.random.exponential()
-	windspeedAtGround = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
-	windspeedAt2000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
-	windspeedAt8000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
-	groundTurbulence  = TURBULENCE_CONST * (windspeedBase + np.random.normal()/3 - 0.2)
+	windspeedAtGround = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+	windspeedAt2000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+	windspeedAt8000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+	groundTurbulence  = TURBULENCE_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
 	
 	
 	if(windspeedAtGround < 0):
 		windspeedAtGround = 0
-	elif(windspeedAtGround > WINDSPEED_MAX):
-		windspeedAtGround = WINDSPEED_MAX
+	#elif(windspeedAtGround > WINDSPEED_MAX):
+	#	windspeedAtGround = WINDSPEED_MAX
 	
 	if(windspeedAt2000 < 0):
 		windspeedAt2000 = 0
-	elif(windspeedAt2000 > WINDSPEED_MAX):
-		windspeedAt2000 = WINDSPEED_MAX
+	#elif(windspeedAt2000 > WINDSPEED_MAX):
+	#	windspeedAt2000 = WINDSPEED_MAX
 	
 	if(windspeedAt8000 < 0):
 		windspeedAt8000 = 0
-	elif(windspeedAt8000 > WINDSPEED_MAX):
-		windspeedAt8000 = WINDSPEED_MAX
+	#elif(windspeedAt8000 > WINDSPEED_MAX):
+	#	windspeedAt8000 = WINDSPEED_MAX
 	
 	if(groundTurbulence < 0):
 		groundTurbulence = 0
-	elif(groundTurbulence > TURBULENCE_MAX):
-		groungTurbulence = TURBULENCE_MAX
+	#elif(groundTurbulence > TURBULENCE_MAX):
+	#	groungTurbulence = TURBULENCE_MAX
 	
-	#print("-------------------")
-	#print("speed at ground:",windspeedAtGround)
-	#print("speed at 2000:",windspeedAt2000)
-	#print("speed at 8000:",windspeedAt8000)
-	#print("turbulence:",groundTurbulence)
-	#print("dir at ground:",windDirAtGround)
-	#print("dir at 2000:",windDirAt2000)
-	#print("dir at 8000:",windDirAt8000)
-	#print("-------------------")
+	
+	print("-------------------")
+	print("speed at ground:",windspeedAtGround)
+	print("speed at 2000:",windspeedAt2000)
+	print("speed at 8000:",windspeedAt8000)
+	print("turbulence:",groundTurbulence)
+	print("dir at ground:",windDirAtGround)
+	print("dir at 2000:",windDirAt2000)
+	print("dir at 8000:",windDirAt8000)
+	print("-------------------")
 	
 	
 	missionDict["weather"]["wind"]["atGround"]["speed"] = windspeedAtGround
