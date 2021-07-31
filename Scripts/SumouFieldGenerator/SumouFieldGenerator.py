@@ -38,6 +38,7 @@ THEATRE = [
         "Nevada",
         "PersianGulf",
         "Syria",
+        "MarianaIslands"
     ]
 
 FEET_CLOUD_BASES = [
@@ -398,7 +399,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="description sample")
     parser.add_argument('--theatre',default=None,help='Caucasus | Nevada | PersianGulf | Syria')
     parser.add_argument('--distance',type=int,default=45)
-    parser.add_argument('--AWACSdistance',type=int,default=150)
+    parser.add_argument('--AWACSdistance',type=int,default=120)
     args = parser.parse_args()
     
     
