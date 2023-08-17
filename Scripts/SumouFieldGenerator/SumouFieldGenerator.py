@@ -16,7 +16,8 @@ from DcsMissionGeneration import TheatreGenerator
 from DcsMissionGeneration import WarehousesGenerator
 import sys
 import argparse
-
+import random
+from enum import IntEnum,auto
 
 OUTPUT_DIR_NAME = "GeneratedMissions"
 
@@ -107,17 +108,26 @@ CLOUD_NAMES = [
 	"Overcast And Rain 3",
 ]
 
+class CLOUD_TYPES(IntEnum):
+    CLEAR = auto()
+    CLOUDY = auto()
+    RAINY = auto()
+    ALL = auto()
 
-def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance):
-    bullseyeXMax = theatreInfo[theatre]["CombatArea"]["X"]["Max"] - MIN_RANGE_FROM_EDGE
-    bullseyeXMin = theatreInfo[theatre]["CombatArea"]["X"]["Min"] + MIN_RANGE_FROM_EDGE
-    bullseyeYMax = theatreInfo[theatre]["CombatArea"]["Y"]["Max"] - MIN_RANGE_FROM_EDGE
-    bullseyeYMin = theatreInfo[theatre]["CombatArea"]["Y"]["Min"] + MIN_RANGE_FROM_EDGE
-    
-    rndX = np.random.rand()
-    rndY = np.random.rand()
-    bullseyeX = bullseyeXMax * rndX + bullseyeXMin * (1-rndX)
-    bullseyeY = bullseyeYMax * rndY + bullseyeYMin * (1-rndY)
+def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None):
+    if(bullseyePos is None):
+        bullseyeXMax = theatreInfo[theatre]["CombatArea"]["X"]["Max"] - MIN_RANGE_FROM_EDGE
+        bullseyeXMin = theatreInfo[theatre]["CombatArea"]["X"]["Min"] + MIN_RANGE_FROM_EDGE
+        bullseyeYMax = theatreInfo[theatre]["CombatArea"]["Y"]["Max"] - MIN_RANGE_FROM_EDGE
+        bullseyeYMin = theatreInfo[theatre]["CombatArea"]["Y"]["Min"] + MIN_RANGE_FROM_EDGE
+        
+        rndX = np.random.rand()
+        rndY = np.random.rand()
+        bullseyeX = bullseyeXMax * rndX + bullseyeXMin * (1-rndX)
+        bullseyeY = bullseyeYMax * rndY + bullseyeYMin * (1-rndY)
+    else:
+        bullseyeX = bullseyePos[0]
+        bullseyeY = bullseyePos[1]
     
     #missionDict["coalition"]["neutrals"]["bullseye"]["x"] = bullseyeX
     #missionDict["coalition"]["neutrals"]["bullseye"]["y"] = bullseyeY
@@ -136,7 +146,9 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
     #aiRangeScale = np.random.rand()*1.2 + 0.8 # x0.8 ~ 2.0
     aiRangeScale = 1
     
-    radBlueDirection = np.random.rand() * np.pi * 2
+    if(radBlueDirection is None):
+        radBlueDirection = np.random.rand() * np.pi * 2
+
     RAD_DIRECTION_DELTA = 0.001
     clientCount = OrderedDict()
     clientCount["blue"] = 0
@@ -234,7 +246,7 @@ def setDate(missionDict):
     
     print("Mission Time:{:04}/{:02}/{:02} {:02}-{:02}-{:02}".format(missionDict["date"]["Year"],missionDict["date"]["Month"],missionDict["date"]["Day"],hour,min,sec))
 
-def setWeather(missionDict,weatherTemplates):
+def setWeather(missionDict,weatherTemplates,cloudType=CLOUD_TYPES.ALL):
     probabilityTotal = 0
     cumulativeProbability = OrderedDict()
     
@@ -255,7 +267,18 @@ def setWeather(missionDict,weatherTemplates):
 #     print(weatherTemplates["weathers"].keys())
     #print("Selected weather:",selectedWeather)
     #missionDict["weather"] = weatherTemplates["weathers"][selectedWeather]
-    cloudPreset = np.random.randint(0,50)
+
+    if(cloudType == CLOUD_TYPES.ALL):
+        cloudPreset = np.random.randint(0,50)
+    elif(cloudType == CLOUD_TYPES.CLEAR):
+        cloudPreset = np.random.randint(30,50)
+    elif(cloudType == CLOUD_TYPES.CLOUDY):
+        cloudPreset = np.random.randint(0,27)
+    elif(cloudType == CLOUD_TYPES.RAINY):
+        cloudPreset = np.random.randint(27,30)
+
+
+
     if(cloudPreset < 27):
     	missionDict["weather"]["clouds"]["preset"] = "Preset"+str(cloudPreset+1)
     elif(cloudPreset < 30):
@@ -270,81 +293,80 @@ def setWeather(missionDict,weatherTemplates):
     else:
     	print("Cloud Type: No cloud")
 
-def setWind(missionDict):
-	WINDSPEED_MAX = 50.0
-	TURBULENCE_MAX = 50.0
-	
-	WINDSPEED_CONST = WINDSPEED_MAX/4
-	TURBULENCE_CONST = TURBULENCE_MAX/4
-	
-	windDirAtGround = np.random.rand()*360
-	windDirAt2000   = windDirAtGround + np.random.normal()*60
-	windDirAt8000   = windDirAt2000   + np.random.normal()*60
-	
-	if(windDirAtGround < 0):
-		windDirAtGround += 360
-	elif(windDirAtGround > 360):
-		windDirAtGround -= 360
-	
-	if(windDirAt2000 < 0):
-		windDirAt2000 += 360
-	elif(windDirAt2000 > 360):
-		windDirAt2000 -= 360
-	
-	if(windDirAt8000 < 0):
-		windDirAt8000 += 360
-	elif(windDirAt8000 > 360):
-		windDirAt8000 -= 360
-	
-	windspeedBase = np.random.exponential()
-	windspeedAtGround = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
-	windspeedAt2000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
-	windspeedAt8000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
-	groundTurbulence  = TURBULENCE_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
-	
-	
-	if(windspeedAtGround < 0):
-		windspeedAtGround = 0
-	#elif(windspeedAtGround > WINDSPEED_MAX):
-	#	windspeedAtGround = WINDSPEED_MAX
-	
-	if(windspeedAt2000 < 0):
-		windspeedAt2000 = 0
-	#elif(windspeedAt2000 > WINDSPEED_MAX):
-	#	windspeedAt2000 = WINDSPEED_MAX
-	
-	if(windspeedAt8000 < 0):
-		windspeedAt8000 = 0
-	#elif(windspeedAt8000 > WINDSPEED_MAX):
-	#	windspeedAt8000 = WINDSPEED_MAX
-	
-	if(groundTurbulence < 0):
-		groundTurbulence = 0
-	#elif(groundTurbulence > TURBULENCE_MAX):
-	#	groungTurbulence = TURBULENCE_MAX
-	
-	
-	print("-------------------")
-	print("speed at ground:",windspeedAtGround)
-	print("speed at 2000:",windspeedAt2000)
-	print("speed at 8000:",windspeedAt8000)
-	print("turbulence:",groundTurbulence)
-	print("dir at ground:",windDirAtGround)
-	print("dir at 2000:",windDirAt2000)
-	print("dir at 8000:",windDirAt8000)
-	print("-------------------")
-	
-	
-	missionDict["weather"]["wind"]["atGround"]["speed"] = windspeedAtGround
-	missionDict["weather"]["wind"]["atGround"]["dir"] = windDirAtGround
-	
-	missionDict["weather"]["wind"]["at2000"]["speed"] = windspeedAt2000
-	missionDict["weather"]["wind"]["at2000"]["dir"] = windDirAt2000
-	
-	missionDict["weather"]["wind"]["at8000"]["speed"] = windspeedAt8000
-	missionDict["weather"]["wind"]["at8000"]["dir"] = windDirAt8000
-	
-	missionDict["weather"]["groundTurbulence"] = groundTurbulence
+def setWind(missionDict,maxWindspeed=50):
+    maxTurbulence = maxWindspeed
+
+    WINDSPEED_CONST = maxWindspeed/4
+    TURBULENCE_CONST = maxTurbulence/4
+
+    windDirAtGround = np.random.rand()*360
+    windDirAt2000   = windDirAtGround + np.random.normal()*60
+    windDirAt8000   = windDirAt2000   + np.random.normal()*60
+
+    if(windDirAtGround < 0):
+        windDirAtGround += 360
+    elif(windDirAtGround > 360):
+        windDirAtGround -= 360
+
+    if(windDirAt2000 < 0):
+        windDirAt2000 += 360
+    elif(windDirAt2000 > 360):
+        windDirAt2000 -= 360
+
+    if(windDirAt8000 < 0):
+        windDirAt8000 += 360
+    elif(windDirAt8000 > 360):
+        windDirAt8000 -= 360
+
+    windspeedBase = np.random.exponential()
+    windspeedAtGround = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+    windspeedAt2000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+    windspeedAt8000   = WINDSPEED_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+    groundTurbulence  = TURBULENCE_CONST * (windspeedBase + np.random.normal()/3 - 0.3)
+
+
+    if(windspeedAtGround < 0):
+        windspeedAtGround = 0
+    #elif(windspeedAtGround > maxWindspeed):
+    #	windspeedAtGround = maxWindspeed
+
+    if(windspeedAt2000 < 0):
+        windspeedAt2000 = 0
+    #elif(windspeedAt2000 > maxWindspeed):
+    #	windspeedAt2000 = maxWindspeed
+
+    if(windspeedAt8000 < 0):
+        windspeedAt8000 = 0
+    #elif(windspeedAt8000 > maxWindspeed):
+    #	windspeedAt8000 = maxWindspeed
+
+    if(groundTurbulence < 0):
+        groundTurbulence = 0
+    #elif(groundTurbulence > maxTurbulence):
+    #	groungTurbulence = maxTurbulence
+
+
+    print("-------------------")
+    print("speed at ground:",windspeedAtGround)
+    print("speed at 2000:",windspeedAt2000)
+    print("speed at 8000:",windspeedAt8000)
+    print("turbulence:",groundTurbulence)
+    print("dir at ground:",windDirAtGround)
+    print("dir at 2000:",windDirAt2000)
+    print("dir at 8000:",windDirAt8000)
+    print("-------------------")
+
+
+    missionDict["weather"]["wind"]["atGround"]["speed"] = windspeedAtGround
+    missionDict["weather"]["wind"]["atGround"]["dir"] = windDirAtGround
+
+    missionDict["weather"]["wind"]["at2000"]["speed"] = windspeedAt2000
+    missionDict["weather"]["wind"]["at2000"]["dir"] = windDirAt2000
+
+    missionDict["weather"]["wind"]["at8000"]["speed"] = windspeedAt8000
+    missionDict["weather"]["wind"]["at8000"]["dir"] = windDirAt8000
+
+    missionDict["weather"]["groundTurbulence"] = groundTurbulence
 	
 
 def setFogAndDust(missionDict):
@@ -400,9 +422,17 @@ if __name__ == "__main__":
     parser.add_argument('--theatre',default=None,help='Caucasus | Nevada | PersianGulf | Syria')
     parser.add_argument('--distance',type=int,default=45)
     parser.add_argument('--AWACSdistance',type=int,default=120)
+    parser.add_argument('--airports',type=str,default=None, help='Kobuleti,Gudauta... | all')
+    parser.add_argument('--cloud',type=str,default="all",help='clear|cloudy|rainy|all')
+    parser.add_argument('--wind',type=float,default=50.0,help='Max Windspeed[m/s] in float')
+
+    parser.add_argument('--template',type=str,default="TemplateMission")
+
     args = parser.parse_args()
-    
-    
+
+    ##############################################
+    # Theatreのパース
+    ##############################################
     if(not args.theatre is None):
         theatreCandidates = args.theatre.split(",")
         theatreIndex = np.random.randint(0,len(theatreCandidates))
@@ -420,33 +450,84 @@ if __name__ == "__main__":
     with open("TheatreInfo.json") as f:
         theatreInfo = json.load(f)
     
+    ##############################################
+    # Airportのパース, Bullseye位置の設定
+    ##############################################
+    airportCandidates = []
+    if(not args.airports is None):
+        airportNames = args.airports.split(",")
+
+        for airportName in airportNames:
+            if(airportName=="all"):
+                for key,val in theatreInfo[theatre]["Airports"].items():
+                    airportCandidates.append(key)
+            else:
+                for key,val in theatreInfo[theatre]["Airports"].items():
+                    if(val["name"].lower().replace(" ","").startswith(airportName.lower().replace(" ",""))):
+                        airportCandidates.append(key)
+
+    if(len(airportCandidates) == 0):
+        bullseyePos = None,
+        radBlueDirection = None
+        airportPostfix = ""
+    elif(len(airportCandidates) == 1):
+        bullseyePos = theatreInfo[theatre]["Airports"][airportCandidates[0]]["X"],theatreInfo[theatre]["Airports"][airportCandidates[0]]["Y"]
+        radBlueDirection = None
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["name"]
+    else:
+        airport1,airport2 = random.sample(airportCandidates,2)
+        pos1 = (theatreInfo[theatre]["Airports"][airport1]["X"] , theatreInfo[theatre]["Airports"][airport1]["Y"])
+        pos2 = (theatreInfo[theatre]["Airports"][airport2]["X"] , theatreInfo[theatre]["Airports"][airport2]["Y"])
+        bullseyePos = (pos1[0]+pos2[0])/2,(pos1[1]+pos2[1])/2
+        radBlueDirection = np.arctan2(pos1[1]-pos2[1],pos1[0]-pos2[0])
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["name"]+"_"+theatreInfo[theatre]["Airports"][airport2]["name"]
     
+    ##############################################
+    # 距離のパース
+    ##############################################
     mClientPlaneDistance = M_PER_NM * args.distance/2
     mAiPlaneDistance = M_PER_NM * args.AWACSdistance/2
     
+
+    ##############################################
+    # 雲のパース
+    ##############################################
+    cloudType = CLOUD_TYPES.ALL
+    if("all".startswith(args.cloud.lower().replace(" ",""))):
+        cloudType = CLOUD_TYPES.ALL
+    elif("clear").startswith(args.cloud.lower().replace(" ","")):
+        cloudType = CLOUD_TYPES.CLEAR
+    elif("cloudy".startswith(args.cloud.lower().replace(" ",""))):
+        cloudType = CLOUD_TYPES.CLOUDY
+    elif("rainy".startswith(args.cloud.lower().replace(" ",""))):
+        cloudType = CLOUD_TYPES.RAINY
+    print(cloudType)
     
     dictPath = "tmp/l10n/DEFAULT"
     os.makedirs(dictPath,exist_ok=True)
     
-    missionDict = LuaDictTool.load("TemplateMission/mission")
-    optionsDict = LuaDictTool.load("TemplateMission/options")
-    #warehousesDict = LuaDictTool.load("TemplateMission/warehouses")
-    warehousesGen = WarehousesGenerator(theatre=theatre)
-    warehousesGen.setDefaultParameters(theatreInfo=theatreInfo)
-    dictionaryDict = LuaDictTool.load("TemplateMission/l10n/DEFAULT/dictionary")
-    mapResourceDict = LuaDictTool.load("TemplateMission/l10n/DEFAULT/mapResource")
-    theatreGen = TheatreGenerator(theatre=theatre)
-    
-    weatherTemplates = LuaDictTool.load("WeatherTemplates.txt")
-    
+    try:
+        missionDict = LuaDictTool.load(args.template+"/mission")
+        optionsDict = LuaDictTool.load(args.template+"/options")
+        #warehousesDict = LuaDictTool.load("TemplateMission/warehouses")
+        warehousesGen = WarehousesGenerator(theatre=theatre)
+        warehousesGen.setDefaultParameters(theatreInfo=theatreInfo)
+        dictionaryDict = LuaDictTool.load(args.template+"/l10n/DEFAULT/dictionary")
+        mapResourceDict = LuaDictTool.load(args.template+"/l10n/DEFAULT/mapResource")
+        theatreGen = TheatreGenerator(theatre=theatre)
+        
+        weatherTemplates = LuaDictTool.load("WeatherTemplates.txt")
+    except FileNotFoundError as e:
+        print(e)
+        sys.exit(0)
     
     setDate(missionDict)
-    setWeather(missionDict,weatherTemplates)
+    setWeather(missionDict,weatherTemplates,cloudType)
     setFogAndDust(missionDict)
-    setWind(missionDict)
+    setWind(missionDict,args.wind)
     
     missionDict["theatre"] = theatre
-    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance)
+    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection)
     
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())
     
@@ -466,7 +547,7 @@ if __name__ == "__main__":
     
     dt_now = datetime.datetime.now()
     os.makedirs(OUTPUT_DIR_NAME,exist_ok=True)
-    outFilename = OUTPUT_DIR_NAME+"/GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre);
+    outFilename = OUTPUT_DIR_NAME+"/GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre,airportPostfix);
     
     with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")

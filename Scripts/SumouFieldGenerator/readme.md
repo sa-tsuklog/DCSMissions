@@ -41,6 +41,11 @@ Caucasus,Nevada,PersianGulf,Syriaの中からランダムにマップを選択�
     [Caucasus, Nevada, PersianGulf, Syria]
 
 
+基地名　--airport
+    引数無しでランダム配置。
+    allで全ての基地からランダムに選ばれた2つの中間地点
+    1つのみの指定の場合は指定された基地の位置
+    基地名1,基地名2で基地の中間地点。3つ以上の基地が指定された場合は、指定された中からランダムに選ばれた2つの中間地点。
 
 ---
 # Advanced:
