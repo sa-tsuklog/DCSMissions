@@ -106,7 +106,6 @@ weather =
                     ["centerX"] = -98567.861560512,
                 }, -- end of [1]
             }, -- end of ["cyclones"]
-            
             ["dust_density"] = 0,
             ["enable_dust"] = false,
             ["clouds"] = 
@@ -362,7 +361,7 @@ weather =
             }, -- end of ["clouds"]
             ["atmosphere_type"] = 0,
             ["groundTurbulence"] = 17,
-            ["type_weather"] = 0,            
+            ["type_weather"] = 0,
             ["fog"] = 
             {
                 ["thickness"] = 0,

@@ -1,0 +1,9 @@
+mission = 
+{
+    ["test"] = {},
+    ["actions"] = 
+        {
+            [1] = "aaa",
+            [2] = "bbb",
+        }, -- end of ["actions"]
+}

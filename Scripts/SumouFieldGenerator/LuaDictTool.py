@@ -49,7 +49,7 @@ def load(filename):
     with open(filename) as f:
         lines = f.readlines()
         
-        multilineBuf = "";
+        multilineBuf = ""
         
         for line in lines:
             line = multilineBuf + line
@@ -66,18 +66,18 @@ def load(filename):
             if(match1):
                 variable = parseValue(match1.group(2))
                 value = parseValue(match1.group(3))
-                
+                # print("add property ",variable," = ",value)
                 currentDict[variable] = value
                 
             elif(match2):
-#                 print("new category:" + match.group(2))
+                # print("new category:" + match2.group(2))
                 category = parseValue(match2.group(2))
                 currentDict[category] = OrderedDict()
                 dictStack.append(currentDict)
                 currentDict = currentDict[category]
                 
             elif(match3):
-#                 print("endcategory:" + match.group(2))
+                # print("endcategory:" + match3.group(2))
                 currentDict = dictStack.pop(len(dictStack)-1)
                 
 #            else:

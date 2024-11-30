@@ -2,12 +2,38 @@
 Created on 2021/01/04
 
 @author: sa
+
+TODO: 引数省略のためのPresetを作る
+TODO: ミッション内日付をSprint/Summer/Autum/Winterぐらいで指定できるようにする
+TODO: ミッション内時刻をday/night/時刻ぐらいで指定できるようにする
+
+SATAC用プリセットコマンド：
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud all --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.2 --cloud clear --wind 0.0 --distance 60 --AWACSdistance 140 --date all --airport Nalchik,Senaki
+
+
+Guns用プリセットコマンド
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.2 --cloud clear --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.2 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
+
 '''
+
 from collections import OrderedDict
 import os
 import shutil
 import zipfile
-import LuaDictTool
+import LuaDictTool2
 import glob
 import json
 import numpy as np
@@ -23,11 +49,11 @@ OUTPUT_DIR_NAME = "GeneratedMissions"
 
 RANDOM_HEADING = False
 
-TIMEOFDAY_MIN = 7
-TIMEOFDAY_MAX = 17
+TIMEOFDAY_MIN = 12
+TIMEOFDAY_MAX = 16
 
-FOG_PROBABILITY = 0.2
-DUST_PROBABILITY = 0.05
+FOG_PROBABILITY = 0.1
+DUST_PROBABILITY = 0.02
 
 MIN_RANGE_FROM_EDGE = 150000
 # CLIENT_PLANE_RANGE =  50000
@@ -41,6 +67,11 @@ THEATRE = [
         "Syria",
         "MarianaIslands"
     ]
+
+PRESET = [
+    "SATAL",
+    "SATAC"
+]
 
 FEET_CLOUD_BASES = [
 	(2756,13780),	#Light Scattered 1
@@ -108,6 +139,22 @@ CLOUD_NAMES = [
 	"Overcast And Rain 3",
 ]
 
+DAYS_IN_MONTH = [
+    31, #dummy
+    31, #1
+    28, #2
+    31, #3
+    30, #4
+    31, #5
+    30, #6
+    31, #7
+    31, #8
+    30, #9
+    31, #10
+    30, #11
+    31, #12
+]
+
 class CLOUD_TYPES(IntEnum):
     CLEAR = auto()
     CLOUDY = auto()
@@ -129,10 +176,10 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
         bullseyeX = bullseyePos[0]
         bullseyeY = bullseyePos[1]
     
-    #missionDict["coalition"]["neutrals"]["bullseye"]["x"] = bullseyeX
-    #missionDict["coalition"]["neutrals"]["bullseye"]["y"] = bullseyeY
-    missionDict["coalition"]["neutrals"]["bullseye"]["x"] = 0
-    missionDict["coalition"]["neutrals"]["bullseye"]["y"] = 0
+    missionDict["coalition"]["neutrals"]["bullseye"]["x"] = bullseyeX
+    missionDict["coalition"]["neutrals"]["bullseye"]["y"] = bullseyeY
+    # missionDict["coalition"]["neutrals"]["bullseye"]["x"] = 0
+    # missionDict["coalition"]["neutrals"]["bullseye"]["y"] = 0
     
     missionDict["coalition"]["blue"]["bullseye"]["x"] = bullseyeX
     missionDict["coalition"]["blue"]["bullseye"]["y"] = bullseyeY
@@ -150,6 +197,8 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
         radBlueDirection = np.random.rand() * np.pi * 2
 
     RAD_DIRECTION_DELTA = 0.001
+    NM_AI_RANGE_DELTA = 5.0
+    NM_AI_TRACK = 40
     clientCount = OrderedDict()
     clientCount["blue"] = 0
     clientCount["red"] = 0
@@ -170,17 +219,41 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
                 else:
                     radDirection = radBlueDirection + np.pi
                 
-                
                 if(group["units"][1]["skill"] == "Client"):                    
                     startPointX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
                     startPointY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
                     
-                    group["route"]["points"][1]["x"] = startPointX
-                    group["route"]["points"][1]["y"] = startPointY
-                    
-                    group["route"]["points"][2]["x"] = bullseyeX
-                    group["route"]["points"][2]["y"] = bullseyeY
-                    
+                    #print(group["name"],": ",len(group["route"]["points"]))
+
+                    if(len(group["route"]["points"]) <= 3):
+                        if(1 in group["route"]["points"]):
+                            group["route"]["points"][1]["x"] = startPointX
+                            group["route"]["points"][1]["y"] = startPointY
+                        
+                        if(2 in group["route"]["points"]):
+                            group["route"]["points"][2]["x"] = bullseyeX
+                            group["route"]["points"][2]["y"] = bullseyeY
+
+                        if(3 in group["route"]["points"]):
+                            group["route"]["points"][3]["x"] = bullseyeX + (bullseyeX - startPointX)
+                            group["route"]["points"][3]["y"] = bullseyeY + (bullseyeY - startPointY)
+                    else:
+                        group["route"]["points"][1]["x"] = startPointX
+                        group["route"]["points"][1]["y"] = startPointY
+                        
+                        numWp = len(group["route"]["points"])
+
+                        for i in range(2, numWp - 1):
+                            weight = 0.05 * i
+                            group["route"]["points"][i]["x"] = (1-weight)*startPointX + weight * bullseyeX
+                            group["route"]["points"][i]["y"] = (1-weight)*startPointY + weight * bullseyeY
+
+                        group["route"]["points"][numWp-1]["x"] = bullseyeX
+                        group["route"]["points"][numWp-1]["y"] = bullseyeY
+
+                        group["route"]["points"][numWp]["x"] = bullseyeX + 0.95*(bullseyeX - startPointX)
+                        group["route"]["points"][numWp]["y"] = bullseyeY + 0.95*(bullseyeY - startPointY)
+
                     for unitNo in group["units"]:
                         group["units"][unitNo]["x"] = startPointX
                         group["units"][unitNo]["y"] = startPointY
@@ -199,16 +272,202 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
                             
                     clientCount[coalition] += 1
                 else:
-                    startPointX = bullseyeX + mAiPlaneDistance * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
-                    startPointY = bullseyeY + mAiPlaneDistance * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50);
-                     
-                    group["route"]["points"][1]["x"] = startPointX
-                    group["route"]["points"][1]["y"] = startPointY
-                     
+                    #print(group["name"],": ",len(group["route"]["points"]))
+                    if(len(group["route"]["points"]) == 1):
+                        startPointX = bullseyeX + mAiPlaneDistance * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
+                        startPointY = bullseyeY + mAiPlaneDistance * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
+                        
+                        group["route"]["points"][1]["x"] = startPointX
+                        group["route"]["points"][1]["y"] = startPointY
+                    else:
+                        basePointX = bullseyeX + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.cos(radDirection)
+                        basePointY = bullseyeY + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.sin(radDirection);
+
+                        startPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection+np.pi/2)
+                        startPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection+np.pi/2)
+
+                        endPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection-np.pi/2)
+                        endPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection-np.pi/2)
+                        
+                        if(aiCount[coalition] % 2 == 1):
+                            startPointX,endPointX = endPointX,startPointX
+                            startPointY,endPointY = endPointY,startPointY
+
+
+                        numWp = len(group["route"]["points"])
+                        for i in range(0,numWp-2):
+                            weight = 0.05 * i
+                            group["route"]["points"][i+1]["x"] = (1-weight) * basePointX + weight * startPointX
+                            group["route"]["points"][i+1]["y"] = (1-weight) * basePointY + weight * startPointY
+
+                        group["route"]["points"][numWp-1]["x"] = startPointX
+                        group["route"]["points"][numWp-1]["y"] = startPointY
+
+                        group["route"]["points"][numWp]["x"] = endPointX
+                        group["route"]["points"][numWp]["y"] = endPointY
+
+                    
+
+
+                    for unitNo in group["units"]:
+                            group["units"][unitNo]["x"] = startPointX
+                            group["units"][unitNo]["y"] = startPointY
+                    
+                    aiCount[coalition] += 1
+    
+    return (bullseyeX,bullseyeY),radBlueDirection
+
+def copyAndRelocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None):
+    if(bullseyePos is None):
+        bullseyeXMax = theatreInfo[theatre]["CombatArea"]["X"]["Max"] - MIN_RANGE_FROM_EDGE
+        bullseyeXMin = theatreInfo[theatre]["CombatArea"]["X"]["Min"] + MIN_RANGE_FROM_EDGE
+        bullseyeYMax = theatreInfo[theatre]["CombatArea"]["Y"]["Max"] - MIN_RANGE_FROM_EDGE
+        bullseyeYMin = theatreInfo[theatre]["CombatArea"]["Y"]["Min"] + MIN_RANGE_FROM_EDGE
+        
+        rndX = np.random.rand()
+        rndY = np.random.rand()
+        bullseyeX = bullseyeXMax * rndX + bullseyeXMin * (1-rndX)
+        bullseyeY = bullseyeYMax * rndY + bullseyeYMin * (1-rndY)
+    else:
+        bullseyeX = bullseyePos[0]
+        bullseyeY = bullseyePos[1]
+    
+    missionDict["coalition"]["neutrals"]["bullseye"]["x"] = bullseyeX
+    missionDict["coalition"]["neutrals"]["bullseye"]["y"] = bullseyeY
+    # missionDict["coalition"]["neutrals"]["bullseye"]["x"] = 0
+    # missionDict["coalition"]["neutrals"]["bullseye"]["y"] = 0
+    
+    missionDict["coalition"]["blue"]["bullseye"]["x"] = bullseyeX
+    missionDict["coalition"]["blue"]["bullseye"]["y"] = bullseyeY
+    
+    missionDict["coalition"]["red"]["bullseye"]["x"] = bullseyeX
+    missionDict["coalition"]["red"]["bullseye"]["y"] = bullseyeY
+    
+    missionDict["map"]["centerX"] = bullseyeX
+    missionDict["map"]["centerY"] = bullseyeY
+    
+    #aiRangeScale = np.random.rand()*1.2 + 0.8 # x0.8 ~ 2.0
+    aiRangeScale = 1
+    
+    if(radBlueDirection is None):
+        radBlueDirection = np.random.rand() * np.pi * 2
+
+    RAD_DIRECTION_DELTA = 0.001
+    NM_AI_RANGE_DELTA = 5.0
+    NM_AI_TRACK = 40
+    clientCount = OrderedDict()
+    clientCount["blue"] = 0
+    clientCount["red"] = 0
+    clientCount["neutrals"] = 0
+    
+    aiCount = OrderedDict()
+    aiCount["blue"] = 0
+    aiCount["red"] = 0
+    aiCount["neutrals"] = 0
+    
+    for coalition in missionDict["coalition"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+                
+                if(coalition == "blue"):
+                    radDirection = radBlueDirection
+                else:
+                    radDirection = radBlueDirection + np.pi
+                
+                if(group["units"][1]["skill"] == "Client"):                    
+                    startPointX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
+                    startPointY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
+                    
+                    #print(group["name"],": ",len(group["route"]["points"]))
+
+                    if(len(group["route"]["points"]) <= 3):
+                        if(1 in group["route"]["points"]):
+                            group["route"]["points"][1]["x"] = startPointX
+                            group["route"]["points"][1]["y"] = startPointY
+                        
+                        if(2 in group["route"]["points"]):
+                            group["route"]["points"][2]["x"] = bullseyeX
+                            group["route"]["points"][2]["y"] = bullseyeY
+
+                        if(3 in group["route"]["points"]):
+                            group["route"]["points"][3]["x"] = bullseyeX + (bullseyeX - startPointX)
+                            group["route"]["points"][3]["y"] = bullseyeY + (bullseyeY - startPointY)
+                    else:
+                        group["route"]["points"][1]["x"] = startPointX
+                        group["route"]["points"][1]["y"] = startPointY
+                        
+                        numWp = len(group["route"]["points"])
+
+                        for i in range(2, numWp - 1):
+                            weight = 0.05 * i
+                            group["route"]["points"][i]["x"] = (1-weight)*startPointX + weight * bullseyeX
+                            group["route"]["points"][i]["y"] = (1-weight)*startPointY + weight * bullseyeY
+
+                        group["route"]["points"][numWp-1]["x"] = bullseyeX
+                        group["route"]["points"][numWp-1]["y"] = bullseyeY
+
+                        group["route"]["points"][numWp]["x"] = bullseyeX + 0.95*(bullseyeX - startPointX)
+                        group["route"]["points"][numWp]["y"] = bullseyeY + 0.95*(bullseyeY - startPointY)
+
                     for unitNo in group["units"]:
                         group["units"][unitNo]["x"] = startPointX
                         group["units"][unitNo]["y"] = startPointY
+                        if(RANDOM_HEADING):
+                            group["units"][unitNo]["heading"] = 2*(np.random.rand()-0.5)*np.pi
+                            group["units"][unitNo]["psi"] = 2*(np.random.rand()-0.5)*np.pi
+                        else:
+                            psi = -radDirection+np.pi
+                            if(psi < -np.pi):
+                                psi += 2*np.pi
+                            if(psi > np.pi):
+                                psi -= 2*np.pi
+                            
+                            group["units"][unitNo]["heading"] = 0
+                            group["units"][unitNo]["psi"] = psi
+                            
+                    clientCount[coalition] += 1
+                else:
+                    #print(group["name"],": ",len(group["route"]["points"]))
+                    if(len(group["route"]["points"]) == 1):
+                        startPointX = bullseyeX + mAiPlaneDistance * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
+                        startPointY = bullseyeY + mAiPlaneDistance * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
+                        
+                        group["route"]["points"][1]["x"] = startPointX
+                        group["route"]["points"][1]["y"] = startPointY
+                    else:
+                        basePointX = bullseyeX + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.cos(radDirection)
+                        basePointY = bullseyeY + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.sin(radDirection);
+
+                        startPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection+np.pi/2)
+                        startPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection+np.pi/2)
+
+                        endPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection-np.pi/2)
+                        endPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection-np.pi/2)
+                        
+                        if(aiCount[coalition] % 2 == 1):
+                            startPointX,endPointX = endPointX,startPointX
+                            startPointY,endPointY = endPointY,startPointY
+
+
+                        numWp = len(group["route"]["points"])
+                        for i in range(0,numWp-2):
+                            weight = 0.05 * i
+                            group["route"]["points"][i+1]["x"] = (1-weight) * basePointX + weight * startPointX
+                            group["route"]["points"][i+1]["y"] = (1-weight) * basePointY + weight * startPointY
+
+                        group["route"]["points"][numWp-1]["x"] = startPointX
+                        group["route"]["points"][numWp-1]["y"] = startPointY
+
+                        group["route"]["points"][numWp]["x"] = endPointX
+                        group["route"]["points"][numWp]["y"] = endPointY
+
                     
+
+
+                    for unitNo in group["units"]:
+                            group["units"][unitNo]["x"] = startPointX
+                            group["units"][unitNo]["y"] = startPointY
                     
                     aiCount[coalition] += 1
     
@@ -229,13 +488,45 @@ def setWarehouseCoalition(bullseyePos,radBlueDirection,theatreInfo,theatre,wareh
             warehouseDict["airports"][int(key)]["coalition"] = "RED"
     
     
-def setDate(missionDict):
+def setDate(missionDict,date):
     dt_now = datetime.datetime.now()
-    dt_now.year
-    
-    missionDict["date"]["Year"] = dt_now.year
-    missionDict["date"]["Month"] = dt_now.month
-    missionDict["date"]["Day"] = dt_now.day
+        
+    if(date == "all"):
+        month = np.random.randint(1,12)
+        day = np.random.randint(1,DAYS_IN_MONTH[month])
+        missionDict["date"]["Year"] = dt_now.year
+        missionDict["date"]["Month"] = month
+        missionDict["date"]["Day"] = day
+    elif(date == "spring"):
+        month = np.random.randint(3,5)
+        day = np.random.randint(1,DAYS_IN_MONTH[month])
+        missionDict["date"]["Year"] = dt_now.year
+        missionDict["date"]["Month"] = month
+        missionDict["date"]["Day"] = day
+    elif(date == "summer"):
+        month = np.random.randint(6,8)
+        day = np.random.randint(1,DAYS_IN_MONTH[month])
+        missionDict["date"]["Year"] = dt_now.year
+        missionDict["date"]["Month"] = month
+        missionDict["date"]["Day"] = day
+    elif(date == "autumn"):
+        month = np.random.randint(9,11)
+        day = np.random.randint(1,DAYS_IN_MONTH[month])
+        missionDict["date"]["Year"] = dt_now.year
+        missionDict["date"]["Month"] = month
+        missionDict["date"]["Day"] = day
+    elif(date == "winter"):
+        month = np.random.randint(0,3)
+        if(month == 0):
+            month=12
+        day = np.random.randint(1,DAYS_IN_MONTH[month])
+        missionDict["date"]["Year"] = dt_now.year
+        missionDict["date"]["Month"] = month
+        missionDict["date"]["Day"] = day
+    else:   #today
+        missionDict["date"]["Year"] = dt_now.year
+        missionDict["date"]["Month"] = dt_now.month
+        missionDict["date"]["Day"] = dt_now.day
     
     rnd = np.random.rand()
     missionDict["start_time"] = 3600 * int(TIMEOFDAY_MAX * rnd + TIMEOFDAY_MIN * (1-rnd))
@@ -425,8 +716,9 @@ if __name__ == "__main__":
     parser.add_argument('--airports',type=str,default=None, help='Kobuleti,Gudauta... | all')
     parser.add_argument('--cloud',type=str,default="all",help='clear|cloudy|rainy|all')
     parser.add_argument('--wind',type=float,default=50.0,help='Max Windspeed[m/s] in float')
-
     parser.add_argument('--template',type=str,default="TemplateMission")
+    parser.add_argument('--fileprefix',type=str,default="GeneratedMission")
+    parser.add_argument('--date',type=str,default='today',help='today|spring|summer|autumn|winter|all')
 
     args = parser.parse_args()
 
@@ -467,7 +759,7 @@ if __name__ == "__main__":
                         airportCandidates.append(key)
 
     if(len(airportCandidates) == 0):
-        bullseyePos = None,
+        bullseyePos = None
         radBlueDirection = None
         airportPostfix = ""
     elif(len(airportCandidates) == 1):
@@ -507,21 +799,22 @@ if __name__ == "__main__":
     os.makedirs(dictPath,exist_ok=True)
     
     try:
-        missionDict = LuaDictTool.load(args.template+"/mission")
-        optionsDict = LuaDictTool.load(args.template+"/options")
+        missionDict = LuaDictTool2.load(args.template+"/mission")
+        optionsDict = LuaDictTool2.load(args.template+"/options")
         #warehousesDict = LuaDictTool.load("TemplateMission/warehouses")
         warehousesGen = WarehousesGenerator(theatre=theatre)
         warehousesGen.setDefaultParameters(theatreInfo=theatreInfo)
-        dictionaryDict = LuaDictTool.load(args.template+"/l10n/DEFAULT/dictionary")
-        mapResourceDict = LuaDictTool.load(args.template+"/l10n/DEFAULT/mapResource")
+        dictionaryDict = LuaDictTool2.load(args.template+"/l10n/DEFAULT/dictionary")
+        mapResourceDict = LuaDictTool2.load(args.template+"/l10n/DEFAULT/mapResource")
         theatreGen = TheatreGenerator(theatre=theatre)
         
-        weatherTemplates = LuaDictTool.load("WeatherTemplates.txt")
+        weatherTemplates = LuaDictTool2.load("WeatherTemplates.txt")
     except FileNotFoundError as e:
         print(e)
         sys.exit(0)
     
-    setDate(missionDict)
+
+    setDate(missionDict,args.date)
     setWeather(missionDict,weatherTemplates,cloudType)
     setFogAndDust(missionDict)
     setWind(missionDict,args.wind)
@@ -532,12 +825,12 @@ if __name__ == "__main__":
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())
     
     
-    LuaDictTool.dump("tmp/mission", missionDict, "mission")
-    LuaDictTool.dump("tmp/options", optionsDict, "options")
+    LuaDictTool2.dump("tmp/mission", missionDict, "mission")
+    LuaDictTool2.dump("tmp/options", optionsDict, "options")
     #LuaDictTool.dump("tmp/warehouses", warehousesDict, "warehouses")
     warehousesGen.dump()
-    LuaDictTool.dump("tmp/dictionary", dictionaryDict, "dictionary")
-    LuaDictTool.dump("tmp/mapResource",mapResourceDict, "mapResource")
+    LuaDictTool2.dump("tmp/dictionary", dictionaryDict, "dictionary")
+    LuaDictTool2.dump("tmp/mapResource",mapResourceDict, "mapResource")
     theatreGen.dump()
     
     
@@ -547,7 +840,7 @@ if __name__ == "__main__":
     
     dt_now = datetime.datetime.now()
     os.makedirs(OUTPUT_DIR_NAME,exist_ok=True)
-    outFilename = OUTPUT_DIR_NAME+"/GeneratedMission_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}{}.miz".format(dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre,airportPostfix);
+    outFilename = OUTPUT_DIR_NAME+"/{}_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}{}.miz".format(args.fileprefix,dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre,airportPostfix)
     
     with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")
@@ -557,12 +850,17 @@ if __name__ == "__main__":
         zf.write("tmp/l10n/DEFAULT/dictionary",arcname="l10n/DEFAULT/dictionary")
         zf.write("tmp/l10n/DEFAULT/mapResource",arcname="l10n/DEFAULT/mapResource")
         
-        oggFiles = glob.glob("TemplateMission/l10n/DEFAULT/*.ogg")
+        oggFiles = glob.glob(args.template+"/l10n/DEFAULT/*.ogg")
         for oggFile in oggFiles:
             soundFilename = os.path.basename(oggFile)
             shutil.copyfile(oggFile,"tmp/l10n/DEFAULT/"+ soundFilename)
             zf.write("tmp/l10n/DEFAULT/"+soundFilename,arcname="l10n/DEFAULT/"+soundFilename)
         
+        luaFiles = glob.glob(args.template+"/l10n/DEFAULT/*.lua")
+        for luaFile in luaFiles:
+            luaFilename = os.path.basename(luaFile)
+            shutil.copyfile(luaFile,"tmp/l10n/DEFAULT/"+ luaFilename)
+            zf.write("tmp/l10n/DEFAULT/"+luaFilename,arcname="l10n/DEFAULT/"+luaFilename)
         
     
     
