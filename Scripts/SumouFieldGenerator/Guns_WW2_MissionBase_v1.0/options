@@ -25,10 +25,10 @@ options =
 	["difficulty"] = 
 	{
 		["fuel"] = false,
+		["spottingDot"] = 3,
 		["miniHUD"] = false,
 		["optionsView"] = "optview_all",
 		["setGlobal"] = true,
-		["improvedSpottingDot"] = true,
 		["avionicsLanguage"] = "native",
 		["cockpitVisualRM"] = false,
 		["map"] = true,
@@ -41,21 +41,20 @@ options =
 		["birds"] = 0,
 		["permitCrash"] = true,
 		["immortal"] = false,
-		["cockpitStatusBarAllowed"] = false,
+		["easyCommunication"] = true,
 		["wakeTurbulence"] = false,
 		["easyFlight"] = false,
 		["hideStick"] = false,
 		["radio"] = false,
 		["geffect"] = "realistic",
-		["reports"] = true,
-		["easyCrew"] = false,
 		["unrestrictedSATNAV"] = false,
+		["reports"] = true,
 		["tips"] = true,
+		["cockpitStatusBarAllowed"] = false,
 		["autoTrimmer"] = false,
-		["RBDAI"] = true,
 		["externalViews"] = true,
+		["RBDAI"] = true,
 		["controlsIndicator"] = true,
-		["easyCommunication"] = true,
 		["units"] = "imperial",
 		["userMarks"] = true,
 		["labels"] = 1,
@@ -63,16 +62,18 @@ options =
 	["VR"] = 
 	{
 		["handOffsetZ"] = 0,
-		["custom_IPD_enable"] = false,
+		["enableHMDMask"] = true,
 		["box_mouse_cursor"] = true,
-		["hand_controllers_joint_throttle"] = false,
+		["handOffsetY"] = 0,
+		["mirror_crop"] = false,
 		["pointer_use_type"] = 0,
 		["mirror_use_DCS_resolution"] = false,
+		["openxr_eyeGaze"] = false,
 		["hand_controllers_use_throttle"] = true,
-		["mirror_crop"] = false,
+		["hand_controllers_joint_throttle"] = false,
 		["use_mouse"] = true,
-		["handOffsetY"] = 0,
-		["enableHMDMask"] = true,
+		["openxr_quadView"] = false,
+		["custom_IPD_enable"] = false,
 		["hand_controllers_type"] = 0,
 		["hand_controllers_debug_draw"] = false,
 		["handOffsetX"] = 0,
@@ -89,6 +90,7 @@ options =
 	}, -- end of ["VR"]
 	["graphics"] = 
 	{
+		["volumetricLights"] = 1,
 		["AA"] = "OFF",
 		["forestDetailsFactor"] = 1,
 		["rainDroplets"] = true,
@@ -138,8 +140,8 @@ options =
 		["Sharpening"] = 0,
 		["sync"] = true,
 		["preloadRadius"] = 60000,
-		["motionBlur"] = 0,
 		["height"] = 2160,
+		["motionBlur"] = 0,
 		["ScreenshotExt"] = "jpg",
 		["civTraffic"] = "high",
 	}, -- end of ["graphics"]
@@ -242,8 +244,13 @@ options =
 		}, -- end of ["VRFree"]
 		["Supercarrier"] = 
 		{
+			["deck_crew"] = true,
 			["enable_FLOLS_overlay"] = true,
+			["messages_enabled"] = true,
+			["simplified_taxi"] = true,
 			["Use_native_ATC_text"] = false,
+			["helpers_enabled"] = true,
+			["velocity_limit_enabled"] = true,
 		}, -- end of ["Supercarrier"]
 		["CaptoGlove"] = 
 		{
@@ -344,19 +351,23 @@ options =
 		}, -- end of ["A-10C_2"]
 		["AH-64D_BLK_II"] = 
 		{
-			["AH64BalaclavaPLT"] = true,
 			["AH64HmdEye"] = 1,
 			["CPLocalList"] = "default",
 			["AH64BalaclavaCPG"] = true,
-			["AH64TriggerGuardEnable"] = false,
-			["AH64LockoutDetent"] = 1,
 			["AH64PedalsTrimmingMethod"] = 0,
 			["AH64ManTrkRampUpSpeed"] = 5,
 			["AH64CockpitShake"] = 50,
 			["AH64AutoHandover"] = true,
 			["AH64CyclicTrimmingMethod"] = 0,
-			["AH64AIColorScheme"] = 0,
 			["AH64IhadssMonocleVisible"] = true,
+			["AH64BalaclavaPLT"] = true,
+			["AH64VRSNotificationAudio"] = true,
+			["AH64VRSNotificationVisual"] = false,
+			["AH64AIIFFColorScheme"] = 0,
+			["AH64TriggerGuardEnable"] = false,
+			["AH64LockoutDetent"] = 1,
+			["AH64AIInterfaceColorScheme"] = 0,
+			["AH64AIColorScheme"] = 0,
 		}, -- end of ["AH-64D_BLK_II"]
 		["Su-25"] = 
 		{
@@ -380,12 +391,16 @@ options =
 		}, -- end of ["Su-33"]
 		["F-16C"] = 
 		{
-			["abDetent"] = 0,
-			["canopyReflections"] = 0,
 			["hmdEye"] = 1,
 			["CPLocalList"] = "default",
-			["canopyTint"] = 1,
+			["rollForceStickGradient"] = 1,
+			["abDetent"] = 0,
+			["canopyReflections"] = 0,
+			["pitchDeadzoneValue"] = 4.375,
+			["rollDeadzoneValue"] = 5.9,
 			["mfdReflections"] = 0,
+			["canopyTint"] = 1,
+			["pitchForceStickGradient"] = 1,
 		}, -- end of ["F-16C"]
 		["Su-27"] = 
 		{

@@ -33,6 +33,7 @@ FLAG_ID_NUM_RED_PLAYERS_OUT_OF_OUTER_BUBBLE = '31'
 FLAG_ID_OUT_OF_BUFFER_ZONE_SOUND = '32'
 FLAG_ID_OUT_OF_BUBBLE_SOUND = '33'
 FLAG_ID_BUBBLE_SHRINK_SOUND = '34'
+FLAG_ID_HOTARU_SOUND = '35'
 ----------------------------------------------------
 
 
@@ -102,6 +103,10 @@ function missionTimeManagement()
 
     if(missionProlonged > 0)then
         trigger.action.setUserFlag(FLAG_ID_MISSION_PROLONGED,missionProlonged - 1)
+    end
+
+    if(math.floor(timer.getTime()) == missionEndTime -120)then
+        trigger.action.setUserFlag(FLAG_ID_HOTARU_SOUND,1)
     end
 end
 
