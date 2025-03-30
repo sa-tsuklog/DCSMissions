@@ -7,21 +7,28 @@ TODO: 引数省略のためのPresetを作る
 TODO: ミッション内日付をSprint/Summer/Autum/Winterぐらいで指定できるようにする
 TODO: ミッション内時刻をday/night/時刻ぐらいで指定できるようにする
 
-SATAC用プリセットコマンド：
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud all --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.6 --cloud clear --wind 0.0 --distance 60 --AWACSdistance 140 --date all --airport Nalchik,Senaki
+ACL用プリセットコマンド：
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix ACL --template ACLMissionBase_v1.0 --cloud all --wind 0.0 --distance 120 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix ACL --template ACLMissionBase_v1.0 --cloud all --wind 0.0 --distance 120 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
 
+SATAC用プリセットコマンド：
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud all --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 60 --AWACSdistance 140 --date all --airport Nalchik,Senaki
+
+近距離BVR用プリセットコマンド：
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_30nm --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 30 --AWACSdistance 140 --date all --alt 15000 --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_30nm --template SatacMissionBase_v1.4.9 --cloud clear --wind 0.0 --distance 30 --AWACSdistance 140 --date all --alt 15000 --airport Tbilishi,Sukhumi
 
 Guns用プリセットコマンド
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.2 --cloud clear --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
@@ -29,6 +36,10 @@ python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVR
 
 WW2 Guns用プリセットコマンド
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix WW2 --template Guns_WW2_MissionBase_v1.0 --cloud clear --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
+
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix Minimum --template minimum --cloud clear --wind 0.0 --distance 30 --AWACSdistance 140 --date all --alt 15000 --airport Tbilishi,Sukhumi
+
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix Test4 --template Test4
 
 '''
 
@@ -63,6 +74,7 @@ MIN_RANGE_FROM_EDGE = 150000
 # CLIENT_PLANE_RANGE =  50000
 # AI_PLANE_RANGE     = 100000
 M_PER_NM = 1852
+M_PER_FEET = 0.3048
 
 THEATRE = [
         "Caucasus",
@@ -168,6 +180,7 @@ RED_LIVERY_DICT = {
     "J-11A":"usn aggressor vfc-13 'ferris' (fictional)",
     "Su-27":"Mirgorod AFB (Digital camo)",
     "Su-33":"t-10k-5 test paint scheme",
+    "JF-17":"maf blue sea camo",
     "E-3A":"nato",
     "A-50":"RF Air Force"
 }
@@ -176,14 +189,13 @@ STN_START = 200
 STN_INCREMENT = 10
 RED_STN_OFFSET = 1000
 
-
 class CLOUD_TYPES(IntEnum):
     CLEAR = auto()
     CLOUDY = auto()
     RAINY = auto()
     ALL = auto()
 
-def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None):
+def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None,mAlt=None):
     if(bullseyePos is None):
         bullseyeXMax = theatreInfo[theatre]["CombatArea"]["X"]["Max"] - MIN_RANGE_FROM_EDGE
         bullseyeXMin = theatreInfo[theatre]["CombatArea"]["X"]["Min"] + MIN_RANGE_FROM_EDGE
@@ -292,6 +304,16 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
                             group["units"][unitNo]["heading"] = 0
                             group["units"][unitNo]["psi"] = psi
                             
+                    group["x"] = startPointX
+                    group["y"] = startPointY
+
+                    if(not mAlt is None):
+                        for pointNo in group["route"]["points"]:
+                            group["route"]["points"][pointNo]["alt"] = mAlt
+
+                        for unitNo in group["units"]:
+                            group["units"][unitNo]["alt"] = mAlt
+
                     clientCount[coalition] += 1
                 else:
                     #print(group["name"],": ",len(group["route"]["points"]))
@@ -303,7 +325,7 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
                         group["route"]["points"][1]["y"] = startPointY
                     else:
                         basePointX = bullseyeX + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.cos(radDirection)
-                        basePointY = bullseyeY + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.sin(radDirection);
+                        basePointY = bullseyeY + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.sin(radDirection)
 
                         startPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection+np.pi/2)
                         startPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection+np.pi/2)
@@ -328,16 +350,30 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
                         group["route"]["points"][numWp]["x"] = endPointX
                         group["route"]["points"][numWp]["y"] = endPointY
 
-                    
-
-
                     for unitNo in group["units"]:
                             group["units"][unitNo]["x"] = startPointX
                             group["units"][unitNo]["y"] = startPointY
                     
+                    group["x"] = startPointX
+                    group["y"] = startPointY
+
                     aiCount[coalition] += 1
     
     return (bullseyeX,bullseyeY),radBlueDirection
+
+def isInclude89(stn):
+    while(stn > 0):
+        if(stn % 10 == 8 or stn%10 == 9):
+            return True
+        stn = stn//10
+    return False
+
+def incrementStn(stn):
+    stn = stn + STN_INCREMENT
+    while(isInclude89(stn)):
+        stn = stn + STN_INCREMENT
+    return stn
+
 
 def sanitizeStn(missionDict):
     ##################################
@@ -354,7 +390,59 @@ def sanitizeStn(missionDict):
                     groupHaveStn = True
 
             if(groupHaveStn):
-                STN_START = STN_START + STN_INCREMENT
+                STN_START = incrementStn(STN_START)
+
+def sanitizeGroupNo(missionDict):
+    newGroupId = 1
+    for coalition in missionDict["coalition"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+
+                group["groupId"] = newGroupId
+                for pointNo in group["route"]["points"]:
+                    point = group["route"]["points"][pointNo]
+                    for taskNo in point["task"]["params"]["tasks"]:
+                        task = point["task"]["params"]["tasks"][taskNo]
+                        if("params" in task and "action" in task["params"] and "params" in task["params"]["action"] and "groupId" in task["params"]["action"]["params"]):
+                            task["params"]["action"]["params"]["groupId"] = newGroupId
+                newGroupId += 1
+
+
+def sanitizeUnitId(missionDict):
+    newUnitId = 1
+    unitIdConversionDict = OrderedDict()
+    for coalition in missionDict["coalition"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+                
+                for unitNo in group["units"]:
+                    unit = group["units"][unitNo]
+                    if(not unit["unitId"] in unitIdConversionDict):
+                        unitIdConversionDict[unit["unitId"]] = newUnitId
+                        newUnitId += 1
+                    else:
+                        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                        print("!!!Warning unit id {:} duplicates.   !!!".format(unit["unitId"]))
+                        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    
+    for coalition in missionDict["coalition"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+                
+                for unitNo in group["units"]:
+                    group["units"][unitNo]["unitId"] = unitIdConversionDict[group["units"][unitNo]["unitId"]]
+
+                    if("datalinks" in group["units"][unitNo] and "Link16" in group["units"][unitNo]["datalinks"] and "network" in group["units"][unitNo]["datalinks"]["Link16"] and "teamMembers" in group["units"][unitNo]["datalinks"]["Link16"]["network"]):
+                        for teamMemberId in group["units"][unitNo]["datalinks"]["Link16"]["network"]["teamMembers"]:
+                            group["units"][unitNo]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"] = unitIdConversionDict[group["units"][unitNo]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"]]
+
+                        for donorId in group["units"][unitNo]["datalinks"]["Link16"]["network"]["donors"]:
+                            group["units"][unitNo]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] = unitIdConversionDict[group["units"][unitNo]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"]]
+
+
 
 def copyBlueToRed(missionDict):
     ##################################
@@ -686,6 +774,7 @@ if __name__ == "__main__":
     parser.add_argument('--template',type=str,default="TemplateMission")
     parser.add_argument('--fileprefix',type=str,default="GeneratedMission")
     parser.add_argument('--date',type=str,default='today',help='today|spring|summer|autumn|winter|all')
+    parser.add_argument('--alt',type=float,default=None)
 
     args = parser.parse_args()
 
@@ -703,7 +792,7 @@ if __name__ == "__main__":
          
     else:
         theatre = THEATRE[np.random.randint(0,len(THEATRE))]
-    
+
     print("Theatre:",theatre)
     
     with open("TheatreInfo.json") as f:
@@ -741,6 +830,11 @@ if __name__ == "__main__":
         radBlueDirection = np.arctan2(pos1[1]-pos2[1],pos1[0]-pos2[0])
         airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["name"]+"_"+theatreInfo[theatre]["Airports"][airport2]["name"]
     
+    if(args.alt is None):
+        mAlt = None
+    else:
+        mAlt = args.alt * M_PER_FEET
+
     ##############################################
     # 距離のパース
     ##############################################
@@ -779,7 +873,6 @@ if __name__ == "__main__":
     except FileNotFoundError as e:
         print(e)
         sys.exit(0)
-    
 
     setDate(missionDict,args.date)
     setWeather(missionDict,weatherTemplates,cloudType)
@@ -789,8 +882,10 @@ if __name__ == "__main__":
     missionDict["theatre"] = theatre
     sanitizeStn(missionDict)
     copyBlueToRed(missionDict)
+    sanitizeGroupNo(missionDict)
+    sanitizeUnitId(missionDict)
     addStnToName(missionDict)
-    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection)
+    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection,mAlt)
     
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())
     
