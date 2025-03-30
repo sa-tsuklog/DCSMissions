@@ -1,0 +1,9 @@
+mapResource = 
+{
+	["ResKey_Action_24"] = "Info.ogg",
+	["ResKey_Action_21"] = "Warn.ogg",
+	["ResKey_Action_15"] = "mist_4_4_90.lua",
+	["ResKey_Action_18"] = "satal_essentials.lua",
+	["ResKey_Action_27"] = "sound2.ogg",
+	["ResKey_Action_26"] = "Shrink.ogg",
+} -- end of mapResource
