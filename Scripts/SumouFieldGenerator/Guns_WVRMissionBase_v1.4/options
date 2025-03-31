@@ -25,7 +25,7 @@ options =
 	["difficulty"] = 
 	{
 		["fuel"] = false,
-		["spottingDot"] = 3,
+		["spottingDot"] = 2,
 		["miniHUD"] = false,
 		["optionsView"] = "optview_all",
 		["setGlobal"] = true,
