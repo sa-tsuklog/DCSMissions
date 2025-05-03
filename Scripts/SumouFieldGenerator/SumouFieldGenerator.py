@@ -12,27 +12,35 @@ python3 SumouFieldGenerator.py --theatre Ca --fileprefix ACL --template ACLMissi
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix ACL --template ACLMissionBase_v1.0 --cloud all --wind 0.0 --distance 120 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
 
 SATAC用プリセットコマンド：
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud all --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Kobuleti,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Sochi,Mozdok
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --airport Maykop,Anapa
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 60 --AWACSdistance 140 --date all --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR       --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR       --template SatacMissionBase_v1.5.0 --cloud all    --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 60 --AWACSdistance 140 --date all --bda ture --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Batumi,Tbilishi
 
 近距離BVR用プリセットコマンド：
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_30nm --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 30 --AWACSdistance 140 --date all --alt 15000 --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_30nm --template SatacMissionBase_v1.4.11 --cloud clear --wind 0.0 --distance 30 --AWACSdistance 140 --date all --alt 15000 --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm       --template SatacMissionBase_v1.5.0 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm       --template SatacMissionBase_v1.5.0 --cloud all --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_PLAIN --template SatacMissionBase_v1.5.0 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_SEA   --template SatacMissionBase_v1.5.0 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT1  --template SatacMissionBase_v1.5.0 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 20000 --bda ture --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT2  --template SatacMissionBase_v1.5.0 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Batumi,Tbilishi
 
 Guns用プリセットコマンド
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.4 --cloud clear --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.4 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.5 --cloud clear --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR --template Guns_WVRMissionBase_v1.5 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_SEA --template Guns_WVRMissionBase_v1.5 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT1 --template Guns_WVRMissionBase_v1.5 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT2 --template Guns_WVRMissionBase_v1.5 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport Batumi,Tbilishi
 
 WW2 Guns用プリセットコマンド
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix WW2 --template Guns_WW2_MissionBase_v1.0 --cloud clear --wind 0.0 --distance 15 --AWACSdistance 140 --date all --airport all
@@ -171,7 +179,9 @@ DAYS_IN_MONTH = [
     31, #12
 ]
 
-RED_LIVERY_DICT = {
+BLUE_LIVERY_DICT = {
+    "F-5E-3":"aggressor desert scheme",
+    "F-4E-45MC":"jasdf-57-6371",
     "F-14B":"vf-74 adversary",
     "F-15C":"65th Aggressor SQN (WA) SUPER_Flanker",
     "F-15ESE":"IDF 69th Hammers Scheme B",
@@ -182,7 +192,27 @@ RED_LIVERY_DICT = {
     "Su-33":"t-10k-5 test paint scheme",
     "JF-17":"maf blue sea camo",
     "E-3A":"nato",
-    "A-50":"RF Air Force"
+    "A-50":"RF Air Force",
+    "KC-135":"turaf standard",
+    "KC135MPRS":"100th arw"
+}
+
+RED_LIVERY_DICT = {
+    "F-5E-3":"usa standard",
+    "F-4E-45MC":"jasdf-57-8367-301st",
+    "F-14B":"vf-102 diamondbacks",
+    "F-15C":"12th Fighter SQN (AK)",
+    "F-15ESE":"usaf 17th ws af90 high vis clean",
+    "F-16C_50":"dark_viper",
+    "FA-18C_hornet":"vx-23",
+    "J-11A":"plaaf 14th ad (reworked)",
+    "Su-27":"",
+    "Su-33":"",
+    "JF-17":"",
+    "E-3A":"nato",
+    "A-50":"RF Air Force",
+    "KC-135":"turaf standard",
+    "KC135MPRS":"100th arw"
 }
 
 STN_START = 200
@@ -522,7 +552,7 @@ def copyBlueToRed(missionDict):
             missionDict["coalition"]["red"]["country"][1]["plane"]["group"][newGroupCount] = group
             newGroupCount += 1
 
-def addStnToName(mittionDict):
+def addStnToName(missionDict):
     for coalition in ["blue","red"]:
         for countryNo in missionDict["coalition"][coalition]["country"]:
             for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
@@ -538,6 +568,18 @@ def addStnToName(mittionDict):
                 if(groupHaveStn):
                     group["name"] = group["name"] + ", STN=" +stn
 
+def copyPayload(missionDict):
+    for coalition in ["blue","red"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+                for unitId in group["units"]:
+                    if(unitId != 1):
+                        if("payload" in group["units"][unitId] and "payload" in group["units"][1]):
+                            group["units"][unitId]["payload"] = group["units"][1]["payload"]
+
+                        if("livery_id" in group["units"][unitId] and "livery_id" in group["units"][1]):
+                            group["units"][unitId]["livery_id"] = group["units"][1]["livery_id"]
 
 def setWarehouseCoalition(bullseyePos,radBlueDirection,theatreInfo,theatre,warehouseDict):
     for key,value in theatreInfo[theatre]["Airports"].items():
@@ -773,6 +815,10 @@ def setFogAndDust(missionDict):
 		
 		#print("Dust", dustDensity)
 		
+def setOptions(missionDict,changeBdaOption,bda):
+    if(changeBdaOption):
+        missionDict["forcedOptions"]["RBDAI"] = bda
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="description sample")
@@ -786,6 +832,7 @@ if __name__ == "__main__":
     parser.add_argument('--fileprefix',type=str,default="GeneratedMission")
     parser.add_argument('--date',type=str,default='today',help='today|spring|summer|autumn|winter|all')
     parser.add_argument('--alt',type=float,default=None)
+    parser.add_argument('--bda',type=str,default='default',help="default|true|false")
 
     args = parser.parse_args()
 
@@ -832,14 +879,14 @@ if __name__ == "__main__":
     elif(len(airportCandidates) == 1):
         bullseyePos = theatreInfo[theatre]["Airports"][airportCandidates[0]]["X"],theatreInfo[theatre]["Airports"][airportCandidates[0]]["Y"]
         radBlueDirection = None
-        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["name"]
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["shortname"]
     else:
         airport1,airport2 = random.sample(airportCandidates,2)
         pos1 = (theatreInfo[theatre]["Airports"][airport1]["X"] , theatreInfo[theatre]["Airports"][airport1]["Y"])
         pos2 = (theatreInfo[theatre]["Airports"][airport2]["X"] , theatreInfo[theatre]["Airports"][airport2]["Y"])
         bullseyePos = (pos1[0]+pos2[0])/2,(pos1[1]+pos2[1])/2
         radBlueDirection = np.arctan2(pos1[1]-pos2[1],pos1[0]-pos2[0])
-        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["name"]+"_"+theatreInfo[theatre]["Airports"][airport2]["name"]
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["shortname"]+"_"+theatreInfo[theatre]["Airports"][airport2]["shortname"]
     
     if(args.alt is None):
         mAlt = None
@@ -867,8 +914,24 @@ if __name__ == "__main__":
         cloudType = CLOUD_TYPES.RAINY
     print(cloudType)
     
+    ##############################################
+    # オプションのパース
+    ##############################################
+    if(args.bda.startswith("true")):
+        changeBdaOption = True
+        bda = True
+    elif(args.bda.startswith("false")):
+        changeBdaOption = True
+        bda = False
+    else:
+        changeBdaOption = False
+        bda = False
+
+
     dictPath = "tmp/l10n/DEFAULT"
     os.makedirs(dictPath,exist_ok=True)
+    dtcPath = "tmp/DTC"
+    os.makedirs(dtcPath,exist_ok=True)
     
     try:
         missionDict = LuaDictTool2.load(args.template+"/mission")
@@ -881,6 +944,7 @@ if __name__ == "__main__":
         theatreGen = TheatreGenerator(theatre=theatre)
         
         weatherTemplates = LuaDictTool2.load("WeatherTemplates.txt")
+        
     except FileNotFoundError as e:
         print(e)
         sys.exit(0)
@@ -892,14 +956,18 @@ if __name__ == "__main__":
     
     missionDict["theatre"] = theatre
     sanitizeStn(missionDict)
+    copyPayload(missionDict)
     copyBlueToRed(missionDict)
     sanitizeGroupNo(missionDict)
     sanitizeUnitId(missionDict)
     addStnToName(missionDict)
+    setOptions(missionDict,changeBdaOption,bda)
     bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection,mAlt)
-    
+
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())
     
+
+
     
     LuaDictTool2.dump("tmp/mission", missionDict, "mission")
     LuaDictTool2.dump("tmp/options", optionsDict, "options")
@@ -916,7 +984,8 @@ if __name__ == "__main__":
     
     dt_now = datetime.datetime.now()
     os.makedirs(OUTPUT_DIR_NAME,exist_ok=True)
-    outFilename = OUTPUT_DIR_NAME+"/{}_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}{}.miz".format(args.fileprefix,dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre,airportPostfix)
+    #outFilename = OUTPUT_DIR_NAME+"/{}_{:04}-{:02}-{:02}_{:02}{:02}{:02}_{}{}.miz".format(args.fileprefix,dt_now.year,dt_now.month,dt_now.day,dt_now.hour,dt_now.minute,dt_now.second,theatre,airportPostfix)
+    outFilename = OUTPUT_DIR_NAME+"/{}_{:04}-{:02}-{:02}{}.miz".format(args.fileprefix,dt_now.year,dt_now.month,dt_now.day,airportPostfix)
     
     with zipfile.ZipFile(outFilename,"w",compression=zipfile.ZIP_DEFLATED) as zf:
         zf.write("tmp/mission",arcname="mission")
@@ -938,6 +1007,11 @@ if __name__ == "__main__":
             shutil.copyfile(luaFile,"tmp/l10n/DEFAULT/"+ luaFilename)
             zf.write("tmp/l10n/DEFAULT/"+luaFilename,arcname="l10n/DEFAULT/"+luaFilename)
         
+        dtcFiles = glob.glob(args.template+"/DTC/*.dtc")
+        for dtcFile in dtcFiles:
+            dtcFilename = os.path.basename(dtcFile)
+            shutil.copyfile(dtcFile,"tmp/DTC/"+dtcFilename)
+            zf.write("tmp/DTC/"+dtcFilename,arcname="DTC/"+dtcFilename)
     
     
     #todo update maxDictId
