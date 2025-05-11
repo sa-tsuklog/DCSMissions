@@ -26,6 +26,8 @@ python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template Sa
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Maykop,Anapa
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 60 --AWACSdistance 140 --date all --bda ture --airport Nalchik,Senaki
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.0 --cloud cloudy --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --ccspos " -328299,631261,90"
+
 
 近距離BVR用プリセットコマンド：
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm       --template SatacMissionBase_v1.5.0 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport all
@@ -826,6 +828,7 @@ if __name__ == "__main__":
     parser.add_argument('--distance',type=int,default=45)
     parser.add_argument('--AWACSdistance',type=int,default=120)
     parser.add_argument('--airports',type=str,default=None, help='Kobuleti,Gudauta... | all')
+    parser.add_argument('--ccspos',type=str,default=None, help='Position and direction in CCS cordinate system, like 1000,2000,90')
     parser.add_argument('--cloud',type=str,default="all",help='clear|cloudy|rainy|all')
     parser.add_argument('--wind',type=float,default=50.0,help='Max Windspeed[m/s] in float')
     parser.add_argument('--template',type=str,default="TemplateMission")
@@ -872,21 +875,34 @@ if __name__ == "__main__":
                     if(val["name"].lower().replace(" ","").startswith(airportName.lower().replace(" ",""))):
                         airportCandidates.append(key)
 
-    if(len(airportCandidates) == 0):
-        bullseyePos = None
-        radBlueDirection = None
-        airportPostfix = ""
-    elif(len(airportCandidates) == 1):
-        bullseyePos = theatreInfo[theatre]["Airports"][airportCandidates[0]]["X"],theatreInfo[theatre]["Airports"][airportCandidates[0]]["Y"]
-        radBlueDirection = None
-        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["shortname"]
-    else:
+
+    if(len(airportCandidates) == 2):
         airport1,airport2 = random.sample(airportCandidates,2)
         pos1 = (theatreInfo[theatre]["Airports"][airport1]["X"] , theatreInfo[theatre]["Airports"][airport1]["Y"])
         pos2 = (theatreInfo[theatre]["Airports"][airport2]["X"] , theatreInfo[theatre]["Airports"][airport2]["Y"])
         bullseyePos = (pos1[0]+pos2[0])/2,(pos1[1]+pos2[1])/2
         radBlueDirection = np.arctan2(pos1[1]-pos2[1],pos1[0]-pos2[0])
         airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["shortname"]+"_"+theatreInfo[theatre]["Airports"][airport2]["shortname"]
+    elif(len(airportCandidates) == 1):
+        bullseyePos = theatreInfo[theatre]["Airports"][airportCandidates[0]]["X"],theatreInfo[theatre]["Airports"][airportCandidates[0]]["Y"]
+        radBlueDirection = None
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["shortname"]
+    elif(not args.ccspos is None):
+        ccsElements = args.ccspos.split(",")
+        if(len(ccsElements) == 3):
+            bullseyePos = float(ccsElements[0]),float(ccsElements[1])
+            radBlueDirection = float(ccsElements[2])*np.pi/180
+        elif(len(ccsElements) == 2):
+            bullseyePos = float(ccsElements[0]),float(ccsElements[1])
+            radBlueDirection = None
+        else:
+            bullseyePos = None
+            radBlueDirection = None
+        airportPostfix = ""
+    else:
+        bullseyePos = None
+        radBlueDirection = None
+        airportPostfix = ""    
     
     if(args.alt is None):
         mAlt = None
