@@ -69,7 +69,7 @@ Caucasus,Nevada,PersianGulf,Syriaの中からランダムにマップを選択�
 交戦距離80nm、AWACSの距離140nm、全ての季節から選択。雲無し、BDA ON、交戦地点TbilishiとSukhumiの中間地点に設定
 
 
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
+    python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.0 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
 
 
 
