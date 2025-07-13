@@ -6,13 +6,13 @@ from enum import IntEnum,auto
 RE_TOPLEVEL = "^[ \t]*([A-Za-z0-9_]+)"
 RE_DICT_START = "^[ \t]*{"
 RE_DICT_END = "^[ \t]*},?"
-RE_PROPERTY_NAME = "^[ \t]*\[\"(.+)\"\]"
-RE_PROPERTY_NUM = "^[ \t]*\[([0-9]+)\]"
+RE_PROPERTY_NAME = "^[ \t]*\\[\"(.+)\"\\]"
+RE_PROPERTY_NUM = "^[ \t]*\\[([0-9]+)\\]"
 RE_SUBSTITUTE = "^[ \t]*="
 RE_VAL_TRUE = "^[ \t]*true,?"
 RE_VAL_FALSE = "^[ \t]*false,?"
 RE_VAL_INT = "^[ \t]*(-?[0-9]+),?"
-RE_VAL_FLOAT = "^[ \t]*(-?[0-9]*\.[0-9]+),?"
+RE_VAL_FLOAT = "^[ \t]*(-?[0-9]*\\.[0-9]+),?"
 RE_VAL_STRING = "^[ \t]*\"(.*)\",?"
 RE_COMMENT = "^[ \t]--.+"
 
@@ -154,8 +154,12 @@ def load(filename):
         print("Dict depth not equal to Zero.")
         print("Parse might have failed.")
 
-    topKey = list(currentDict.keys())[0]
-    return currentDict[topKey]
+    if(len(currentDict) > 0):
+        topKey = list(currentDict.keys())[0]
+        return currentDict[topKey]
+    else:
+        return OrderedDict()
+    
         
 def keyValToString(key):
         if(isinstance(key,str)):
