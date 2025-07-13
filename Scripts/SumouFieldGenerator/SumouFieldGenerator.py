@@ -531,10 +531,12 @@ def copyBlueToRed(missionDict):
 
                 if("datalinks" in group["units"][unitId] and "Link16" in group["units"][unitId]["datalinks"] and "network" in group["units"][unitId]["datalinks"]["Link16"] and "teamMembers" in group["units"][unitId]["datalinks"]["Link16"]["network"]):
                     for teamMemberId in group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"]:
-                        group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"] = unitIdConversionDict[group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"]]
+                        if(group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"] in unitIdConversionDict):
+                            group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"] = unitIdConversionDict[group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"]]
 
                     for donorId in group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"]:
-                        group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] = unitIdConversionDict[group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"]]
+                        if(group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] in unitIdConversionDict):
+                            group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] = unitIdConversionDict[group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"]]
                     
                 ############################################
                 # CHENGE SMOKE COLOR BLUE -> RED
