@@ -1,0 +1,17 @@
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.1 --cloud clear  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.1 --cloud all  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.1 --cloud all  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND1 --template SatacMissionBase_v1.5.1 --cloud all  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND2 --template SatacMissionBase_v1.5.1 --cloud all  --wind 0.0 --distance 80 --AWACSdistance 140 --date all --bda ture
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_PLAIN --template SatacMissionBase_v1.5.1 --cloud clear --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_SEA   --template SatacMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT1  --template SatacMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 20000 --bda ture --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT2  --template SatacMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND1   --template SatacMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND2   --template SatacMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 25 --AWACSdistance 140 --date all --alt 15000 --bda ture
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_SEA --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT1 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT2 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_RND1 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_RND2 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --AWACSdistance 140 --date all --bda true
