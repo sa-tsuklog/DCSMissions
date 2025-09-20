@@ -12,39 +12,43 @@ python3 SumouFieldGenerator.py --theatre Ca --fileprefix ACL --template ACLMissi
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix ACL --template ACLMissionBase_v1.0 --cloud all --wind 0.0 --distance 120 --AWACSdistance 140 --date all --airport Tbilishi,Sukhumi
 
 SATAC用プリセットコマンド：
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND   --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND   --template SatacMissionBase_v1.5.3 --cloud all    --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Kobuleti,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Kobuleti,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Sochi,Mozdok
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Sochi,Mozdok
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Maykop,Anapa
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Maykop,Anapa
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.3 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Nalchik,Senaki
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --airport Batumi,Tbilishi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.3 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --ccspos " -328299,631261,90"
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND1   --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND2   --template SatacMissionBase_v1.5.4 --cloud all    --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND3   --template SatacMissionBase_v1.5.4 --cloud all    --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_RND4   --template SatacMissionBase_v1.5.4 --cloud all    --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_SEA   --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Kobuleti,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Sochi,Mozdok
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_PLAIN --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Maykop,Anapa
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT1  --template SatacMissionBase_v1.5.4 --cloud clear  --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_MNT2  --template SatacMissionBase_v1.5.4 --cloud cloudy --wind 0.0 --distance 80 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda ture --aim120b true --ccspos " -328299,631261,90"
 
 
 近距離BVR用プリセットコマンド：
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND   --template SatacMissionBase_v1.5.3 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND   --template SatacMissionBase_v1.5.3 --cloud all   --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_PLAIN --template SatacMissionBase_v1.5.3 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Tbilishi,Sukhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_PLAIN --template SatacMissionBase_v1.5.3 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --ccspos "31493,-12672"
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_SEA   --template SatacMissionBase_v1.5.3 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT1  --template SatacMissionBase_v1.5.3 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 20000 --bda ture --airport Nalchik,Senaki
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT2  --template SatacMissionBase_v1.5.3 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND1   --template SatacMissionBase_v1.5.4 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND2   --template SatacMissionBase_v1.5.4 --cloud all   --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND3   --template SatacMissionBase_v1.5.4 --cloud all   --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_RND4   --template SatacMissionBase_v1.5.4 --cloud all   --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_PLAIN --template SatacMissionBase_v1.5.4 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport Tbilishi,Sukhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_PLAIN --template SatacMissionBase_v1.5.4 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --ccspos "31493,-12672"
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_SEA   --template SatacMissionBase_v1.5.4 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT1  --template SatacMissionBase_v1.5.4 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 20000 --bda ture --aim120b true --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix BVR_25nm_MNT2  --template SatacMissionBase_v1.5.4 --cloud clear --wind 0.0 --distance 25 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --alt 15000 --bda ture --aim120b true --airport Batumi,Tbilishi
 
 Guns用プリセットコマンド
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_RND --template Guns_WVRMissionBase_v1.5.1 --cloud clear --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_RND --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport all
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_PLAIN --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport Tbilishi,Shkhumi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_SEA --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport Batumi,Sochi
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT1 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport Nalchik,Senaki
-python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT2 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --airport Batumi,Tbilishi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_RND1 --template Guns_WVRMissionBase_v1.5.1 --cloud clear --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_RND2 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport all
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_PLAIN --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport Tbilishi,Shkhumi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_SEA --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport Batumi,Sochi
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT1 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport Nalchik,Senaki
+python3 SumouFieldGenerator.py --theatre Ca --fileprefix WVR_MNT2 --template Guns_WVRMissionBase_v1.5.1 --cloud all --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --bda true --aim120b true --airport Batumi,Tbilishi
 
 WW2 Guns用プリセットコマンド
 python3 SumouFieldGenerator.py --theatre Ca --fileprefix WW2 --template Guns_WW2_MissionBase_v1.0 --cloud clear --wind 0.0 --distance 15 --posJitter 20 --angleJitter 20 --AWACSdistance 140 --date all --airport all
@@ -217,6 +221,12 @@ RED_LIVERY_DICT = {
     "A-50":"RF Air Force",
     "KC-135":"turaf standard",
     "KC135MPRS":"100th arw"
+}
+
+AMRAAM_CtoB_SWAP_DICT = {
+    "{40EF17B7-F508-45de-8566-6FFECC0C1AB8}":"{C8E06185-7CD6-4C90-959F-044679E90751}",
+    "LAU-115_2*LAU-127_AIM-120C":"LAU-115_2*LAU-127_AIM-120B",
+    "{LAU-115 - AIM-120C}":"{LAU-115 - AIM-120B}",
 }
 
 STN_START = 200
@@ -587,6 +597,22 @@ def copyPayload(missionDict):
                         if("livery_id" in group["units"][unitId] and "livery_id" in group["units"][1]):
                             group["units"][unitId]["livery_id"] = group["units"][1]["livery_id"]
 
+def swapWeapons(aim120b):
+    if(aim120b):
+        for coalition in ["blue","red"]:
+            for countryNo in missionDict["coalition"][coalition]["country"]:
+                for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                    group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+                    for unitId in group["units"]:
+                        if("payload" in group["units"][unitId] and "pylons" in group["units"][unitId]["payload"]):
+                            for pylonId in group["units"][unitId]["payload"]["pylons"]:
+                                if("CLSID" in group["units"][unitId]["payload"]["pylons"][pylonId]):
+                                    if(group["units"][unitId]["payload"]["pylons"][pylonId]["CLSID"] in AMRAAM_CtoB_SWAP_DICT):
+                                        group["units"][unitId]["payload"]["pylons"][pylonId]["CLSID"] = AMRAAM_CtoB_SWAP_DICT[group["units"][unitId]["payload"]["pylons"][pylonId]["CLSID"]]
+                    
+                    group["name"] = group["name"].replace("AIM-120C","AIM-120B")
+                    group["name"] = group["name"].replace("AIM120C","AIM120B")
+
 def setWarehouseCoalition(bullseyePos,radBlueDirection,theatreInfo,theatre,warehouseDict):
     for key,value in theatreInfo[theatre]["Airports"].items():
         radAirportDirection =  np.arctan2(value["Y"]-bullseyePos[1],value["X"]-bullseyePos[0])
@@ -842,6 +868,7 @@ if __name__ == "__main__":
     parser.add_argument('--date',type=str,default='today',help='today|spring|summer|autumn|winter|all')
     parser.add_argument('--alt',type=float,default=None)
     parser.add_argument('--bda',type=str,default='default',help="default|true|false")
+    parser.add_argument('--aim120b',type=bool,default=False,help="True|False")
 
     args = parser.parse_args()
 
@@ -987,6 +1014,7 @@ if __name__ == "__main__":
     sanitizeStn(missionDict)
     copyPayload(missionDict)
     copyBlueToRed(missionDict)
+    swapWeapons(args.aim120b)
     sanitizeGroupNo(missionDict)
     sanitizeUnitId(missionDict)
     addStnToName(missionDict)

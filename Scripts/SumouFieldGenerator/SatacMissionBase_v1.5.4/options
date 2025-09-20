@@ -7,7 +7,7 @@ options =
 		["TrackIR_external_views"] = true,
 		["f11_free_camera"] = true,
 		["f10_awacs"] = true,
-		["Coordinate_Display"] = "Lat Long",
+		["Coordinate_Display"] = "Metric",
 		["accidental_failures"] = false,
 		["autologin"] = true,
 		["show_pilot_body"] = false,
@@ -149,10 +149,17 @@ options =
 	}, -- end of ["graphics"]
 	["plugins"] = 
 	{
-		["Su-25T"] = 
+		["CA"] = 
 		{
-			["CPLocalList"] = "default",
-		}, -- end of ["Su-25T"]
+			["kompass_options"] = 1,
+			["ground_aim_helper"] = true,
+			["ground_platform_shake"] = true,
+			["ground_target_info"] = true,
+			["ground_isometric"] = true,
+			["ground_engine_autostart"] = true,
+			["ground_automatic"] = true,
+			["automatic_clutch"] = true,
+		}, -- end of ["CA"]
 		["UltraLeap"] = 
 		{
 			["handOffsetY"] = 0,
@@ -164,24 +171,13 @@ options =
 			["set_debug"] = false,
 			["mouseClickSrc"] = 0,
 		}, -- end of ["UltraLeap"]
-		["F-15ESE"] = 
+		["DCS-SRS"] = 
 		{
-			["RAND_RDR_CHANNEL"] = false,
-			["RADAR_SAR_SCINTILLATION"] = true,
-			["RADAR_MAX_CORES"] = 4,
-			["LINEAR_STICK"] = false,
-			["CPLocalList"] = "default",
-			["RADALT_ADVANCED"] = false,
-			["MONITOR_EYEPOINT_OFFSET"] = 0,
-			["THROTTLE_CO_DETENT"] = 10,
-			["VR_EYEPOINT_OFFSET"] = 5,
-			["FF_TRIM_OFFSET"] = true,
-			["THROTTLE_AB_DETENT"] = 75,
-			["GHOST_CONTROLS"] = false,
-			["FF_PITCH_GAIN"] = 65,
-			["FF_ROLL_GAIN"] = 65,
-			["LOW_END_TEXT"] = false,
-		}, -- end of ["F-15ESE"]
+			["srsOverlayHelpTextEnabled"] = true,
+			["srsOverlayEnabled"] = true,
+			["srsAutoLaunchEnabled"] = true,
+			["srsOverlayCompactModeEnabled"] = false,
+		}, -- end of ["DCS-SRS"]
 		["F/A-18C"] = 
 		{
 			["abDetent"] = 0,
@@ -236,12 +232,6 @@ options =
 		{
 			["CPLocalList"] = "default",
 		}, -- end of ["A-10A"]
-		["TF-51D"] = 
-		{
-			["assistance"] = 100,
-			["CPLocalList"] = "default",
-			["autoRudder"] = false,
-		}, -- end of ["TF-51D"]
 		["Supercarrier"] = 
 		{
 			["deck_crew"] = true,
@@ -252,18 +242,12 @@ options =
 			["helpers_enabled"] = true,
 			["velocity_limit_enabled"] = true,
 		}, -- end of ["Supercarrier"]
-		["A-10C_2"] = 
+		["TF-51D"] = 
 		{
-			["GUNPAC_Runway"] = 0.1,
-			["hmdEye"] = 1,
-			["CPLocalList"] = "aged",
-			["throttleSlewMaverick"] = 5,
-			["GUNPAC_Hot"] = 0.1,
-			["defaultGunMode"] = 0,
-			["throttleSlewTGP"] = 5,
-			["GUNPAC_Cold"] = 0.1,
-			["GUNPAC_Air"] = 0.2,
-		}, -- end of ["A-10C_2"]
+			["assistance"] = 100,
+			["CPLocalList"] = "default",
+			["autoRudder"] = false,
+		}, -- end of ["TF-51D"]
 		["AH-64D_BLK_II"] = 
 		{
 			["AH64HmdEye"] = 1,
@@ -284,6 +268,26 @@ options =
 			["AH64AIInterfaceColorScheme"] = 0,
 			["AH64AIColorScheme"] = 0,
 		}, -- end of ["AH-64D_BLK_II"]
+		["A-10C_2"] = 
+		{
+			["GUNPAC_Runway"] = 0.1,
+			["hmdEye"] = 1,
+			["CPLocalList"] = "aged",
+			["throttleSlewMaverick"] = 5,
+			["GUNPAC_Hot"] = 0.1,
+			["defaultGunMode"] = 0,
+			["throttleSlewTGP"] = 5,
+			["GUNPAC_Cold"] = 0.1,
+			["GUNPAC_Air"] = 0.2,
+		}, -- end of ["A-10C_2"]
+		["Ka-50"] = 
+		{
+			["Ka50TrimmingMethod"] = 0,
+			["Ka50RudderTrimmer"] = false,
+			["hmdEye"] = 1,
+			["CPLocalList"] = "default",
+			["helmetCircleDisplacement"] = 11,
+		}, -- end of ["Ka-50"]
 		["F-16C"] = 
 		{
 			["hmdEye"] = 1,
@@ -297,31 +301,30 @@ options =
 			["canopyTint"] = 1,
 			["pitchForceStickGradient"] = 1,
 		}, -- end of ["F-16C"]
+		["FC3"] = 
+		{
+			["CPLocalList_Su-25"] = "default",
+			["CPLocalList_Su-27"] = "default",
+			["CPLocalList_A-10A"] = "default",
+			["CPLocalList_Su-33"] = "default",
+			["CPLocalList_F-15C"] = "default",
+			["CPLocalList_MiG-29A"] = "default",
+			["CPLocalList_J-11A"] = "default",
+			["CPLocalList_MiG-29G"] = "default",
+			["CPLocalList_MiG-29S"] = "default",
+		}, -- end of ["FC3"]
 		["Su-27"] = 
 		{
 			["CPLocalList"] = "default",
 		}, -- end of ["Su-27"]
-		["FW-190D9"] = 
-		{
-			["assistance"] = 100,
-			["CPLocalList"] = "default",
-			["autoRudder"] = false,
-		}, -- end of ["FW-190D9"]
 		["F-15C"] = 
 		{
 			["CPLocalList"] = "default",
 		}, -- end of ["F-15C"]
-		["CA"] = 
+		["Su-25T"] = 
 		{
-			["kompass_options"] = 1,
-			["ground_aim_helper"] = true,
-			["ground_platform_shake"] = true,
-			["ground_target_info"] = true,
-			["ground_isometric"] = true,
-			["ground_engine_autostart"] = true,
-			["ground_automatic"] = true,
-			["automatic_clutch"] = true,
-		}, -- end of ["CA"]
+			["CPLocalList"] = "default",
+		}, -- end of ["Su-25T"]
 		["Su-25"] = 
 		{
 			["CPLocalList"] = "default",
@@ -339,30 +342,28 @@ options =
 			["CPLocalList_MiG-29G"] = "default",
 			["CPLocalList_MiG-29A"] = "default",
 		}, -- end of ["MiG-29"]
-		["Ka-50"] = 
+		["F-15ESE"] = 
 		{
-			["Ka50TrimmingMethod"] = 0,
-			["Ka50RudderTrimmer"] = false,
-			["hmdEye"] = 1,
+			["RAND_RDR_CHANNEL"] = false,
+			["RADAR_SAR_SCINTILLATION"] = true,
+			["RADAR_MAX_CORES"] = 4,
+			["LINEAR_STICK"] = false,
 			["CPLocalList"] = "default",
-			["helmetCircleDisplacement"] = 11,
-		}, -- end of ["Ka-50"]
+			["RADALT_ADVANCED"] = false,
+			["MONITOR_EYEPOINT_OFFSET"] = 0,
+			["THROTTLE_CO_DETENT"] = 10,
+			["VR_EYEPOINT_OFFSET"] = 5,
+			["FF_TRIM_OFFSET"] = true,
+			["THROTTLE_AB_DETENT"] = 75,
+			["GHOST_CONTROLS"] = false,
+			["FF_PITCH_GAIN"] = 65,
+			["FF_ROLL_GAIN"] = 65,
+			["LOW_END_TEXT"] = false,
+		}, -- end of ["F-15ESE"]
 		["Su-33"] = 
 		{
 			["CPLocalList"] = "default",
 		}, -- end of ["Su-33"]
-		["FC3"] = 
-		{
-			["CPLocalList_Su-25"] = "default",
-			["CPLocalList_Su-27"] = "default",
-			["CPLocalList_A-10A"] = "default",
-			["CPLocalList_Su-33"] = "default",
-			["CPLocalList_F-15C"] = "default",
-			["CPLocalList_MiG-29A"] = "default",
-			["CPLocalList_J-11A"] = "default",
-			["CPLocalList_MiG-29G"] = "default",
-			["CPLocalList_MiG-29S"] = "default",
-		}, -- end of ["FC3"]
 		["CaptoGlove"] = 
 		{
 			["fingerPinkyBentRight"] = "0",
@@ -426,6 +427,12 @@ options =
 			["gloveRotationRoll_Right"] = 0,
 			["fingerPinkyBentLeft"] = "0",
 		}, -- end of ["CaptoGlove"]
+		["FW-190D9"] = 
+		{
+			["assistance"] = 100,
+			["CPLocalList"] = "default",
+			["autoRudder"] = false,
+		}, -- end of ["FW-190D9"]
 		["VRFree"] = 
 		{
 			["handUseThrottle"] = false,
