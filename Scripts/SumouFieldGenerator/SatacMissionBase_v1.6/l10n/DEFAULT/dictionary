@@ -1,0 +1,17 @@
+dictionary = 
+{
+	["DictKey_ActionText_10"] = "Bubble decreased to XX nm",
+	["DictKey_ActionText_6"] = "",
+	["DictKey_ActionText_22"] = "",
+	["DictKey_descriptionBlueTask_3"] = "",
+	["DictKey_descriptionRedTask_2"] = "",
+	["DictKey_descriptionText_1"] = "",
+	["DictKey_ActionComment_9"] = "",
+	["DictKey_descriptionNeutralsTask_4"] = "",
+	["DictKey_sortie_5"] = "",
+	["DictKey_ActionText_11"] = "Player XX is out of Bubble",
+	["DictKey_ActionRadioText_23"] = "Bubble Shrink",
+	["DictKey_ActionText_8"] = "",
+	["DictKey_ActionText_14"] = "",
+	["DictKey_ActionText_12"] = "Player XX is near to edge of bubble",
+} -- end of dictionary
