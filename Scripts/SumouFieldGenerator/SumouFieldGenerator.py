@@ -217,22 +217,24 @@ RED_LIVERY_DICT = {
     "F-16C_50":"dark_viper",
     "FA-18C_hornet":"vx-23",
     "J-11A":"plaaf 14th ad (reworked)",
-    "Su-27":"",
-    "Su-33":"",
-    "JF-17":"",
+    "Su-27":"Algerian AF GREY 04",
+    "Su-33":"AAF GREY 12",
+    "JF-17":"'splinter' camo for blue side (fictional)",
+    "M-2000C":"peru064",
     "E-3A":"nato",
     "A-50":"RF Air Force",
     "KC-135":"turaf standard",
     "KC135MPRS":"100th arw"
 }
 
-MULTISECTOR_COORDINATES = {
-    ["airport","Tbilishi","Sukhumi"],
-    ["ccspos" 31493,-12672],
-    ["airport","Maykop","Anapa"],
-    ["airport","Sochi","Mozdok"],
-    ["airport","Batumi","Sochi"],
-}
+MULTISECTOR_COORDINATES = [
+    ["airport",["Tbilishi","Sukhumi"]],
+    ["ccspos", [31493,-12672]],
+    ["airport",["Maykop","Anapa"]],
+    ["ccspos", [-416167,685281,90],15000 * M_PER_FEET],
+    # ["airport","Sochi","Mozdok"],
+    # ["airport","Batumi","Sochi"],
+]
 
 
 AMRAAM_CtoB_SWAP_DICT = {
@@ -263,7 +265,7 @@ TANK_REMOVE_DICT = {
 
 STN_START = 200
 STN_INCREMENT = 10
-RED_STN_OFFSET = 1000
+RED_STN_OFFSET = 10000
 
 class CLOUD_TYPES(IntEnum):
     CLEAR = auto()
@@ -271,7 +273,7 @@ class CLOUD_TYPES(IntEnum):
     RAINY = auto()
     ALL = auto()
 
-def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None,mAlt=None):
+def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None,mAlt=None,multisector=False,sectorId=0):
     if(bullseyePos is None):
         bullseyeXMax = theatreInfo[theatre]["CombatArea"]["X"]["Max"] - MIN_RANGE_FROM_EDGE
         bullseyeXMin = theatreInfo[theatre]["CombatArea"]["X"]["Min"] + MIN_RANGE_FROM_EDGE
@@ -319,122 +321,135 @@ def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistan
     aiCount["red"] = 0
     aiCount["neutrals"] = 0
     
+    groups = []
+    coalitions = []
+    groupNames = []
+
     for coalition in missionDict["coalition"]:
         for countryNo in missionDict["coalition"][coalition]["country"]:
             for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
-                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
-                
-                if(coalition == "blue"):
-                    radDirection = radBlueDirection
-                else:
-                    radDirection = radBlueDirection + np.pi
-                
-                if(group["units"][1]["skill"] == "Client"):                    
-                    startPointX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
-                    startPointY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
-                    startPointDeltaX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition] + RAD_DIRECTION_DELTA/6) -startPointX
-                    startPointDeltaY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition] + RAD_DIRECTION_DELTA/6) -startPointY
-                    #print(group["name"],": ",len(group["route"]["points"]))
+                groups.append(missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo])
+                coalitions.append(coalition)
+                groupNames.append(missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]["name"])
 
-                    if(len(group["route"]["points"]) <= 3):
-                        if(1 in group["route"]["points"]):
-                            group["route"]["points"][1]["x"] = startPointX
-                            group["route"]["points"][1]["y"] = startPointY
-                        
-                        if(2 in group["route"]["points"]):
-                            group["route"]["points"][2]["x"] = bullseyeX
-                            group["route"]["points"][2]["y"] = bullseyeY
+    indices = np.argsort(groupNames)    #名前順に配置
 
-                        if(3 in group["route"]["points"]):
-                            group["route"]["points"][3]["x"] = bullseyeX + (bullseyeX - startPointX)
-                            group["route"]["points"][3]["y"] = bullseyeY + (bullseyeY - startPointY)
-                    else:
+    for idx in indices:
+        group = groups[idx]
+        coalition = coalitions[idx]
+        
+        if((not multisector) or group["name"].startswith("S{:1}".format(sectorId+1))):
+            if(coalition == "blue"):
+                radDirection = radBlueDirection
+            else:
+                radDirection = radBlueDirection + np.pi
+            
+            if(group["units"][1]["skill"] == "Client"):                    
+                startPointX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
+                startPointY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition])
+                startPointDeltaX = bullseyeX + mClientPlaneDistance * np.cos(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition] + RAD_DIRECTION_DELTA/6) -startPointX
+                startPointDeltaY = bullseyeY + mClientPlaneDistance * np.sin(radDirection + RAD_DIRECTION_DELTA*clientCount[coalition] + RAD_DIRECTION_DELTA/6) -startPointY
+                #print(group["name"],": ",len(group["route"]["points"]))
+
+                if(len(group["route"]["points"]) <= 3):
+                    if(1 in group["route"]["points"]):
                         group["route"]["points"][1]["x"] = startPointX
                         group["route"]["points"][1]["y"] = startPointY
-                        
-                        numWp = len(group["route"]["points"])
-
-                        for i in range(2, numWp - 1):
-                            weight = 0.05 * i
-                            group["route"]["points"][i]["x"] = (1-weight)*startPointX + weight * bullseyeX
-                            group["route"]["points"][i]["y"] = (1-weight)*startPointY + weight * bullseyeY
-
-                        group["route"]["points"][numWp-1]["x"] = bullseyeX
-                        group["route"]["points"][numWp-1]["y"] = bullseyeY
-
-                        group["route"]["points"][numWp]["x"] = bullseyeX + 0.95*(bullseyeX - startPointX)
-                        group["route"]["points"][numWp]["y"] = bullseyeY + 0.95*(bullseyeY - startPointY)
-
-                    for unitNo in group["units"]:
-                        group["units"][unitNo]["x"] = startPointX + startPointDeltaX * (unitNo-1)
-                        group["units"][unitNo]["y"] = startPointY + startPointDeltaY * (unitNo-1)
-                        if(RANDOM_HEADING):
-                            group["units"][unitNo]["heading"] = 2*(np.random.rand()-0.5)*np.pi
-                            group["units"][unitNo]["psi"] = 2*(np.random.rand()-0.5)*np.pi
-                        else:
-                            psi = -radDirection+np.pi
-                            if(psi < -np.pi):
-                                psi += 2*np.pi
-                            if(psi > np.pi):
-                                psi -= 2*np.pi
-                            
-                            group["units"][unitNo]["heading"] = 0
-                            group["units"][unitNo]["psi"] = psi
-                            
-                    group["x"] = startPointX
-                    group["y"] = startPointY
-
-                    if(not mAlt is None):
-                        for pointNo in group["route"]["points"]:
-                            group["route"]["points"][pointNo]["alt"] = mAlt
-
-                        for unitNo in group["units"]:
-                            group["units"][unitNo]["alt"] = mAlt
-
-                    clientCount[coalition] += 1
-                else:
-                    #print(group["name"],": ",len(group["route"]["points"]))
-                    if(len(group["route"]["points"]) == 1):
-                        startPointX = bullseyeX + mAiPlaneDistance * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
-                        startPointY = bullseyeY + mAiPlaneDistance * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
-                        
-                        group["route"]["points"][1]["x"] = startPointX
-                        group["route"]["points"][1]["y"] = startPointY
-                    else:
-                        basePointX = bullseyeX + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.cos(radDirection)
-                        basePointY = bullseyeY + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.sin(radDirection)
-
-                        startPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection+np.pi/2)
-                        startPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection+np.pi/2)
-
-                        endPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection-np.pi/2)
-                        endPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection-np.pi/2)
-                        
-                        if(aiCount[coalition] % 2 == 1):
-                            startPointX,endPointX = endPointX,startPointX
-                            startPointY,endPointY = endPointY,startPointY
-
-
-                        numWp = len(group["route"]["points"])
-                        for i in range(0,numWp-2):
-                            weight = 0.05 * i
-                            group["route"]["points"][i+1]["x"] = (1-weight) * basePointX + weight * startPointX
-                            group["route"]["points"][i+1]["y"] = (1-weight) * basePointY + weight * startPointY
-
-                        group["route"]["points"][numWp-1]["x"] = startPointX
-                        group["route"]["points"][numWp-1]["y"] = startPointY
-
-                        group["route"]["points"][numWp]["x"] = endPointX
-                        group["route"]["points"][numWp]["y"] = endPointY
-
-                    for unitNo in group["units"]:
-                            group["units"][unitNo]["x"] = startPointX
-                            group["units"][unitNo]["y"] = startPointY
                     
-                    group["x"] = startPointX
-                    group["y"] = startPointY
+                    if(2 in group["route"]["points"]):
+                        group["route"]["points"][2]["x"] = bullseyeX
+                        group["route"]["points"][2]["y"] = bullseyeY
 
-                    aiCount[coalition] += 1
+                    if(3 in group["route"]["points"]):
+                        group["route"]["points"][3]["x"] = bullseyeX + (bullseyeX - startPointX)
+                        group["route"]["points"][3]["y"] = bullseyeY + (bullseyeY - startPointY)
+                else:
+                    group["route"]["points"][1]["x"] = startPointX
+                    group["route"]["points"][1]["y"] = startPointY
+                    
+                    numWp = len(group["route"]["points"])
+
+                    for i in range(2, numWp - 1):
+                        weight = 0.05 * i
+                        group["route"]["points"][i]["x"] = (1-weight)*startPointX + weight * bullseyeX
+                        group["route"]["points"][i]["y"] = (1-weight)*startPointY + weight * bullseyeY
+
+                    group["route"]["points"][numWp-1]["x"] = bullseyeX
+                    group["route"]["points"][numWp-1]["y"] = bullseyeY
+
+                    group["route"]["points"][numWp]["x"] = bullseyeX + 0.95*(bullseyeX - startPointX)
+                    group["route"]["points"][numWp]["y"] = bullseyeY + 0.95*(bullseyeY - startPointY)
+
+                for unitNo in group["units"]:
+                    group["units"][unitNo]["x"] = startPointX + startPointDeltaX * (unitNo-1)
+                    group["units"][unitNo]["y"] = startPointY + startPointDeltaY * (unitNo-1)
+                    if(RANDOM_HEADING):
+                        group["units"][unitNo]["heading"] = 2*(np.random.rand()-0.5)*np.pi
+                        group["units"][unitNo]["psi"] = 2*(np.random.rand()-0.5)*np.pi
+                    else:
+                        psi = -radDirection+np.pi
+                        if(psi < -np.pi):
+                            psi += 2*np.pi
+                        if(psi > np.pi):
+                            psi -= 2*np.pi
+                        
+                        group["units"][unitNo]["heading"] = 0
+                        group["units"][unitNo]["psi"] = psi
+                        
+                group["x"] = startPointX
+                group["y"] = startPointY
+
+                if(not mAlt is None):
+                    for pointNo in group["route"]["points"]:
+                        group["route"]["points"][pointNo]["alt"] = mAlt
+
+                    for unitNo in group["units"]:
+                        group["units"][unitNo]["alt"] = mAlt
+
+                clientCount[coalition] += 1
+            else:
+                #print(group["name"],": ",len(group["route"]["points"]))
+                if(len(group["route"]["points"]) == 1):
+                    startPointX = bullseyeX + mAiPlaneDistance * aiRangeScale * np.cos(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
+                    startPointY = bullseyeY + mAiPlaneDistance * aiRangeScale * np.sin(radDirection + RAD_DIRECTION_DELTA * aiCount[coalition] * 50)
+                    
+                    group["route"]["points"][1]["x"] = startPointX
+                    group["route"]["points"][1]["y"] = startPointY
+                else:
+                    basePointX = bullseyeX + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.cos(radDirection)
+                    basePointY = bullseyeY + (mAiPlaneDistance + NM_AI_RANGE_DELTA * M_PER_NM * aiCount[coalition]) * aiRangeScale * np.sin(radDirection)
+
+                    startPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection+np.pi/2)
+                    startPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection+np.pi/2)
+
+                    endPointX = basePointX + NM_AI_TRACK/2 * M_PER_NM * np.cos(radDirection-np.pi/2)
+                    endPointY = basePointY + NM_AI_TRACK/2 * M_PER_NM * np.sin(radDirection-np.pi/2)
+                    
+                    if(aiCount[coalition] % 2 == 1):
+                        startPointX,endPointX = endPointX,startPointX
+                        startPointY,endPointY = endPointY,startPointY
+
+
+                    numWp = len(group["route"]["points"])
+                    for i in range(0,numWp-2):
+                        weight = 0.05 * i
+                        group["route"]["points"][i+1]["x"] = (1-weight) * basePointX + weight * startPointX
+                        group["route"]["points"][i+1]["y"] = (1-weight) * basePointY + weight * startPointY
+
+                    group["route"]["points"][numWp-1]["x"] = startPointX
+                    group["route"]["points"][numWp-1]["y"] = startPointY
+
+                    group["route"]["points"][numWp]["x"] = endPointX
+                    group["route"]["points"][numWp]["y"] = endPointY
+
+                for unitNo in group["units"]:
+                        group["units"][unitNo]["x"] = startPointX
+                        group["units"][unitNo]["y"] = startPointY
+                
+                group["x"] = startPointX
+                group["y"] = startPointY
+
+                aiCount[coalition] += 1
     
     return (bullseyeX,bullseyeY),radBlueDirection
 
@@ -456,18 +471,40 @@ def sanitizeStn(missionDict):
     ##################################
     # Sanitize STN
     ##################################
+    # global STN_START
+
+    # for countryNo in missionDict["coalition"]["blue"]["country"]:
+    #     for groupNo in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"]:
+    #         groupHaveStn = False
+    #         for unitId in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"]:
+    #             if("AddPropAircraft" in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId] 
+    #             and "STN_L16" in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId]["AddPropAircraft"]):
+    #                 missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId]["AddPropAircraft"]["STN_L16"] = "{:05}".format(STN_START + unitId)
+    #                 groupHaveStn = True
+
+    #         if(groupHaveStn):
+    #             STN_START = incrementStn(STN_START)
     global STN_START
+
+    groups = []
+    groupNames = []
     for countryNo in missionDict["coalition"]["blue"]["country"]:
         for groupNo in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"]:
-            groupHaveStn = False
-            for unitId in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"]:
-                if("AddPropAircraft" in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId] 
-                and "STN_L16" in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId]["AddPropAircraft"]):
-                    missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId]["AddPropAircraft"]["STN_L16"] = "{:05}".format(STN_START + unitId)
-                    groupHaveStn = True
+            groups.append(missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo])
+            groupNames.append(missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["name"])
 
-            if(groupHaveStn):
-                STN_START = incrementStn(STN_START)
+    indices = np.argsort(groupNames)
+
+    for idx in indices:
+        groupHaveStn = False
+        for unitId in groups[idx]["units"]:
+            if("AddPropAircraft" in groups[idx]["units"][unitId] 
+            and "STN_L16" in groups[idx]["units"][unitId]["AddPropAircraft"]):
+                groups[idx]["units"][unitId]["AddPropAircraft"]["STN_L16"] = "{:05}".format(STN_START + unitId)
+                groupHaveStn = True
+
+        if(groupHaveStn):
+            STN_START = incrementStn(STN_START)
 
 def sanitizeGroupNo(missionDict):
     newGroupId = 1
@@ -519,6 +556,15 @@ def sanitizeUnitId(missionDict):
                         for donorId in group["units"][unitNo]["datalinks"]["Link16"]["network"]["donors"]:
                             group["units"][unitNo]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] = unitIdConversionDict[group["units"][unitNo]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"]]
 
+def sanitizeUnitNames(missionDict):
+    for coalition in missionDict["coalition"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+
+                for unitId in group["units"]:
+                    unit = group["units"][unitId]
+                    unit["name"] = group["name"] + "-{:}".format(unitId)
 
 
 def copyBlueToRed(missionDict):
@@ -600,6 +646,75 @@ def copyBlueToRed(missionDict):
             missionDict["coalition"]["red"]["country"][1]["plane"]["group"][newGroupCount] = group
             newGroupCount += 1
 
+def getBlankId(idDict):
+    id = 1
+    while(id in idDict):
+        id+=1
+    return id
+
+def copyRenameSectors(missionDict,numSectors):
+    TMP_LINK16_SECOTR_OFFSET = 1000
+    ##################################
+    # Create unitId conversion dict
+    ##################################
+    unitIdConversionDict = OrderedDict()
+    for countryNo in missionDict["coalition"]["blue"]["country"]:
+        for groupNo in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"]:
+            for unitId in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"]:
+                missionUnitId = missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["units"][unitId]["unitId"]
+                unitIdConversionDict[missionUnitId] = [-1]*numSectors
+                unitIdConversionDict[missionUnitId][0] = missionUnitId
+
+    newUnitId = 1
+    for missionUnitId in unitIdConversionDict:
+        for sectorId in range(1,len(unitIdConversionDict[missionUnitId])):
+            if(unitIdConversionDict[missionUnitId][sectorId] < 0):
+                while(newUnitId in unitIdConversionDict):
+                    newUnitId += 1
+                unitIdConversionDict[missionUnitId][sectorId] = newUnitId
+                newUnitId += 1
+
+    ##################################
+    # Rename group names(Add sector id, BLUE only)
+    ##################################
+    for coalition in missionDict["coalition"]:
+        for countryNo in missionDict["coalition"][coalition]["country"]:
+            for groupNo in missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"]:
+                group = missionDict["coalition"][coalition]["country"][countryNo]["plane"]["group"][groupNo]
+                group["name"] = "S1 " + group["name"]
+
+    ##################################
+    # Copy ST2-
+    ##################################
+    for sectorId in range(1,numSectors):
+        for countryNo in missionDict["coalition"]["blue"]["country"]:
+            modifiedGroups = copy.deepcopy(missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"])
+            
+            for groupNo in missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"]:
+                if(missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo]["name"].startswith("S1 ")):
+                    group = copy.deepcopy(missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"][groupNo])
+                    group["name"] = group["name"].replace("S1","S{:1} ".format(sectorId+1))
+
+                    for unitId in group["units"]:
+                        group["units"][unitId]["unitId"] = unitIdConversionDict[group["units"][unitId]["unitId"]][sectorId]
+
+                        if("AddPropAircraft" in group["units"][unitId] and "STN_L16" in group["units"][unitId]["AddPropAircraft"]):
+                            group["units"][unitId]["AddPropAircraft"]["STN_L16"] = "{:05}".format(int(group["units"][unitId]["AddPropAircraft"]["STN_L16"])+TMP_LINK16_SECOTR_OFFSET*sectorId)
+
+                        if("datalinks" in group["units"][unitId] and "Link16" in group["units"][unitId]["datalinks"] and "network" in group["units"][unitId]["datalinks"]["Link16"] and "teamMembers" in group["units"][unitId]["datalinks"]["Link16"]["network"]):
+                            for teamMemberId in group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"]:
+                                if(group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"] in unitIdConversionDict):
+                                    group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"] = unitIdConversionDict[group["units"][unitId]["datalinks"]["Link16"]["network"]["teamMembers"][teamMemberId]["missionUnitId"]][sectorId]
+
+                            for donorId in group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"]:
+                                if(group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] in unitIdConversionDict):
+                                    group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"] = unitIdConversionDict[group["units"][unitId]["datalinks"]["Link16"]["network"]["donors"][donorId]["missionUnitId"]][sectorId]
+                    
+                    newGroupId = getBlankId(modifiedGroups)
+                    modifiedGroups[newGroupId] = group
+
+            missionDict["coalition"]["blue"]["country"][countryNo]["plane"]["group"] = modifiedGroups
+
 def addStnToName(missionDict):
     for coalition in ["blue","red"]:
         for countryNo in missionDict["coalition"][coalition]["country"]:
@@ -628,6 +743,9 @@ def copyPayload(missionDict):
 
                         if("livery_id" in group["units"][unitId] and "livery_id" in group["units"][1]):
                             group["units"][unitId]["livery_id"] = group["units"][1]["livery_id"]
+
+                        if("DTC" in group["units"][unitId] and "DTC" in group["units"][1]):
+                            group["units"][unitId]["DTC"] = group["units"][1]["DTC"]
 
 def swapWeapons(aim120b,removeTank):
     if(aim120b):
@@ -902,6 +1020,58 @@ def setOptions(missionDict,changeBdaOption,bda):
     if(changeBdaOption):
         missionDict["forcedOptions"]["RBDAI"] = bda
 
+def getBullseysPosAndDirction(airportNames,ccspos):
+    airportCandidates = []
+
+    if(airportNames is None):
+        for key,val in theatreInfo[theatre]["Airports"].items():
+            airportCandidates.append(key)
+    else:
+        for i in range(len(airportNames)):
+            if(airportNames[i]=="all"):
+                for key,val in theatreInfo[theatre]["Airports"].items():
+                    airportCandidates.append(key)
+            else:
+                for key,val in theatreInfo[theatre]["Airports"].items():
+                    if(val["name"].lower().replace(" ","").startswith(airportNames[i].lower().replace(" ",""))):
+                        airportCandidates.append(key)
+
+
+    if(len(airportCandidates) == 2):
+        airport1,airport2 = random.sample(airportCandidates,2)
+        pos1 = (theatreInfo[theatre]["Airports"][airport1]["X"] , theatreInfo[theatre]["Airports"][airport1]["Y"])
+        pos2 = (theatreInfo[theatre]["Airports"][airport2]["X"] , theatreInfo[theatre]["Airports"][airport2]["Y"])
+        bullseyePos = [(pos1[0]+pos2[0])/2,(pos1[1]+pos2[1])/2]
+        radBlueDirection = np.arctan2(pos1[1]-pos2[1],pos1[0]-pos2[0])
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["shortname"]+"_"+theatreInfo[theatre]["Airports"][airport2]["shortname"]
+    elif(len(airportCandidates) == 1):
+        bullseyePos = [theatreInfo[theatre]["Airports"][airportCandidates[0]]["X"],theatreInfo[theatre]["Airports"][airportCandidates[0]]["Y"]]
+        radBlueDirection = None
+        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["shortname"]
+    elif(ccspos is not None):
+        if(len(ccspos) == 3):
+            bullseyePos = [float(ccspos[0]),float(ccspos[1])]
+            radBlueDirection = float(ccspos[2])*np.pi/180
+        elif(len(ccspos) == 2):
+            bullseyePos = [float(ccspos[0]),float(ccspos[1])]
+            radBlueDirection = None
+        else:
+            bullseyePos = None
+            radBlueDirection = None
+        airportPostfix = ""
+    else:
+        bullseyePos = None
+        radBlueDirection = None
+        airportPostfix = ""
+
+    if(not bullseyePos is None):
+        bullseyePos[0] += np.random.uniform(-args.posJitter * M_PER_NM,args.posJitter * M_PER_NM)
+        bullseyePos[1] += np.random.uniform(-args.posJitter * M_PER_NM,args.posJitter * M_PER_NM)
+
+    if(not radBlueDirection is None):
+        radBlueDirection += np.random.uniform(-args.angleJitter*np.pi/180,args.angleJitter*np.pi/180)
+
+    return bullseyePos,radBlueDirection,airportPostfix
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="description sample")
@@ -921,6 +1091,7 @@ if __name__ == "__main__":
     parser.add_argument('--bda',type=str,default='default',help="default|true|false")
     parser.add_argument('--aim120b',type=bool,default=False,help="True|False")
     parser.add_argument('--notank',type=bool,default=False,help="True|False")
+    parser.add_argument('--multisector',type=bool,default=False,help="True|False")
 
     args = parser.parse_args()
 
@@ -943,64 +1114,7 @@ if __name__ == "__main__":
     
     with open("TheatreInfo.json") as f:
         theatreInfo = json.load(f)
-    
-    ##############################################
-    # Airportのパース, Bullseye位置の設定
-    ##############################################
-    airportCandidates = []
-    if(not args.airports is None):
-        airportNames = args.airports.split(",")
 
-        for airportName in airportNames:
-            if(airportName=="all"):
-                for key,val in theatreInfo[theatre]["Airports"].items():
-                    airportCandidates.append(key)
-            else:
-                for key,val in theatreInfo[theatre]["Airports"].items():
-                    if(val["name"].lower().replace(" ","").startswith(airportName.lower().replace(" ",""))):
-                        airportCandidates.append(key)
-
-    
-    if(len(airportCandidates) == 2):
-        airport1,airport2 = random.sample(airportCandidates,2)
-        pos1 = (theatreInfo[theatre]["Airports"][airport1]["X"] , theatreInfo[theatre]["Airports"][airport1]["Y"])
-        pos2 = (theatreInfo[theatre]["Airports"][airport2]["X"] , theatreInfo[theatre]["Airports"][airport2]["Y"])
-        bullseyePos = [(pos1[0]+pos2[0])/2,(pos1[1]+pos2[1])/2]
-        radBlueDirection = np.arctan2(pos1[1]-pos2[1],pos1[0]-pos2[0])
-        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airport1]["shortname"]+"_"+theatreInfo[theatre]["Airports"][airport2]["shortname"]
-    elif(len(airportCandidates) == 1):
-        bullseyePos = [theatreInfo[theatre]["Airports"][airportCandidates[0]]["X"],theatreInfo[theatre]["Airports"][airportCandidates[0]]["Y"]]
-        radBlueDirection = None
-        airportPostfix = "_"+theatreInfo[theatre]["Airports"][airportCandidates[0]]["shortname"]
-    elif(not args.ccspos is None):
-        ccsElements = args.ccspos.split(",")
-        if(len(ccsElements) == 3):
-            bullseyePos = [float(ccsElements[0]),float(ccsElements[1])]
-            radBlueDirection = float(ccsElements[2])*np.pi/180
-        elif(len(ccsElements) == 2):
-            bullseyePos = [float(ccsElements[0]),float(ccsElements[1])]
-            radBlueDirection = None
-        else:
-            bullseyePos = None
-            radBlueDirection = None
-        airportPostfix = ""
-    else:
-        bullseyePos = None
-        radBlueDirection = None
-        airportPostfix = ""    
-    
-    if(not bullseyePos is None):
-        bullseyePos[0] += np.random.uniform(-args.posJitter * M_PER_NM,args.posJitter * M_PER_NM)
-        bullseyePos[1] += np.random.uniform(-args.posJitter * M_PER_NM,args.posJitter * M_PER_NM)
-
-    if(not radBlueDirection is None):
-        radBlueDirection += np.random.uniform(-args.angleJitter*np.pi/180,args.angleJitter*np.pi/180)
-
-
-    if(args.alt is None):
-        mAlt = None
-    else:
-        mAlt = args.alt * M_PER_FEET
 
     ##############################################
     # 距離のパース
@@ -1063,15 +1177,53 @@ if __name__ == "__main__":
     setWind(missionDict,args.wind)
     
     missionDict["theatre"] = theatre
+    if(args.multisector):
+        copyRenameSectors(missionDict,len(MULTISECTOR_COORDINATES))
     sanitizeStn(missionDict)
     copyPayload(missionDict)
     copyBlueToRed(missionDict)
     swapWeapons(args.aim120b,args.notank)
     sanitizeGroupNo(missionDict)
     sanitizeUnitId(missionDict)
+    sanitizeUnitNames(missionDict)
     addStnToName(missionDict)
     setOptions(missionDict,changeBdaOption,bda)
-    bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection,mAlt)
+
+    if(args.multisector):
+        for sectorId in range(len(MULTISECTOR_COORDINATES)):
+            if(MULTISECTOR_COORDINATES[sectorId][0]=="airport"):
+                airportNames = [MULTISECTOR_COORDINATES[sectorId][1][0],MULTISECTOR_COORDINATES[sectorId][1][1]]
+                ccspos = None
+            elif(MULTISECTOR_COORDINATES[sectorId][0]=="ccspos"):
+                airportNames = []
+                ccspos = MULTISECTOR_COORDINATES[sectorId][1]
+
+            if(len(MULTISECTOR_COORDINATES[sectorId])>2):
+                mAlt = MULTISECTOR_COORDINATES[sectorId][2]
+            else:
+                if(args.alt is None):
+                    mAlt = None
+                else:
+                    mAlt = args.alt * M_PER_FEET
+
+            bullseyePos,radBlueDirection,_ = getBullseysPosAndDirction(airportNames,ccspos)
+            bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection,mAlt,True,sectorId)
+            airportPostfix = ""
+    else:
+        ##############################################
+        # Airportのパース, Bullseye位置の設定
+        ##############################################
+        if(not args.airports is None):
+            airportNames = args.airports.split(",")
+        else:
+            airportNames = None
+        
+        if(args.alt is None):
+            mAlt = None
+        else:
+            mAlt = args.alt * M_PER_FEET
+        bullseyePos,radBlueDirection,airportPostfix = getBullseysPosAndDirction(airportNames,args.ccspos)
+        bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection,mAlt,False,0)
 
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())
     

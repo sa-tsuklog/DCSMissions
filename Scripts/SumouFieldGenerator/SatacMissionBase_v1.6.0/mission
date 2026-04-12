@@ -260,9 +260,9 @@ mission =
 	}, -- end of ["triggers"]
 	["map"] = 
 	{
-		["centerY"] = 695054.91194345,
-		["zoom"] = 4488.8957073017,
-		["centerX"] = -97013.589207317,
+		["centerY"] = 698174.27968123,
+		["zoom"] = 27917.742260928,
+		["centerX"] = -101772.18650838,
 	}, -- end of ["map"]
 	["coalitions"] = 
 	{
@@ -421,11 +421,11 @@ mission =
 													{
 														[1] = 
 														{
-															["enabled"] = true,
-															["auto"] = true,
-															["id"] = "EngageTargets",
 															["number"] = 1,
 															["key"] = "CAP",
+															["id"] = "EngageTargets",
+															["enabled"] = true,
+															["auto"] = true,
 															["params"] = 
 															{
 																["targetTypes"] = 
@@ -681,14 +681,20 @@ mission =
 												[1] = 
 												{
 													["name"] = "F-16C Default",
-													["default"] = true,
+													["default"] = false,
 												}, -- end of [1]
 												[2] = 
 												{
 													["name"] = "F-16C 5CH-FL",
 													["default"] = false,
 												}, -- end of [2]
+												[3] = 
+												{
+													["name"] = "F-16CM bl.50 5FLCH_15CH",
+													["default"] = true,
+												}, -- end of [3]
 											}, -- end of ["Cartridges"]
+											["AutoLoad"] = true,
 										}, -- end of ["DTC"]
 										["speed"] = 446.78631600017,
 										["AddPropAircraft"] = 
@@ -1663,7 +1669,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 693965.90143959,
 								["x"] = -96174.819529651,
-								["name"] = "F-16C.5 AIM-120Cx4, AIM-9Mx2, Fuelx3, TGP BLUE",
+								["name"] = "F-16C.5 AIM-120Cx4, AIM-9Mx2, Fuelx3, TGP, C90F30 BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["uncontrollable"] = false,
@@ -1987,8 +1993,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -2020,8 +2026,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -2174,8 +2180,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -2207,8 +2213,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -2359,8 +2365,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -2392,8 +2398,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -2546,8 +2552,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -2579,8 +2585,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -2825,7 +2831,7 @@ mission =
 										["onboard_num"] = "046",
 										["y"] = 665657.3518469,
 										["x"] = -38969.836826246,
-										["name"] = "Aerial-1-9",
+										["name"] = "AWACS, BLUE",
 										["payload"] = 
 										{
 											["pylons"] = {},
@@ -2846,7 +2852,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 665657.3518469,
 								["x"] = -38969.836826246,
-								["name"] = "BLUE AWACS",
+								["name"] = "AWACS, BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["frequency"] = 251,
@@ -5025,8 +5031,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -5058,8 +5064,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -5215,8 +5221,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -5248,8 +5254,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -5405,8 +5411,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -5438,8 +5444,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -5595,8 +5601,8 @@ mission =
 													[25] = 255,
 													[13] = 264,
 													[26] = 259,
-													[7] = 262,
 													[27] = 262,
+													[7] = 262,
 													[14] = 266,
 													[28] = 257,
 													[23] = 260,
@@ -5628,8 +5634,8 @@ mission =
 													[25] = 0,
 													[13] = 0,
 													[26] = 0,
-													[7] = 0,
 													[27] = 0,
+													[7] = 0,
 													[14] = 0,
 													[28] = 0,
 													[23] = 0,
@@ -6007,6 +6013,11 @@ mission =
 													["name"] = "F-16C 5CH-FL",
 													["default"] = false,
 												}, -- end of [2]
+												[3] = 
+												{
+													["name"] = "F-16CM bl.50 5FLCH_15CH",
+													["default"] = false,
+												}, -- end of [3]
 											}, -- end of ["Cartridges"]
 										}, -- end of ["DTC"]
 										["speed"] = 446.78631600017,
@@ -7130,21 +7141,21 @@ mission =
 											["IsModifiedJesterAllowed"] = true,
 											["LaserCodeDigit4"] = 8,
 											["ChaffDoubleDispense"] = false,
-											["INSAlignmentStored"] = true,
+											["Quality"] = 100,
 											["IsEfbAllowed"] = true,
 											["VORILSFrequencyMHZ"] = 108,
 											["IffMode2Digit4"] = 0,
 											["IffMode2Digit2"] = 0,
 											["CombatTreeSpoofable"] = 2,
 											["LaserCodeDigit2"] = 6,
-											["UseReferenceAircraft"] = 0,
+											["KY28Key"] = 1,
 											["LaserCodeDigit3"] = 8,
 											["IffMode2Digit1"] = 0,
 											["VORILSFrequencyDecimalMHZ"] = 0,
-											["KY28Key"] = 1,
+											["UseReferenceAircraft"] = 0,
 											["IffMode2Digit3"] = 0,
 											["Wear"] = 0,
-											["Quality"] = 100,
+											["INSAlignmentStored"] = true,
 											["TacanChannel"] = 0,
 											["LaserCodeDigit1"] = 1,
 										}, -- end of ["AddPropAircraft"]
@@ -7291,21 +7302,21 @@ mission =
 											["IsModifiedJesterAllowed"] = true,
 											["LaserCodeDigit4"] = 8,
 											["ChaffDoubleDispense"] = false,
-											["INSAlignmentStored"] = true,
+											["Quality"] = 100,
 											["IsEfbAllowed"] = true,
 											["VORILSFrequencyMHZ"] = 108,
 											["IffMode2Digit4"] = 0,
 											["IffMode2Digit2"] = 0,
 											["CombatTreeSpoofable"] = 2,
 											["LaserCodeDigit2"] = 6,
-											["UseReferenceAircraft"] = false,
+											["KY28Key"] = 1,
 											["LaserCodeDigit3"] = 8,
 											["IffMode2Digit1"] = 0,
 											["VORILSFrequencyDecimalMHZ"] = 0,
-											["KY28Key"] = 1,
+											["UseReferenceAircraft"] = 0,
 											["IffMode2Digit3"] = 0,
 											["Wear"] = 0,
-											["Quality"] = 100,
+											["INSAlignmentStored"] = true,
 											["TacanChannel"] = 0,
 											["LaserCodeDigit1"] = 1,
 										}, -- end of ["AddPropAircraft"]
@@ -7452,21 +7463,21 @@ mission =
 											["IsModifiedJesterAllowed"] = true,
 											["LaserCodeDigit4"] = 8,
 											["ChaffDoubleDispense"] = false,
-											["INSAlignmentStored"] = true,
+											["Quality"] = 100,
 											["IsEfbAllowed"] = true,
 											["VORILSFrequencyMHZ"] = 108,
 											["IffMode2Digit4"] = 0,
 											["IffMode2Digit2"] = 0,
 											["CombatTreeSpoofable"] = 2,
 											["LaserCodeDigit2"] = 6,
-											["UseReferenceAircraft"] = false,
+											["KY28Key"] = 1,
 											["LaserCodeDigit3"] = 8,
 											["IffMode2Digit1"] = 0,
 											["VORILSFrequencyDecimalMHZ"] = 0,
-											["KY28Key"] = 1,
+											["UseReferenceAircraft"] = 0,
 											["IffMode2Digit3"] = 0,
 											["Wear"] = 0,
-											["Quality"] = 100,
+											["INSAlignmentStored"] = true,
 											["TacanChannel"] = 0,
 											["LaserCodeDigit1"] = 1,
 										}, -- end of ["AddPropAircraft"]
@@ -7613,21 +7624,21 @@ mission =
 											["IsModifiedJesterAllowed"] = true,
 											["LaserCodeDigit4"] = 8,
 											["ChaffDoubleDispense"] = false,
-											["INSAlignmentStored"] = true,
+											["Quality"] = 100,
 											["IsEfbAllowed"] = true,
 											["VORILSFrequencyMHZ"] = 108,
 											["IffMode2Digit4"] = 0,
 											["IffMode2Digit2"] = 0,
 											["CombatTreeSpoofable"] = 2,
 											["LaserCodeDigit2"] = 6,
-											["UseReferenceAircraft"] = false,
+											["KY28Key"] = 1,
 											["LaserCodeDigit3"] = 8,
 											["IffMode2Digit1"] = 0,
 											["VORILSFrequencyDecimalMHZ"] = 0,
-											["KY28Key"] = 1,
+											["UseReferenceAircraft"] = 0,
 											["IffMode2Digit3"] = 0,
 											["Wear"] = 0,
-											["Quality"] = 100,
+											["INSAlignmentStored"] = true,
 											["TacanChannel"] = 0,
 											["LaserCodeDigit1"] = 1,
 										}, -- end of ["AddPropAircraft"]
@@ -8053,9 +8064,9 @@ mission =
 										{
 											["ChaffBurst"] = 0,
 											["LAU68ROF"] = 0,
-											["FlareBurst"] = 0,
-											["ChaffSalvo"] = 0,
 											["FlareBurstInt"] = 0,
+											["ChaffSalvo"] = 0,
+											["FlareBurst"] = 0,
 											["ChaffSalvoInt"] = 0,
 											["LAU3ROF"] = 0,
 											["ChaffBurstInt"] = 0,
@@ -8149,9 +8160,9 @@ mission =
 										{
 											["ChaffBurst"] = 0,
 											["LAU68ROF"] = 0,
-											["FlareBurst"] = 0,
-											["ChaffSalvo"] = 0,
 											["FlareBurstInt"] = 0,
+											["ChaffSalvo"] = 0,
+											["FlareBurst"] = 0,
 											["ChaffSalvoInt"] = 0,
 											["LAU3ROF"] = 0,
 											["ChaffBurstInt"] = 0,
@@ -8245,9 +8256,9 @@ mission =
 										{
 											["ChaffBurst"] = 0,
 											["LAU68ROF"] = 0,
-											["FlareBurst"] = 0,
-											["ChaffSalvo"] = 0,
 											["FlareBurstInt"] = 0,
+											["ChaffSalvo"] = 0,
+											["FlareBurst"] = 0,
 											["ChaffSalvoInt"] = 0,
 											["LAU3ROF"] = 0,
 											["ChaffBurstInt"] = 0,
@@ -8341,9 +8352,9 @@ mission =
 										{
 											["ChaffBurst"] = 0,
 											["LAU68ROF"] = 0,
-											["FlareBurst"] = 0,
-											["ChaffSalvo"] = 0,
 											["FlareBurstInt"] = 0,
+											["ChaffSalvo"] = 0,
+											["FlareBurst"] = 0,
 											["ChaffSalvoInt"] = 0,
 											["LAU3ROF"] = 0,
 											["ChaffBurstInt"] = 0,
@@ -14766,11 +14777,11 @@ mission =
 													{
 														[1] = 
 														{
-															["enabled"] = true,
-															["auto"] = true,
-															["id"] = "EngageTargets",
 															["number"] = 1,
 															["key"] = "CAP",
+															["id"] = "EngageTargets",
+															["enabled"] = true,
+															["auto"] = true,
 															["params"] = 
 															{
 																["targetTypes"] = 
@@ -15033,6 +15044,11 @@ mission =
 													["name"] = "F-16C 5CH-FL",
 													["default"] = false,
 												}, -- end of [2]
+												[3] = 
+												{
+													["name"] = "F-16CM bl.50 5FLCH_15CH",
+													["default"] = false,
+												}, -- end of [3]
 											}, -- end of ["Cartridges"]
 										}, -- end of ["DTC"]
 										["speed"] = 446.78631600017,
@@ -16019,11 +16035,11 @@ mission =
 													{
 														[1] = 
 														{
-															["number"] = 1,
-															["key"] = "CAP",
-															["id"] = "EngageTargets",
 															["enabled"] = true,
 															["auto"] = true,
+															["id"] = "EngageTargets",
+															["number"] = 1,
+															["key"] = "CAP",
 															["params"] = 
 															{
 																["targetTypes"] = 
@@ -16279,14 +16295,20 @@ mission =
 												[1] = 
 												{
 													["name"] = "F-16C Default",
-													["default"] = true,
+													["default"] = false,
 												}, -- end of [1]
 												[2] = 
 												{
 													["name"] = "F-16C 5CH-FL",
 													["default"] = false,
 												}, -- end of [2]
+												[3] = 
+												{
+													["name"] = "F-16CM bl.50 5FLCH_15CH",
+													["default"] = true,
+												}, -- end of [3]
 											}, -- end of ["Cartridges"]
+											["AutoLoad"] = true,
 										}, -- end of ["DTC"]
 										["speed"] = 446.78631600017,
 										["AddPropAircraft"] = 
@@ -17114,7 +17136,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 693926.63364479,
 								["x"] = -96346.616131899,
-								["name"] = "F-16C.3 AIM-120Cx4, AIM-9Mx2, Fuelx3, C90F30 BLUE-1",
+								["name"] = "F-16C.3 AIM-120Cx4, AIM-9Mx2, Fuelx3, C90F30 BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["uncontrollable"] = false,
@@ -17406,14 +17428,20 @@ mission =
 												[1] = 
 												{
 													["name"] = "F-16C Default",
-													["default"] = true,
+													["default"] = false,
 												}, -- end of [1]
 												[2] = 
 												{
 													["name"] = "F-16C 5CH-FL",
 													["default"] = false,
 												}, -- end of [2]
+												[3] = 
+												{
+													["name"] = "F-16CM bl.50 5FLCH_15CH",
+													["default"] = true,
+												}, -- end of [3]
 											}, -- end of ["Cartridges"]
+											["AutoLoad"] = true,
 										}, -- end of ["DTC"]
 										["speed"] = 446.78631600017,
 										["AddPropAircraft"] = 
@@ -18388,7 +18416,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 693974.59740206,
 								["x"] = -96067.384113943,
-								["name"] = "F-16C.6 AIM-120Cx4, AIM-9Mx2, Fuelx2, ECM, TGP BLUE",
+								["name"] = "F-16C.6 AIM-120Cx4, AIM-9Mx2, Fuelx2, ECM, TGP, C90F30 BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["uncontrollable"] = false,
@@ -18420,11 +18448,11 @@ mission =
 													{
 														[1] = 
 														{
-															["enabled"] = true,
-															["auto"] = true,
-															["id"] = "EngageTargets",
 															["number"] = 1,
 															["key"] = "CAP",
+															["id"] = "EngageTargets",
+															["enabled"] = true,
+															["auto"] = true,
 															["params"] = 
 															{
 																["targetTypes"] = 
@@ -18680,14 +18708,20 @@ mission =
 												[1] = 
 												{
 													["name"] = "F-16C Default",
-													["default"] = true,
+													["default"] = false,
 												}, -- end of [1]
 												[2] = 
 												{
 													["name"] = "F-16C 5CH-FL",
 													["default"] = false,
 												}, -- end of [2]
+												[3] = 
+												{
+													["name"] = "F-16CM bl.50 5FLCH_15CH",
+													["default"] = true,
+												}, -- end of [3]
 											}, -- end of ["Cartridges"]
+											["AutoLoad"] = true,
 										}, -- end of ["DTC"]
 										["speed"] = 446.78631600017,
 										["AddPropAircraft"] = 
@@ -20255,7 +20289,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 693411.90664551,
 								["x"] = -96410.201673633,
-								["name"] = "F-15C.1 AIM-120Cx4, AIM-9Mx4, Fuelx3, BLUE-1",
+								["name"] = "F-15C.1 AIM-120Cx4, AIM-9Mx4, Fuelx3, BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["uncontrollable"] = false,
@@ -20287,11 +20321,11 @@ mission =
 													{
 														[1] = 
 														{
-															["number"] = 1,
-															["auto"] = true,
-															["id"] = "EngageTargets",
 															["enabled"] = true,
 															["key"] = "CAP",
+															["id"] = "EngageTargets",
+															["number"] = 1,
+															["auto"] = true,
 															["params"] = 
 															{
 																["targetTypes"] = 
@@ -22130,7 +22164,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 693426.0892676,
 								["x"] = -96280.174499636,
-								["name"] = "F-15C.3 FAST AIM-120Cx4, AIM-7MHx2, AIM-9Mx2, Fuelx3, BLUE-1",
+								["name"] = "F-15C.3 FAST AIM-120Cx4, AIM-7MHx2, AIM-9Mx2, Fuelx3, BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["uncontrollable"] = false,
@@ -31531,7 +31565,7 @@ mission =
 										["onboard_num"] = "033",
 										["y"] = 664945.82647974,
 										["x"] = -40797.560093255,
-										["name"] = "Aerial-1-1",
+										["name"] = "Tanker, BLUE",
 										["payload"] = 
 										{
 											["pylons"] = {},
@@ -31552,7 +31586,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 664945.82647974,
 								["x"] = -40797.560093255,
-								["name"] = "Tanker",
+								["name"] = "Tanker, BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["frequency"] = 251,
@@ -31756,7 +31790,7 @@ mission =
 										["onboard_num"] = "038",
 										["y"] = 664382.24903442,
 										["x"] = -42092.745081837,
-										["name"] = "Tanker2",
+										["name"] = "Tanker2, BLUE",
 										["payload"] = 
 										{
 											["pylons"] = {},
@@ -31777,7 +31811,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 664382.24903442,
 								["x"] = -42092.745081837,
-								["name"] = "Tanker2",
+								["name"] = "Tanker2, BLUE",
 								["communication"] = true,
 								["start_time"] = 0,
 								["frequency"] = 251,
@@ -41838,6 +41872,7 @@ mission =
 							}, -- end of [6]
 							[7] = 
 							{
+								["dynSpawnTemplate"] = false,
 								["modulation"] = 0,
 								["tasks"] = {},
 								["radioSet"] = false,
@@ -41959,7 +41994,7 @@ mission =
 										["onboard_num"] = "047",
 										["y"] = 588762.54917928,
 										["x"] = -319359.72500652,
-										["name"] = "Aerial-1-10",
+										["name"] = "AWACS, RED",
 										["payload"] = 
 										{
 											["pylons"] = {},
@@ -41980,7 +42015,7 @@ mission =
 								}, -- end of ["units"]
 								["y"] = 588762.54917928,
 								["x"] = -319359.72500652,
-								["name"] = "RED AWACS",
+								["name"] = "AWACS, RED",
 								["communication"] = true,
 								["start_time"] = 0,
 								["frequency"] = 251,
@@ -47815,6 +47850,7 @@ mission =
 			["rules"] = {},
 			["comment"] = "MIST Load",
 			["eventlist"] = "",
+			["predicate"] = "triggerStart",
 			["actions"] = 
 			{
 				[1] = 
@@ -47835,7 +47871,6 @@ mission =
 					["value"] = 0,
 				}, -- end of [3]
 			}, -- end of ["actions"]
-			["predicate"] = "triggerStart",
 		}, -- end of [1]
 		[2] = 
 		{
@@ -47867,6 +47902,7 @@ mission =
 				}, -- end of [1]
 			}, -- end of ["rules"]
 			["comment"] = "BubbleShrinkSound",
+			["predicate"] = "triggerContinious",
 			["actions"] = 
 			{
 				[1] = 
@@ -47876,7 +47912,6 @@ mission =
 					["start_delay"] = 0,
 				}, -- end of [1]
 			}, -- end of ["actions"]
-			["predicate"] = "triggerContinious",
 			["eventlist"] = "",
 		}, -- end of [3]
 		[4] = 
@@ -47894,7 +47929,6 @@ mission =
 			}, -- end of ["rules"]
 			["comment"] = "OutOfBufferSound",
 			["eventlist"] = "",
-			["predicate"] = "triggerContinious",
 			["actions"] = 
 			{
 				[1] = 
@@ -47904,6 +47938,7 @@ mission =
 					["start_delay"] = 0,
 				}, -- end of [1]
 			}, -- end of ["actions"]
+			["predicate"] = "triggerContinious",
 		}, -- end of [4]
 		[5] = 
 		{
@@ -47920,7 +47955,6 @@ mission =
 			}, -- end of ["rules"]
 			["comment"] = "OutOfBubbleSound",
 			["eventlist"] = "",
-			["predicate"] = "triggerContinious",
 			["actions"] = 
 			{
 				[1] = 
@@ -47930,6 +47964,7 @@ mission =
 					["start_delay"] = 0,
 				}, -- end of [1]
 			}, -- end of ["actions"]
+			["predicate"] = "triggerContinious",
 		}, -- end of [5]
 		[6] = 
 		{
@@ -47945,7 +47980,6 @@ mission =
 				}, -- end of [1]
 			}, -- end of ["rules"]
 			["eventlist"] = "",
-			["predicate"] = "triggerContinious",
 			["actions"] = 
 			{
 				[1] = 
@@ -47960,6 +47994,7 @@ mission =
 					["predicate"] = "a_clear_flag",
 				}, -- end of [2]
 			}, -- end of ["actions"]
+			["predicate"] = "triggerContinious",
 			["comment"] = "HotaruSound",
 		}, -- end of [6]
 		[7] = 
@@ -47983,16 +48018,16 @@ mission =
 				[1] = 
 				{
 					["start_delay"] = 0,
-					["KeyDict_text"] = "DictKey_ActionText_22",
-					["winner"] = "",
 					["predicate"] = "a_end_mission",
 					["text"] = "DictKey_ActionText_22",
+					["KeyDict_text"] = "DictKey_ActionText_22",
+					["winner"] = "",
 				}, -- end of [1]
 			}, -- end of ["actions"]
 			["colorItem"] = "0x80ffffff",
 		}, -- end of [7]
 	}, -- end of ["trigrules"]
-	["currentKey"] = 150780,
+	["currentKey"] = 160410,
 	["failures"] = 
 	{
 		["pp_damage_EmergMaxTempr"] = 
