@@ -2,6 +2,7 @@ import re
 import json
 from _collections import OrderedDict
 from enum import IntEnum,auto
+import zipfile
 
 RE_TOPLEVEL = "^[ \t]*([A-Za-z0-9_]+)"
 RE_DICT_START = "^[ \t]*{"
@@ -90,64 +91,59 @@ def parseLine(line):
     
     return tokenType,value,remainingLine
 
-
-
-def load(filename):
+def loadFromLines(lines):
     dictStack = []
     currentDict = OrderedDict()
-    
-    with open(filename) as f:
-        lines = f.readlines()
-        state = STATE.SUBSTITUTE    #1line 目を "mission = "等と仮定してスタート
-        propertyKey = re.match(RE_TOPLEVEL,lines[0]).group(1)
-        dictDepth = 0
 
-        for i in range(1,len(lines)):
-            line = lines[i]
+    state = STATE.SUBSTITUTE    #1line 目を "mission = "等と仮定してスタート
+    propertyKey = re.match(RE_TOPLEVEL,lines[0]).group(1)
+    dictDepth = 0
 
-            while(True):
-                tokenType,value,remainingLine = parseLine(line)
+    for i in range(1,len(lines)):
+        line = lines[i]
+
+        while(True):
+            tokenType,value,remainingLine = parseLine(line)
 
 
-                if(tokenType == TOKEN_TYPE.INVALID or tokenType == TOKEN_TYPE.COMMENT):
-                    if(tokenType == TOKEN_TYPE.INVALID and len(line) > 2):  #"\n"は除く
-                        print("in ",filename," line ",i+1,"INVALID LINE: ",line)
-                    break
+            if(tokenType == TOKEN_TYPE.INVALID or tokenType == TOKEN_TYPE.COMMENT):
+                if(tokenType == TOKEN_TYPE.INVALID and len(line) > 2):  #"\n"は除く
+                    print("in ",filename," line ",i+1,"INVALID LINE: ",line)
+                break
 
-                if(state == STATE.IDLE):
-                    if(tokenType == TOKEN_TYPE.PROPERTY_NAME or tokenType == TOKEN_TYPE.PROPERTY_NUM):
-                        propertyKey = value
-                        state = STATE.PROPERTY
-                    elif(tokenType == TOKEN_TYPE.DICT_END):
-                        currentDict = dictStack.pop(len(dictStack)-1)
-                        state = STATE.IDLE
-                        dictDepth-=1
-                        # print("\tDict end, depth = ",dictDepth)
-                    else:
-                        print("in ",filename," line",line+1,": AT STATE.IDLE, Invalid token ",tokenType," (",line,")")
-                elif(state == STATE.PROPERTY):
-                    if(tokenType == TOKEN_TYPE.SUBSTITUTE):
-                        state = STATE.SUBSTITUTE
-                    else:
-                        print("in ",filename," line",line+1,": AT STATE.PROPERTY, Invalid token ",tokenType," (",line,")")
-                elif(state == STATE.SUBSTITUTE):
-                    if(tokenType == TOKEN_TYPE.VAL_TRUE or tokenType == TOKEN_TYPE.VAL_FALSE or 
-                        tokenType == TOKEN_TYPE.VAL_INT or tokenType == TOKEN_TYPE.VAL_FLOAT or tokenType == TOKEN_TYPE.VAL_STRING):
-                        currentDict[propertyKey] = value
-                        state = STATE.IDLE
-                    elif(tokenType == TOKEN_TYPE.DICT_START):
-                        newDict = OrderedDict()
-                        currentDict[propertyKey] = newDict
-                        dictStack.append(currentDict)
-                        currentDict = newDict
-                        state = STATE.IDLE
-                        dictDepth+=1
-                        # print("\t",propertyKey," = New Dict, depth = ",dictDepth)
-                    else:
-                        print("in ",filename," line",line+1,": AT STATE.SUBSTITUTE, Invalid token ",tokenType," (",line,")")
+            if(state == STATE.IDLE):
+                if(tokenType == TOKEN_TYPE.PROPERTY_NAME or tokenType == TOKEN_TYPE.PROPERTY_NUM):
+                    propertyKey = value
+                    state = STATE.PROPERTY
+                elif(tokenType == TOKEN_TYPE.DICT_END):
+                    currentDict = dictStack.pop(len(dictStack)-1)
+                    state = STATE.IDLE
+                    dictDepth-=1
+                    # print("\tDict end, depth = ",dictDepth)
+                else:
+                    print("in ",filename," line",line+1,": AT STATE.IDLE, Invalid token ",tokenType," (",line,")")
+            elif(state == STATE.PROPERTY):
+                if(tokenType == TOKEN_TYPE.SUBSTITUTE):
+                    state = STATE.SUBSTITUTE
+                else:
+                    print("in ",filename," line",line+1,": AT STATE.PROPERTY, Invalid token ",tokenType," (",line,")")
+            elif(state == STATE.SUBSTITUTE):
+                if(tokenType == TOKEN_TYPE.VAL_TRUE or tokenType == TOKEN_TYPE.VAL_FALSE or 
+                    tokenType == TOKEN_TYPE.VAL_INT or tokenType == TOKEN_TYPE.VAL_FLOAT or tokenType == TOKEN_TYPE.VAL_STRING):
+                    currentDict[propertyKey] = value
+                    state = STATE.IDLE
+                elif(tokenType == TOKEN_TYPE.DICT_START):
+                    newDict = OrderedDict()
+                    currentDict[propertyKey] = newDict
+                    dictStack.append(currentDict)
+                    currentDict = newDict
+                    state = STATE.IDLE
+                    dictDepth+=1
+                    # print("\t",propertyKey," = New Dict, depth = ",dictDepth)
+                else:
+                    print("in ",filename," line",line+1,": AT STATE.SUBSTITUTE, Invalid token ",tokenType," (",line,")")
 
-                line = remainingLine
-
+            line = remainingLine
     
     if(dictDepth != 0):
         print("---------parse warning at ",filename,"--------------")
@@ -159,7 +155,23 @@ def load(filename):
         return currentDict[topKey]
     else:
         return OrderedDict()
+
+
+def load(filename):
+    dictStack = []
+    currentDict = OrderedDict()
     
+    with open(filename) as f:
+        lines = f.readlines()
+        return loadFromLines(lines)
+
+def loadMiz(mizFilename,innerFileName):
+    with zipfile.ZipFile(mizFilename) as miz:
+        with miz.open(innerFileName) as f:
+            lines = f.readlines()
+            for i in range(len(lines)):
+                lines[i] = lines[i].decode('utf-8')
+            return loadFromLines(lines)
         
 def keyValToString(key):
         if(isinstance(key,str)):

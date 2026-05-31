@@ -1222,13 +1222,16 @@ if __name__ == "__main__":
     os.makedirs(dtcPath,exist_ok=True)
     
     try:
-        missionDict = LuaDictTool2.load(args.template+"/mission")
-        optionsDict = LuaDictTool2.load(args.template+"/options")
-        #warehousesDict = LuaDictTool.load("TemplateMission/warehouses")
+        # missionDict = LuaDictTool2.load(args.template+"/mission")
+        # optionsDict = LuaDictTool2.load(args.template+"/options")
+        missionDict = LuaDictTool2.loadMiz(args.template,"mission")
+        optionsDict = LuaDictTool2.loadMiz(args.template,"options")
         warehousesGen = WarehousesGenerator(theatre=theatre)
         warehousesGen.setDefaultParameters(theatreInfo=theatreInfo)
-        dictionaryDict = LuaDictTool2.load(args.template+"/l10n/DEFAULT/dictionary")
-        mapResourceDict = LuaDictTool2.load(args.template+"/l10n/DEFAULT/mapResource")
+        # dictionaryDict = LuaDictTool2.load(args.template+"/l10n/DEFAULT/dictionary")
+        # mapResourceDict = LuaDictTool2.load(args.template+"/l10n/DEFAULT/mapResource")
+        dictionaryDict = LuaDictTool2.loadMiz(args.template,"l10n/DEFAULT/dictionary")
+        mapResourceDict = LuaDictTool2.loadMiz(args.template,"l10n/DEFAULT/mapResource")
         theatreGen = TheatreGenerator(theatre=theatre)
         
         weatherTemplates = LuaDictTool2.load("WeatherTemplates.txt")
