@@ -78,6 +78,7 @@ import argparse
 import random
 from enum import IntEnum,auto
 import copy
+import re
 
 OUTPUT_DIR_NAME = "GeneratedMissions"
 
@@ -139,6 +140,10 @@ FEET_CLOUD_BASES = [
 	(1378,9646),	#Overcast And Rain 1
 	(2756,8268),	#Overcast And Rain 2
 	(2756,8268),	#Overcast And Rain 3
+    (1378,9646),	#Light Rain 1
+	(2756,8268),	#Light Rain 2
+	(2756,8268),	#Light Rain 3
+    (1378,9646),	#Light Rain 4
 ]
 
 CLOUD_NAMES = [
@@ -172,6 +177,10 @@ CLOUD_NAMES = [
 	"Overcast And Rain 1",
 	"Overcast And Rain 2",
 	"Overcast And Rain 3",
+    "Light Rain 1",
+    "Light Rain 2",
+    "Light Rain 3",
+    "Light Rain 4",
 ]
 
 DAYS_IN_MONTH = [
@@ -272,6 +281,13 @@ class CLOUD_TYPES(IntEnum):
     CLOUDY = auto()
     RAINY = auto()
     ALL = auto()
+    LIGHT_SCATTERED1 = auto()
+    SCATTERED1 = auto()
+    BROKEN5 = auto()
+    OVERCAST_AND_RAIN1 = auto()
+    OVERCAST_AND_RAIN2 = auto()
+    LIGHT_RAIN1 = auto()
+    
 
 def relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos=None,radBlueDirection=None,mAlt=None,multisector=False,sectorId=0):
     if(bullseyePos is None):
@@ -800,45 +816,51 @@ def setWarehouseCoalition(bullseyePos,radBlueDirection,theatreInfo,theatre,wareh
 def setDate(missionDict,date):
     dt_now = datetime.datetime.now()
         
-    if(date == "all"):
-        month = np.random.randint(1,12)
-        day = np.random.randint(1,DAYS_IN_MONTH[month])
-        missionDict["date"]["Year"] = dt_now.year
-        missionDict["date"]["Month"] = month
-        missionDict["date"]["Day"] = day
-    elif(date == "spring"):
-        month = np.random.randint(3,5)
-        day = np.random.randint(1,DAYS_IN_MONTH[month])
-        missionDict["date"]["Year"] = dt_now.year
-        missionDict["date"]["Month"] = month
-        missionDict["date"]["Day"] = day
-    elif(date == "summer"):
-        month = np.random.randint(6,8)
-        day = np.random.randint(1,DAYS_IN_MONTH[month])
-        missionDict["date"]["Year"] = dt_now.year
-        missionDict["date"]["Month"] = month
-        missionDict["date"]["Day"] = day
-    elif(date == "autumn"):
-        month = np.random.randint(9,11)
-        day = np.random.randint(1,DAYS_IN_MONTH[month])
-        missionDict["date"]["Year"] = dt_now.year
-        missionDict["date"]["Month"] = month
-        missionDict["date"]["Day"] = day
-    elif(date == "winter"):
-        month = np.random.randint(0,3)
-        if(month == 0):
-            month=12
-        day = np.random.randint(1,DAYS_IN_MONTH[month])
-        missionDict["date"]["Year"] = dt_now.year
-        missionDict["date"]["Month"] = month
-        missionDict["date"]["Day"] = day
-    else:   #today
-        missionDict["date"]["Year"] = dt_now.year
-        missionDict["date"]["Month"] = dt_now.month
-        missionDict["date"]["Day"] = dt_now.day
-    
-    rnd = np.random.rand()
-    missionDict["start_time"] = 3600 * int(TIMEOFDAY_MAX * rnd + TIMEOFDAY_MIN * (1-rnd))
+    if(re.match("[0-9]{12}",date)):
+        missionDict["date"]["Year"] = int(date[0:4])
+        missionDict["date"]["Month"] = int(date[4:6])
+        missionDict["date"]["Day"] = int(date[6:8])
+        missionDict["start_time"] = 3600 * int(date[8:10]) + 60 * int(date[10:12])
+    else:
+        if(date == "all"):
+            month = np.random.randint(1,12)
+            day = np.random.randint(1,DAYS_IN_MONTH[month])
+            missionDict["date"]["Year"] = dt_now.year
+            missionDict["date"]["Month"] = month
+            missionDict["date"]["Day"] = day
+        elif(date == "spring"):
+            month = np.random.randint(3,5)
+            day = np.random.randint(1,DAYS_IN_MONTH[month])
+            missionDict["date"]["Year"] = dt_now.year
+            missionDict["date"]["Month"] = month
+            missionDict["date"]["Day"] = day
+        elif(date == "summer"):
+            month = np.random.randint(6,8)
+            day = np.random.randint(1,DAYS_IN_MONTH[month])
+            missionDict["date"]["Year"] = dt_now.year
+            missionDict["date"]["Month"] = month
+            missionDict["date"]["Day"] = day
+        elif(date == "autumn"):
+            month = np.random.randint(9,11)
+            day = np.random.randint(1,DAYS_IN_MONTH[month])
+            missionDict["date"]["Year"] = dt_now.year
+            missionDict["date"]["Month"] = month
+            missionDict["date"]["Day"] = day
+        elif(date == "winter"):
+            month = np.random.randint(0,3)
+            if(month == 0):
+                month=12
+            day = np.random.randint(1,DAYS_IN_MONTH[month])
+            missionDict["date"]["Year"] = dt_now.year
+            missionDict["date"]["Month"] = month
+            missionDict["date"]["Day"] = day
+        else:   #today
+            missionDict["date"]["Year"] = dt_now.year
+            missionDict["date"]["Month"] = dt_now.month
+            missionDict["date"]["Day"] = dt_now.day
+        
+        rnd = np.random.rand()
+        missionDict["start_time"] = 3600 * int(TIMEOFDAY_MAX * rnd + TIMEOFDAY_MIN * (1-rnd))
     
     hour = missionDict["start_time"] // 3600
     min  = (missionDict["start_time"] // 60) % 60
@@ -876,22 +898,53 @@ def setWeather(missionDict,weatherTemplates,cloudType=CLOUD_TYPES.ALL):
         cloudPreset = np.random.randint(0,27)
     elif(cloudType == CLOUD_TYPES.RAINY):
         cloudPreset = np.random.randint(27,30)
+    elif(cloudType == CLOUD_TYPES.LIGHT_SCATTERED1):
+        cloudPreset = CLOUD_NAMES.index("Light Scattered 1")
+    elif(cloudType == CLOUD_TYPES.OVERCAST_AND_RAIN1):
+        cloudPreset = CLOUD_NAMES.index("Overcast And Rain 1")
+    elif(cloudType == CLOUD_TYPES.OVERCAST_AND_RAIN2):
+        cloudPreset = CLOUD_NAMES.index("Overcast And Rain 2")
+    elif(cloudType == CLOUD_TYPES.LIGHT_RAIN1):
+        cloudPreset = CLOUD_NAMES.index("Light Rain 1")
+    elif(cloudType == CLOUD_TYPES.SCATTERED1):
+        cloudPreset = CLOUD_NAMES.index("Scattered 1")
+    elif(cloudType == CLOUD_TYPES.BROKEN5):
+        cloudPreset = CLOUD_NAMES.index("Broken 5")
 
 
 
-    if(cloudPreset < 27):
-    	missionDict["weather"]["clouds"]["preset"] = "Preset"+str(cloudPreset+1)
-    elif(cloudPreset < 30):
-    	missionDict["weather"]["clouds"]["preset"] = "RainyPreset"+str(cloudPreset-26)
+    if(cloudType == CLOUD_TYPES.LIGHT_SCATTERED1):
+        missionDict["weather"]["clouds"]["base"] = (int)(13780 * 0.3048)
+        print("Cloud Type: Light Scattered 1, Base:",int(13780)," [ft]")
+    elif(cloudType == CLOUD_TYPES.OVERCAST_AND_RAIN1):
+        missionDict["weather"]["clouds"]["base"] = (int)(8202 * 0.3048)
+        print("Cloud Type: Overcast And Rain1, Base:",int(8202)," [ft]")
+    elif(cloudType == CLOUD_TYPES.OVERCAST_AND_RAIN2):
+        missionDict["weather"]["clouds"]["base"] = (int)(8202 * 0.3048)
+        print("Cloud Type: Overcast And Rain2, Base:",int(8202)," [ft]")
+    elif(cloudType == CLOUD_TYPES.LIGHT_RAIN1):
+        missionDict["weather"]["clouds"]["base"] = (int)(12795 * 0.3048)
+        print("Cloud Type: Light Rain1, Base:",int(12795)," [ft]")
+    elif(cloudType == CLOUD_TYPES.SCATTERED1):
+        missionDict["weather"]["clouds"]["base"] = (int)(14764 * 0.3048)
+        print("Cloud Type: Scattered 1, Base:",int(14764)," [ft]")
+    elif(cloudType == CLOUD_TYPES.BROKEN5):
+        missionDict["weather"]["clouds"]["base"] = (int)(8202 * 0.3048)
+        print("Cloud Type: Broken5, Base:",int(8202)," [ft]")
     else:
-    	pass #(no clouds)
-    if(cloudPreset < 30):
-	    baseRnd = np.random.uniform()
-	    cloudBase = FEET_CLOUD_BASES[cloudPreset][0]*baseRnd + FEET_CLOUD_BASES[cloudPreset][1]*(1-baseRnd)
-	    missionDict["weather"]["clouds"]["base"] = (int)(cloudBase * 0.3048)
-	    print("Cloud Type:",CLOUD_NAMES[cloudPreset],"Base:",int(cloudBase)," [ft]")
-    else:
-    	print("Cloud Type: No cloud")
+        if(cloudPreset < 27):
+            missionDict["weather"]["clouds"]["preset"] = "Preset"+str(cloudPreset+1)
+        elif(cloudPreset < 34):
+            missionDict["weather"]["clouds"]["preset"] = "RainyPreset"+str(cloudPreset-26)
+        else:
+            pass #(no clouds)
+        if(cloudPreset < 34):
+            baseRnd = np.random.uniform()
+            cloudBase = FEET_CLOUD_BASES[cloudPreset][0]*baseRnd + FEET_CLOUD_BASES[cloudPreset][1]*(1-baseRnd)
+            missionDict["weather"]["clouds"]["base"] = (int)(cloudBase * 0.3048)
+            print("Cloud Type:",CLOUD_NAMES[cloudPreset],"Base:",int(cloudBase)," [ft]")
+        else:
+            print("Cloud Type: No cloud")
 
 def setWind(missionDict,maxWindspeed=50):
     maxTurbulence = maxWindspeed
@@ -1135,6 +1188,19 @@ if __name__ == "__main__":
         cloudType = CLOUD_TYPES.CLOUDY
     elif("rainy".startswith(args.cloud.lower().replace(" ",""))):
         cloudType = CLOUD_TYPES.RAINY
+    elif("lightscattered1".startswith(args.cloud.lower().replace(" ","").replace("_",""))):
+        cloudType = CLOUD_TYPES.LIGHT_SCATTERED1
+    elif("overcastandrain1".startswith(args.cloud.lower().replace(" ","").replace("_",""))):
+        cloudType = CLOUD_TYPES.OVERCAST_AND_RAIN1
+    elif("overcastandrain2".startswith(args.cloud.lower().replace(" ","").replace("_",""))):
+        cloudType = CLOUD_TYPES.OVERCAST_AND_RAIN2
+    elif("lightrain1".startswith(args.cloud.lower().replace(" ","").replace("_",""))):
+        cloudType = CLOUD_TYPES.LIGHT_RAIN1
+    elif("broken5".startswith(args.cloud.lower().replace(" ","").replace("_",""))):
+        cloudType = CLOUD_TYPES.BROKEN5
+    elif("scattered1".startswith(args.cloud.lower().replace(" ","").replace("_",""))):
+        cloudType = CLOUD_TYPES.SCATTERED1
+
     
     ##############################################
     # オプションのパース
@@ -1173,7 +1239,8 @@ if __name__ == "__main__":
 
     setDate(missionDict,args.date)
     setWeather(missionDict,weatherTemplates,cloudType)
-    setFogAndDust(missionDict)
+    if(cloudType != CLOUD_TYPES.CLEAR):
+        setFogAndDust(missionDict)
     setWind(missionDict,args.wind)
     
     missionDict["theatre"] = theatre
@@ -1222,7 +1289,13 @@ if __name__ == "__main__":
             mAlt = None
         else:
             mAlt = args.alt * M_PER_FEET
-        bullseyePos,radBlueDirection,airportPostfix = getBullseysPosAndDirction(airportNames,args.ccspos)
+        
+        if(not args.ccspos is None):
+            ccspos = [int(args.ccspos.split(",")[0]),int(args.ccspos.split(",")[1])]
+        else:
+            ccspos = None
+
+        bullseyePos,radBlueDirection,airportPostfix = getBullseysPosAndDirction(airportNames,ccspos)
         bullseyePos,radBlueDirection = relocate(missionDict,theatreInfo,theatre,mClientPlaneDistance,mAiPlaneDistance,bullseyePos,radBlueDirection,mAlt,False,0)
 
     setWarehouseCoalition(bullseyePos, radBlueDirection, theatreInfo,theatre,warehousesGen.getDict())

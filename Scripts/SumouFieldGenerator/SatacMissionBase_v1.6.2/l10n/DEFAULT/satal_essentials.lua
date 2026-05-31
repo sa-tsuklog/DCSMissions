@@ -34,6 +34,7 @@ FLAG_ID_OUT_OF_BUFFER_ZONE_SOUND = '32'
 FLAG_ID_OUT_OF_BUBBLE_SOUND = '33'
 FLAG_ID_BUBBLE_SHRINK_SOUND = '34'
 FLAG_ID_HOTARU_SOUND = '35'
+
 ----------------------------------------------------
 
 
@@ -59,11 +60,35 @@ function bubbleShrink()
     end
 end
 
-function deactivateAwacs()
+function activateBlueAwacs()
     for groupId,groupData in pairs(mist.DBs.groupsByName)do
-        if(groupData.task == "AWACS")then
-            Group.getByName(groupData.groupName):destroy()
-            trigger.action.outText(groupData.groupName.." deactivated.", 1,false)
+        if(groupData.task == "AWACS" and groupData.coalition == "blue")then
+            -- Group.getByName(groupData.groupName):destroy()
+            Group.getByName(groupData.groupName):getController():setCommand({
+                id = 'EPLRS',
+                params = {
+                    value = true,
+                    groupId = groupId
+                }
+            })
+            
+            trigger.action.outText(groupData.groupName.." EPLRS activated.", 10,false)
+        end
+    end
+end
+
+function activateRedAwacs()
+    for groupId,groupData in pairs(mist.DBs.groupsByName)do
+        if(groupData.task == "AWACS" and groupData.coalition == "red")then
+            -- Group.getByName(groupData.groupName):destroy()
+            Group.getByName(groupData.groupName):getController():setCommand({
+                id = 'EPLRS',
+                params = {
+                    value = true,
+                    groupId = groupId
+                }
+            })
+            trigger.action.outText(groupData.groupName.." EPLRS activated.", 10,false)
         end
     end
 end
@@ -86,7 +111,8 @@ function initialize()
     missionCommands.addCommand("Bubble shrink",nil,bubbleShrink)
 
 
-    missionCommands.addCommand("Deactivate AWACS",nil,deactivateAwacs)
+    missionCommands.addCommand("Activate BLUE AWACS",nil,activateBlueAwacs)
+    missionCommands.addCommand("Activate RED AWACS",nil,activateRedAwacs)
 
     trigger.action.setUserFlag(FLAG_ID_INITIALIZED,1)
 end
@@ -204,7 +230,7 @@ function bubbleManagement()
         end
     end
 
-    --trigger.action.outText("out of bubble=" ..#bluePlayerNamesOutOfOuterBubble..", in buffer zone="..#bluePlayerNamesAtBufferZone..", in bubble"..#bluePlayerNamesInInnerBubble, 10,false)
+    trigger.action.outText("out of bubble=" ..#bluePlayerNamesOutOfOuterBubble..", in buffer zone="..#bluePlayerNamesAtBufferZone..", in bubble"..#bluePlayerNamesInInnerBubble, 10,false)
     trigger.action.outText("Blue [0:0] Red(1st Half) CZ Radius: ".. nmBubbleSize.."nm TTS: "..bubbleShrinkCount, 1,true)
 
     -------------------------------------------------------------
