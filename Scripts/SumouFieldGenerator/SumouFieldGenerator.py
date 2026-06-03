@@ -101,7 +101,8 @@ THEATRE = [
         "Nevada",
         "PersianGulf",
         "Syria",
-        "MarianaIslands"
+        "MarianaIslands",
+        "Falklands"
     ]
 
 PRESET = [
@@ -223,8 +224,8 @@ RED_LIVERY_DICT = {
     "F-14B":"vf-102 diamondbacks",
     "F-15C":"12th Fighter SQN (AK)",
     "F-15ESE":"usaf 17th ws af90 high vis clean",
-    "F-16C_50":"dark_viper",
-    "FA-18C_hornet":"vx-23",
+    "F-16C_50":"Zero Aggressor F-16",
+    "FA-18C_hornet":"Zero Aggressor FA-18",
     "J-11A":"plaaf 14th ad (reworked)",
     "Su-27":"Algerian AF GREY 04",
     "Su-33":"AAF GREY 12",

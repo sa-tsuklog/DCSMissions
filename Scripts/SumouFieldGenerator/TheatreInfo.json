@@ -699,5 +699,176 @@
                 "Min": -211155.37848606
             }
         }
+    },
+
+    "Falklands": {
+        "Airports": {
+            "1": {
+                "name": "OHiggins",
+                "shortname":"Higgins",
+                "X": 328503.0,
+                "Y": -1000925.0
+            },
+            "2": {
+                "name": "Puerto Natales",
+                "shortname":"Natales",
+                "X": -24047.0,
+                "Y": -923144
+            },
+            "3": {
+                "name": "Hipico Flying Club",
+                "shortname":"Hipico",
+                "X": 330008.0,
+                "Y": -823705.0
+            },
+            "4": {
+                "name": "Gobernador Gregores",
+                "shortname":"Goberndor",
+                "X": 328044.0,
+                "Y": -817118.0
+            },
+            "5": {
+                "name": "San Julian",
+                "shortname":"SanJulian",
+                "X": 297566.0,
+                "Y": -636918.0
+            },
+            "6": {
+                "name": "Puerto Santa Cruz",
+                "shortname":"SantaCruz",
+                "X": 210400.0,
+                "Y": -680975.0
+            },
+            "7": {
+                "name": "Commandante Luis Piedrabuena",
+                "shortname":"Piedra",
+                "X": 208622.0,
+                "Y": -707823.0
+            },
+            "8": {
+                "name": "El Calafate",
+                "shortname":"Calafate",
+                "X": 136330.0,
+                "Y": -922578.0
+            },
+            "9": {
+                "name": "Rio Turbio",
+                "shortname":"Turbio",
+                "X": -12200.0,
+                "Y": -903471.0
+            },
+            "10": {
+                "name": "Hipico Flying Club",
+                "shortname":"Hipico",
+                "X": 330008.0,
+                "Y": -823705.0
+            },
+            "11": {
+                "name": "Rio Gallegos",
+                "shortname":"Gallegos",
+                "X": 25803.0,
+                "Y": -703365.0
+            },
+            "12": {
+                "name": "Rio Chico",
+                "shortname":"Chico",
+                "X": 19578.0,
+                "Y": -699129.0
+            },
+            "13": {
+                "name": "FrancoBianco",
+                "shortname":"Bianco",
+                "X": -98995.0,
+                "Y": -683184.0
+            },
+            "14": {
+                "name": "Punta Arenas",
+                "shortname":"Arenas",
+                "X": -147755.0,
+                "Y": -779860.0
+            },
+            "15": {
+                "name": "Porvenir",
+                "shortname":"Porvenir",
+                "X": -168081.0,
+                "Y": -738995.0
+            },
+            "16": {
+                "name": "Rio Grande",
+                "shortname":"RioGrande",
+                "X": -196877.0,
+                "Y": -559445.0
+            },
+            "17": {
+                "name": "Pampa Guanaco",
+                "shortname":"Guanaco",
+                "X": -238165.0,
+                "Y": -623812.0
+            },
+            "18": {
+                "name": "Tolhuin",
+                "shortname":"Tolhuin",
+                "X": -271408.0,
+                "Y": -510111.0
+            },
+            "19": {
+                "name": "Ushuaia Helo Port",
+                "shortname":"UshuaiaHP",
+                "X": -318395.0,
+                "Y": -577176.0
+            },
+            "20": {
+                "name": "Ushuais",
+                "shortname":"Ushuaia",
+                "X": -320420.0,
+                "Y": -576276.0
+            },
+            "21": {
+                "name": "Puerto Williams",
+                "shortname":"Williams",
+                "X": -323233.0,
+                "Y": -532054.0
+            },
+            "22": {
+                "name": "San Carlos FOB",
+                "shortname":"SanCarlos",
+                "X": 108173.0,
+                "Y": 8409.0
+            },
+            "23": {
+                "name": "GooseGreen",
+                "shortname":"Goose",
+                "X": 72665.0,
+                "Y": 11072.0
+            },
+            "24": {
+                "name": "Gull Point",
+                "shortname":"Gull Point",
+                "X": 32817.0,
+                "Y": 20344.0
+            },
+            "25": {
+                "name": "Mount Pleasant",
+                "shortname":"MtPleasant",
+                "X": 73388.0,
+                "Y": 47115.0
+            },
+            "26": {
+                "name": "PortStanley",
+                "shortname":"Stanley",
+                "X": 89243.0,
+                "Y": 93838.0
+            }
+        },
+        "CombatArea": {
+            "X": {
+                "Max":  348165.0,
+                "Min": -492597.0
+            },
+            "Y": {
+                "Max": -459760.0,
+                "Min": -1252466.0
+            }
+        }
     }
 }
